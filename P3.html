@@ -1,0 +1,1015 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Verb "To Be" — Full Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --burnt:   #8B3A1A;
+  --rust:    #C0541A;
+  --amber:   #D4821A;
+  --gold:    #E8A830;
+  --sand:    #F2C87E;
+  --cream:   #FBF4E8;
+  --fog:     #EDE3D4;
+  --forest:  #3D5A3E;
+  --brown:   #5C3317;
+  --ink:     #1E1206;
+  --white:   #FFFDF8;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body {
+  font-family:'Lato',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ─── SLIDE SYSTEM ─────────────────────────────── */
+.slide {
+  width:100vw;
+  min-height:100vh;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:60px 40px;
+  position:relative;
+  animation:slideIn .35s ease;
+}
+.slide.active { display:flex; }
+
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(30px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+/* ─── PROGRESS & NAV ───────────────────────────── */
+#progress-bar {
+  position:fixed; top:0; left:0; height:4px;
+  background:linear-gradient(90deg,var(--rust),var(--gold));
+  transition:width .3s ease; z-index:100;
+}
+#slide-counter {
+  position:fixed; top:12px; right:20px;
+  font-size:12px; font-weight:700; letter-spacing:1px;
+  color:rgba(255,255,255,0.7); z-index:100;
+  text-transform:uppercase;
+}
+
+.nav-controls {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+  display:flex; gap:14px; z-index:100; align-items:center;
+}
+.nav-btn {
+  background:rgba(139,58,26,0.92); color:var(--white);
+  border:none; padding:11px 26px; border-radius:30px;
+  font-family:'Lato',sans-serif; font-size:14px; font-weight:700;
+  cursor:pointer; letter-spacing:.5px;
+  transition:all .2s; backdrop-filter:blur(6px);
+}
+.nav-btn:hover { background:var(--burnt); transform:translateY(-2px); }
+.nav-btn:disabled { opacity:0.3; cursor:not-allowed; transform:none; }
+.nav-dots { display:flex; gap:6px; align-items:center; }
+.dot {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(139,58,26,.35); cursor:pointer; transition:.2s;
+}
+.dot.active { background:var(--rust); transform:scale(1.3); }
+
+/* ─── SLIDE BACKGROUNDS ────────────────────────── */
+.bg-dark   { background:var(--burnt); color:var(--white); }
+.bg-dark2  { background:var(--brown); color:var(--white); }
+.bg-forest { background:var(--forest); color:var(--white); }
+.bg-amber  { background:var(--amber); color:var(--white); }
+.bg-light  { background:var(--cream); }
+.bg-fog    { background:var(--fog); }
+.bg-white  { background:var(--white); }
+
+/* Leaf deco */
+.leaf-deco {
+  position:absolute; font-size:80px; opacity:.07;
+  user-select:none; pointer-events:none;
+}
+
+/* ─── TYPOGRAPHY ───────────────────────────────── */
+.slide-tag {
+  display:inline-block;
+  font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  padding:5px 14px; border-radius:20px; margin-bottom:18px;
+  background:rgba(255,255,255,.15); color:rgba(255,255,255,.85);
+}
+.slide-tag.dark {
+  background:rgba(139,58,26,.12); color:var(--rust);
+}
+.slide-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,5vw,3.8rem);
+  font-weight:900; line-height:1.1;
+  margin-bottom:16px;
+}
+.slide-subtitle {
+  font-size:1.1rem; font-weight:300; opacity:.8;
+  max-width:600px; text-align:center; line-height:1.7;
+}
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:700; color:var(--burnt);
+  margin-bottom:24px;
+}
+.bg-dark .section-title,
+.bg-dark2 .section-title,
+.bg-forest .section-title,
+.bg-amber .section-title { color:var(--sand); }
+
+.content-box {
+  width:100%; max-width:860px;
+}
+
+/* ─── TABLES ───────────────────────────────────── */
+.tbl-wrap { border-radius:10px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.1); }
+table { width:100%; border-collapse:collapse; font-size:.95rem; background:var(--white); }
+thead th {
+  background:var(--burnt); color:var(--white);
+  padding:12px 18px; text-align:left;
+  font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:700;
+}
+tbody tr { transition:background .15s; }
+tbody tr:hover { background:#fef3e2; }
+tbody tr:nth-child(even) { background:#fdf7ee; }
+td { padding:12px 18px; border-bottom:1px solid #ede3d4; }
+td:first-child { font-weight:700; color:var(--rust); }
+td b, td strong { color:var(--burnt); font-weight:700; }
+
+/* ─── CARDS ────────────────────────────────────── */
+.cards { display:grid; gap:16px; width:100%; max-width:860px; }
+.cards-2 { grid-template-columns:repeat(2,1fr); }
+.cards-3 { grid-template-columns:repeat(3,1fr); }
+.cards-4 { grid-template-columns:repeat(4,1fr); }
+
+.card {
+  background:var(--white); border-radius:12px;
+  padding:20px; box-shadow:0 3px 18px rgba(0,0,0,.08);
+  border-left:4px solid var(--amber);
+  transition:transform .2s, box-shadow .2s;
+}
+.card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,.13); }
+.card-label {
+  font-size:9px; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--amber); font-weight:700; margin-bottom:6px;
+}
+.card p { font-size:.92rem; line-height:1.6; }
+.card em { color:var(--burnt); font-style:normal; font-weight:700; }
+
+/* Parts of speech card */
+.pos-card {
+  background:var(--white); border-radius:10px;
+  padding:16px; box-shadow:0 2px 12px rgba(0,0,0,.07);
+  border-top:3px solid var(--amber);
+}
+.pos-card .pos-name {
+  font-family:'Playfair Display',serif;
+  font-size:1rem; font-weight:700; color:var(--burnt); margin-bottom:4px;
+}
+.pos-card .pos-def { font-size:.8rem; color:#666; margin-bottom:8px; line-height:1.4; }
+.pos-card .pos-ex {
+  font-size:.82rem; background:var(--fog); padding:6px 10px;
+  border-radius:6px; color:var(--brown);
+  font-style:italic;
+}
+
+/* Pronoun table visual */
+.pronoun-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:10px; width:100%; max-width:700px;
+}
+.pronoun-item {
+  background:var(--white); border-radius:10px;
+  padding:16px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,.07);
+  border-bottom:3px solid var(--amber);
+  transition:transform .2s;
+}
+.pronoun-item:hover { transform:translateY(-3px); }
+.pronoun-item .pron { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--burnt); }
+.pronoun-item .pron-type { font-size:.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--amber); margin-top:4px; }
+.pronoun-item .pron-verb { font-size:1rem; font-weight:700; color:var(--rust); margin-top:6px; }
+
+/* Context quotes */
+.quote-card {
+  background:var(--white); border-radius:12px;
+  padding:24px 28px; box-shadow:0 3px 18px rgba(0,0,0,.08);
+  border-left:5px solid var(--rust); position:relative; overflow:hidden;
+  margin-bottom:14px;
+}
+.quote-card::before {
+  content:'"'; font-family:'Playfair Display',serif;
+  font-size:7rem; color:rgba(192,84,26,.06);
+  position:absolute; top:-20px; right:10px; line-height:1;
+}
+.quote-ctx { font-size:.72rem; letter-spacing:2px; text-transform:uppercase; color:var(--rust); font-weight:700; margin-bottom:8px; }
+.quote-card p { font-size:1rem; line-height:1.75; color:#333; }
+.quote-card em { color:var(--burnt); font-style:normal; font-weight:700; }
+
+/* ─── EXERCISES ────────────────────────────────── */
+.ex-wrap { width:100%; max-width:760px; display:flex; flex-direction:column; gap:22px; }
+.ex-box {
+  background:var(--white); border-radius:14px;
+  padding:26px 28px; box-shadow:0 3px 20px rgba(0,0,0,.08);
+  border:1px solid var(--fog);
+}
+.ex-num-badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; border-radius:50%;
+  background:var(--rust); color:var(--white);
+  font-weight:700; font-size:.82rem; margin-bottom:12px;
+}
+.ex-instruction { font-size:.8rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--amber); font-weight:700; margin-bottom:8px; }
+.ex-sentence {
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem; color:var(--burnt); margin-bottom:18px; font-style:italic;
+}
+.ex-blank { color:var(--gold); border-bottom:2px solid var(--gold); padding:0 8px; }
+.ex-input {
+  display:block; width:100%; max-width:340px;
+  padding:10px 15px; border:2px solid var(--fog);
+  border-radius:8px; font-family:'Lato',sans-serif; font-size:1rem;
+  color:var(--ink); background:#fdfaf5; outline:none; margin-bottom:14px;
+  transition:border-color .2s;
+}
+.ex-input:focus { border-color:var(--amber); background:var(--white); }
+.ex-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.btn {
+  padding:9px 18px; border:none; border-radius:8px;
+  font-family:'Lato',sans-serif; font-size:.85rem; font-weight:700;
+  cursor:pointer; transition:all .2s; letter-spacing:.3px;
+}
+.btn-check { background:var(--burnt); color:var(--white); }
+.btn-check:hover { background:var(--rust); transform:translateY(-1px); }
+.btn-hint { background:transparent; color:var(--amber); border:1.5px solid var(--amber); }
+.btn-hint:hover { background:var(--amber); color:var(--white); }
+.btn-answer { background:transparent; color:var(--forest); border:1.5px solid var(--forest); }
+.btn-answer:hover { background:var(--forest); color:var(--white); }
+.ex-hint-box, .ex-ans-box {
+  display:none; margin-top:12px; padding:10px 14px;
+  border-radius:8px; font-size:.9rem;
+}
+.ex-hint-box { background:#fff8e6; color:#7a5500; border-left:3px solid var(--gold); }
+.ex-ans-box { background:#eef5ee; color:var(--forest); border-left:3px solid var(--forest); font-weight:700; }
+.ex-feedback { margin-top:10px; font-size:.95rem; font-weight:700; min-height:22px; }
+.ex-feedback.ok  { color:#1a7a3a; }
+.ex-feedback.err { color:#b32000; }
+
+/* Multiple choice */
+.mc-options { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+.mc-btn {
+  padding:9px 22px; border:2px solid var(--fog);
+  border-radius:8px; background:var(--white); color:var(--ink);
+  font-family:'Lato',sans-serif; font-size:.95rem; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.mc-btn:hover { border-color:var(--amber); background:#fef5e4; }
+.mc-btn.selected { border-color:var(--burnt); background:var(--burnt); color:var(--white); }
+.mc-btn.correct-choice { border-color:var(--forest); background:var(--forest); color:var(--white); }
+.mc-btn.wrong-choice   { border-color:#b32000; background:#b32000; color:var(--white); }
+
+/* ─── GREETING SECTION ─────────────────────────── */
+.dialogue-box {
+  background:var(--white); border-radius:14px;
+  padding:26px 30px; box-shadow:0 3px 18px rgba(0,0,0,.09);
+  width:100%; max-width:700px; margin-bottom:16px;
+}
+.dialogue-title { font-size:.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--rust); font-weight:700; margin-bottom:14px; }
+.line { display:flex; gap:12px; margin-bottom:10px; align-items:flex-start; }
+.speaker {
+  min-width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:.8rem; color:var(--white); flex-shrink:0;
+}
+.spk-a { background:var(--rust); }
+.spk-b { background:var(--forest); }
+.line-text { font-size:.97rem; line-height:1.6; padding-top:8px; color:#333; }
+.line-text em { color:var(--burnt); font-style:normal; font-weight:700; }
+
+/* ─── HERO SLIDE ───────────────────────────────── */
+.hero-leaf { font-size:260px; opacity:.06; position:absolute; right:-30px; top:-40px; transform:rotate(15deg); user-select:none; }
+
+/* utility */
+.text-center { text-align:center; }
+.mt-6 { margin-top:6px; }
+.mt-12 { margin-top:12px; }
+.mt-20 { margin-top:20px; }
+.list-plain { list-style:none; }
+.list-plain li { padding:5px 0; font-size:.95rem; line-height:1.6; }
+.list-plain li::before { content:"🍂 "; }
+.highlight { color:var(--burnt); font-weight:700; }
+.rule-text { font-size:.95rem; line-height:1.7; max-width:700px; color:#444; }
+.tag-pill {
+  display:inline-block; background:var(--fog); color:var(--burnt);
+  padding:3px 10px; border-radius:12px; font-size:.8rem; font-weight:700;
+  margin:2px;
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="slide-counter"></div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 1 — HERO
+═════════════════════════════════════════════ -->
+<div class="slide bg-dark active" id="s1">
+  <span class="hero-leaf">🍂</span>
+  <div class="slide-tag">English Grammar · Beginner</div>
+  <h1 class="slide-title" style="text-align:center">The Verb<br><em style="color:var(--gold);font-style:italic">"To Be"</em></h1>
+  <p class="slide-subtitle mt-6">Una guía completa con teoría, vocabulario, ejercicios interactivos y saludos en inglés</p>
+  <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <span class="tag-pill" style="background:rgba(255,255,255,.1);color:var(--sand)">📖 Partes del habla</span>
+    <span class="tag-pill" style="background:rgba(255,255,255,.1);color:var(--sand)">👤 Pronombres</span>
+    <span class="tag-pill" style="background:rgba(255,255,255,.1);color:var(--sand)">✏️ Ejercicios</span>
+    <span class="tag-pill" style="background:rgba(255,255,255,.1);color:var(--sand)">🤝 Saludos</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 2 — PARTS OF SPEECH
+═════════════════════════════════════════════ -->
+<div class="slide bg-fog" id="s2">
+  <div class="content-box">
+    <div class="slide-tag dark">01 — Gramática base</div>
+    <h2 class="section-title">Parts of Speech</h2>
+    <p class="rule-text" style="margin-bottom:22px;">El inglés organiza las palabras en <strong>8 categorías gramaticales</strong>. Conocerlas es la clave para entender cómo funciona cualquier oración.</p>
+    <div class="cards cards-4" style="grid-template-columns:repeat(4,1fr)">
+      <div class="pos-card">
+        <div class="pos-name">Noun</div>
+        <div class="pos-def">Names a person, place, thing or idea.</div>
+        <div class="pos-ex">teacher, city, love</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Verb</div>
+        <div class="pos-def">Expresses action or state of being.</div>
+        <div class="pos-ex">run, <strong style="color:var(--burnt)">is</strong>, feel</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Adjective</div>
+        <div class="pos-def">Describes or modifies a noun.</div>
+        <div class="pos-ex">happy, cold, tall</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Adverb</div>
+        <div class="pos-def">Modifies a verb, adjective or adverb.</div>
+        <div class="pos-ex">quickly, very, now</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Pronoun</div>
+        <div class="pos-def">Replaces a noun to avoid repetition.</div>
+        <div class="pos-ex"><strong style="color:var(--burnt)">I, you, he, she</strong></div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Preposition</div>
+        <div class="pos-def">Shows relationship between words.</div>
+        <div class="pos-ex">in, on, at, from</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Conjunction</div>
+        <div class="pos-def">Connects words, phrases or clauses.</div>
+        <div class="pos-ex">and, but, because</div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-name">Article</div>
+        <div class="pos-def">Specifies a noun (definite/indefinite).</div>
+        <div class="pos-ex">a, an, the</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 3 — PERSONAL PRONOUNS
+═════════════════════════════════════════════ -->
+<div class="slide bg-white" id="s3">
+  <div class="content-box text-center">
+    <div class="slide-tag dark">02 — Pronombres</div>
+    <h2 class="section-title" style="display:inline-block">Personal Pronouns</h2>
+    <p class="rule-text" style="text-align:center;margin:0 auto 28px;">Los pronombres personales son el <strong>sujeto</strong> de las oraciones. Cada uno usa una forma diferente del verbo <em style="color:var(--burnt)">to be</em>.</p>
+    <div class="pronoun-grid">
+      <div class="pronoun-item"><div class="pron">I</div><div class="pron-type">1st singular</div><div class="pron-verb">am</div></div>
+      <div class="pronoun-item"><div class="pron">You</div><div class="pron-type">2nd singular</div><div class="pron-verb">are</div></div>
+      <div class="pronoun-item"><div class="pron">He</div><div class="pron-type">3rd masc.</div><div class="pron-verb">is</div></div>
+      <div class="pronoun-item"><div class="pron">She</div><div class="pron-type">3rd fem.</div><div class="pron-verb">is</div></div>
+      <div class="pronoun-item"><div class="pron">It</div><div class="pron-type">3rd neutral</div><div class="pron-verb">is</div></div>
+      <div class="pronoun-item"><div class="pron">We</div><div class="pron-type">1st plural</div><div class="pron-verb">are</div></div>
+      <div class="pronoun-item"><div class="pron">You</div><div class="pron-type">2nd plural</div><div class="pron-verb">are</div></div>
+      <div class="pronoun-item"><div class="pron">They</div><div class="pron-type">3rd plural</div><div class="pron-verb">are</div></div>
+      <div class="pronoun-item" style="background:var(--fog);border-color:var(--rust);">
+        <div class="pron" style="font-size:1rem;color:#666">Note:</div>
+        <div class="pron-type" style="margin-top:4px;">It = animals, things, weather</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 4 — CONJUGATION TABLE
+═════════════════════════════════════════════ -->
+<div class="slide bg-light" id="s4">
+  <div class="content-box">
+    <div class="slide-tag dark">03 — Conjugación</div>
+    <h2 class="section-title">Formas del Verbo "To Be"</h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Subject</th><th>Verb</th><th>Contraction</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>I</td><td><b>am</b></td><td><b>'m</b></td><td>I <b>am</b> / I<b>'m</b> a teacher.</td></tr>
+          <tr><td>You</td><td><b>are</b></td><td><b>'re</b></td><td>You <b>are</b> / You<b>'re</b> kind.</td></tr>
+          <tr><td>He</td><td><b>is</b></td><td><b>'s</b></td><td>He <b>is</b> / He<b>'s</b> a doctor.</td></tr>
+          <tr><td>She</td><td><b>is</b></td><td><b>'s</b></td><td>She <b>is</b> / She<b>'s</b> happy.</td></tr>
+          <tr><td>It</td><td><b>is</b></td><td><b>'s</b></td><td>It <b>is</b> / It<b>'s</b> cold today.</td></tr>
+          <tr><td>We</td><td><b>are</b></td><td><b>'re</b></td><td>We <b>are</b> / We<b>'re</b> ready.</td></tr>
+          <tr><td>They</td><td><b>are</b></td><td><b>'re</b></td><td>They <b>are</b> / They<b>'re</b> engineers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="rule-text mt-12" style="font-size:.88rem;"><strong>💡 Tip:</strong> Las contracciones son más comunes en el habla informal y cotidiana. <em>I am not</em> → no tiene contracción estándar (nunca <em>I amn't</em>).</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 5 — NEGATIVE FORM
+═════════════════════════════════════════════ -->
+<div class="slide bg-fog" id="s5">
+  <div class="content-box">
+    <div class="slide-tag dark">04 — Negación</div>
+    <h2 class="section-title">Forma Negativa</h2>
+    <p class="rule-text" style="margin-bottom:22px;">Agrega <strong>not</strong> después del verbo. En conversación se usan las contracciones negativas.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Subject</th><th>Forma completa</th><th>Contracción</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>I</td><td>I am not</td><td>— (no tiene)</td><td>I am not tired.</td></tr>
+          <tr><td>You</td><td>You are not</td><td><b>You aren't</b></td><td>You aren't late.</td></tr>
+          <tr><td>He</td><td>He is not</td><td><b>He isn't</b></td><td>He isn't home.</td></tr>
+          <tr><td>She</td><td>She is not</td><td><b>She isn't</b></td><td>She isn't a nurse.</td></tr>
+          <tr><td>It</td><td>It is not</td><td><b>It isn't</b></td><td>It isn't hot today.</td></tr>
+          <tr><td>We</td><td>We are not</td><td><b>We aren't</b></td><td>We aren't ready.</td></tr>
+          <tr><td>They</td><td>They are not</td><td><b>They aren't</b></td><td>They aren't students.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 6 — QUESTIONS
+═════════════════════════════════════════════ -->
+<div class="slide bg-white" id="s6">
+  <div class="content-box">
+    <div class="slide-tag dark">05 — Interrogativo</div>
+    <h2 class="section-title">Forming Questions</h2>
+    <p class="rule-text" style="margin-bottom:8px;">Invierte el orden: <strong style="color:var(--burnt)">Verb + Subject + …?</strong></p>
+    <p class="rule-text" style="margin-bottom:22px;font-size:.88rem;">Para respuestas cortas usamos: <em>Yes, I am.</em> / <em>No, I'm not.</em></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Statement</th><th>Question</th><th>Short Yes</th><th>Short No</th></tr></thead>
+        <tbody>
+          <tr><td>I am a teacher.</td><td><b>Am</b> I a teacher?</td><td>Yes, you are.</td><td>No, you're not.</td></tr>
+          <tr><td>You are a student.</td><td><b>Are</b> you a student?</td><td>Yes, I am.</td><td>No, I'm not.</td></tr>
+          <tr><td>She is tired.</td><td><b>Is</b> she tired?</td><td>Yes, she is.</td><td>No, she isn't.</td></tr>
+          <tr><td>He is a doctor.</td><td><b>Is</b> he a doctor?</td><td>Yes, he is.</td><td>No, he isn't.</td></tr>
+          <tr><td>They are ready.</td><td><b>Are</b> they ready?</td><td>Yes, they are.</td><td>No, they aren't.</td></tr>
+          <tr><td>We are from Mexico.</td><td><b>Are</b> we from Mexico?</td><td>Yes, we are.</td><td>No, we're not.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 7 — USES OF TO BE
+═════════════════════════════════════════════ -->
+<div class="slide bg-light" id="s7">
+  <div class="content-box">
+    <div class="slide-tag dark">06 — Aplicaciones</div>
+    <h2 class="section-title">Usos del Verbo "To Be"</h2>
+    <div class="cards cards-3">
+      <div class="card"><div class="card-label">Identidad</div><p>My name <em>is</em> Ana. I <em>am</em> a designer.</p></div>
+      <div class="card"><div class="card-label">Profesión</div><p>She <em>is</em> a lawyer. They <em>are</em> engineers.</p></div>
+      <div class="card"><div class="card-label">Edad</div><p>I <em>am</em> 25 years old. He <em>is</em> 40.</p></div>
+      <div class="card"><div class="card-label">Nacionalidad</div><p>We <em>are</em> Mexican. She <em>is</em> French.</p></div>
+      <div class="card"><div class="card-label">Ubicación</div><p>The office <em>is</em> in Guadalajara. We <em>are</em> here.</p></div>
+      <div class="card"><div class="card-label">Estado emocional</div><p>I <em>am</em> happy. He <em>is</em> nervous today.</p></div>
+      <div class="card"><div class="card-label">Descripción física</div><p>She <em>is</em> tall. The building <em>is</em> old.</p></div>
+      <div class="card"><div class="card-label">Clima / Tiempo</div><p>It <em>is</em> cold. It <em>is</em> sunny outside.</p></div>
+      <div class="card"><div class="card-label">Tiempo / Hora</div><p>It <em>is</em> 8 a.m. Today <em>is</em> Monday.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 8 — VOCABULARY
+═════════════════════════════════════════════ -->
+<div class="slide bg-fog" id="s8">
+  <div class="content-box">
+    <div class="slide-tag dark">07 — Vocabulario</div>
+    <h2 class="section-title">Key Vocabulary with "To Be"</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <p style="font-weight:700;color:var(--burnt);margin-bottom:10px;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;">Adjectives — Feelings</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>English</th><th>Español</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>happy</td><td>feliz</td><td>She <b>is</b> happy.</td></tr>
+              <tr><td>tired</td><td>cansado/a</td><td>I <b>am</b> tired.</td></tr>
+              <tr><td>nervous</td><td>nervioso/a</td><td>He <b>is</b> nervous.</td></tr>
+              <tr><td>excited</td><td>emocionado/a</td><td>They <b>are</b> excited.</td></tr>
+              <tr><td>bored</td><td>aburrido/a</td><td>We <b>are</b> bored.</td></tr>
+              <tr><td>angry</td><td>enojado/a</td><td>She <b>is</b> angry.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;color:var(--burnt);margin-bottom:10px;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;">Adjectives — Descriptions</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>English</th><th>Español</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>tall / short</td><td>alto/bajo</td><td>He <b>is</b> tall.</td></tr>
+              <tr><td>young / old</td><td>joven/viejo</td><td>She <b>is</b> young.</td></tr>
+              <tr><td>busy / free</td><td>ocupado/libre</td><td>I <b>am</b> busy.</td></tr>
+              <tr><td>ready</td><td>listo/a</td><td>We <b>are</b> ready.</td></tr>
+              <tr><td>late / early</td><td>tarde/temprano</td><td>You <b>are</b> late.</td></tr>
+              <tr><td>right / wrong</td><td>correcto/incorrecto</td><td>That <b>is</b> right.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 9 — EXERCISE SET A (fill-in)
+═════════════════════════════════════════════ -->
+<div class="slide bg-white" id="s9">
+  <div class="content-box">
+    <div class="slide-tag dark">08 — Práctica A</div>
+    <h2 class="section-title">Ejercicio: Complete the Blanks</h2>
+    <div class="ex-wrap">
+
+      <div class="ex-box">
+        <div class="ex-num-badge">1</div>
+        <div class="ex-instruction">Fill in with am / is / are</div>
+        <p class="ex-sentence">I <span class="ex-blank">____</span> a student.</p>
+        <input class="ex-input" id="ea1" placeholder="am / is / are" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ea1')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ea1','am','fb-ea1')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ea1')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ea1">El sujeto es "I" — solo tiene una forma posible.</div>
+        <div class="ex-ans-box" id="ans-ea1">✓ Respuesta: <em>am</em> → I am a student.</div>
+        <div class="ex-feedback" id="fb-ea1"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">2</div>
+        <div class="ex-instruction">Fill in with am / is / are</div>
+        <p class="ex-sentence">She <span class="ex-blank">____</span> a doctor.</p>
+        <input class="ex-input" id="ea2" placeholder="am / is / are" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ea2')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ea2','is','fb-ea2')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ea2')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ea2">He / She / It → misma forma.</div>
+        <div class="ex-ans-box" id="ans-ea2">✓ Respuesta: <em>is</em> → She is a doctor.</div>
+        <div class="ex-feedback" id="fb-ea2"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">3</div>
+        <div class="ex-instruction">Fill in with am / is / are</div>
+        <p class="ex-sentence">We <span class="ex-blank">____</span> from Mexico City.</p>
+        <input class="ex-input" id="ea3" placeholder="am / is / are" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ea3')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ea3','are','fb-ea3')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ea3')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ea3">You / We / They → misma forma.</div>
+        <div class="ex-ans-box" id="ans-ea3">✓ Respuesta: <em>are</em> → We are from Mexico City.</div>
+        <div class="ex-feedback" id="fb-ea3"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 10 — EXERCISE SET B (multiple choice)
+═════════════════════════════════════════════ -->
+<div class="slide bg-light" id="s10">
+  <div class="content-box">
+    <div class="slide-tag dark">09 — Práctica B</div>
+    <h2 class="section-title">Ejercicio: Multiple Choice</h2>
+    <div class="ex-wrap">
+
+      <div class="ex-box">
+        <div class="ex-num-badge">4</div>
+        <div class="ex-instruction">Choose the correct verb</div>
+        <p class="ex-sentence">It <span class="ex-blank">____</span> very cold today.</p>
+        <div class="mc-options">
+          <button class="mc-btn" onclick="mcCheck(this,'eb1','is')">am</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb1','is')">is</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb1','is')">are</button>
+        </div>
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-eb1')">💡 Pista</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-eb1')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-eb1">"It" se usa para objetos, animales y clima.</div>
+        <div class="ex-ans-box" id="ans-eb1">✓ Respuesta: <em>is</em> → It is very cold today.</div>
+        <div class="ex-feedback" id="eb1"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">5</div>
+        <div class="ex-instruction">Choose the correct verb</div>
+        <p class="ex-sentence">They <span class="ex-blank">____</span> not ready yet.</p>
+        <div class="mc-options">
+          <button class="mc-btn" onclick="mcCheck(this,'eb2','are')">is</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb2','are')">am</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb2','are')">are</button>
+        </div>
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-eb2')">💡 Pista</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-eb2')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-eb2">"They" es plural — igual que "We" y "You".</div>
+        <div class="ex-ans-box" id="ans-eb2">✓ Respuesta: <em>are</em> → They are not ready yet.</div>
+        <div class="ex-feedback" id="eb2"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">6</div>
+        <div class="ex-instruction">Choose the correct verb</div>
+        <p class="ex-sentence">My brother <span class="ex-blank">____</span> a teacher.</p>
+        <div class="mc-options">
+          <button class="mc-btn" onclick="mcCheck(this,'eb3','is')">are</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb3','is')">is</button>
+          <button class="mc-btn" onclick="mcCheck(this,'eb3','is')">am</button>
+        </div>
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-eb3')">💡 Pista</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-eb3')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-eb3">"My brother" = he → tercera persona singular.</div>
+        <div class="ex-ans-box" id="ans-eb3">✓ Respuesta: <em>is</em> → My brother is a teacher.</div>
+        <div class="ex-feedback" id="eb3"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 11 — EXERCISE SET C (transform)
+═════════════════════════════════════════════ -->
+<div class="slide bg-fog" id="s11">
+  <div class="content-box">
+    <div class="slide-tag dark">10 — Práctica C</div>
+    <h2 class="section-title">Ejercicio: Transform the Sentence</h2>
+    <div class="ex-wrap">
+
+      <div class="ex-box">
+        <div class="ex-num-badge">7</div>
+        <div class="ex-instruction">Make it negative (use contraction)</div>
+        <p class="ex-sentence">He is at home.</p>
+        <input class="ex-input" id="ec1" placeholder="He isn't ..." autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ec1')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ec1','he isn\'t at home.','fb-ec1')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ec1')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ec1">is + not → isn't. Mantén el resto igual.</div>
+        <div class="ex-ans-box" id="ans-ec1">✓ He isn't at home.</div>
+        <div class="ex-feedback" id="fb-ec1"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">8</div>
+        <div class="ex-instruction">Turn into a question</div>
+        <p class="ex-sentence">You are a student.</p>
+        <input class="ex-input" id="ec2" placeholder="Are you ...?" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ec2')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ec2','are you a student?','fb-ec2')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ec2')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ec2">Mueve el verbo al inicio.</div>
+        <div class="ex-ans-box" id="ans-ec2">✓ Are you a student?</div>
+        <div class="ex-feedback" id="fb-ec2"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">9</div>
+        <div class="ex-instruction">Write the contraction form</div>
+        <p class="ex-sentence">They are not engineers.</p>
+        <input class="ex-input" id="ec3" placeholder="They aren't ..." autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ec3')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ec3','they aren\'t engineers.','fb-ec3')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ec3')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ec3">are + not → aren't</div>
+        <div class="ex-ans-box" id="ans-ec3">✓ They aren't engineers.</div>
+        <div class="ex-feedback" id="fb-ec3"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 12 — REAL CONTEXTS
+═════════════════════════════════════════════ -->
+<div class="slide bg-white" id="s12">
+  <div class="content-box">
+    <div class="slide-tag dark">11 — Contextos reales</div>
+    <h2 class="section-title">To Be in Real Life</h2>
+    <div class="quote-card">
+      <div class="quote-ctx">Personal introduction</div>
+      <p>Hello! My name <em>is</em> Laura. I <em>am</em> a graphic designer. I <em>am</em> from Mexico City and I <em>am</em> 28 years old. My company <em>is</em> a small agency in Condesa.</p>
+    </div>
+    <div class="quote-card" style="border-color:var(--forest)">
+      <div class="quote-ctx" style="color:var(--forest)">Work context</div>
+      <p>We <em>are</em> a marketing team of five people. Our office <em>is</em> in Guadalajara. The deadlines <em>are</em> tight, but the team <em>is</em> motivated.</p>
+    </div>
+    <div class="quote-card" style="border-color:var(--amber)">
+      <div class="quote-ctx" style="color:var(--amber)">Daily life</div>
+      <p>It <em>is</em> 7:30 a.m. The coffee <em>is</em> ready. The streets <em>are</em> quiet and the sky <em>is</em> clear. It <em>is</em> a perfect autumn morning.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 13 — GREETINGS & INTRODUCTIONS
+═════════════════════════════════════════════ -->
+<div class="slide bg-dark2" id="s13">
+  <div class="content-box" style="max-width:760px">
+    <div class="slide-tag">12 — Saludos</div>
+    <h2 class="section-title">Greetings & Introductions</h2>
+    <p style="color:rgba(255,255,255,.7);margin-bottom:22px;font-size:.95rem;line-height:1.7;">El verbo <em style="color:var(--gold)">to be</em> es esencial para saludar, presentarse y conocer personas. Aquí los patrones más útiles:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:18px;">
+        <p style="color:var(--gold);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Formal Greeting</p>
+        <p style="font-size:.95rem;color:#eee;line-height:1.7;">Good morning. My name <em style="color:var(--gold);font-style:normal;font-weight:700">is</em> Carlos Reyes. I <em style="color:var(--gold);font-style:normal;font-weight:700">am</em> the project manager.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:18px;">
+        <p style="color:var(--gold);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Casual Greeting</p>
+        <p style="font-size:.95rem;color:#eee;line-height:1.7;">Hey! I<em style="color:var(--gold);font-style:normal;font-weight:700">'m</em> Sofia. Nice to meet you! I<em style="color:var(--gold);font-style:normal;font-weight:700">'m</em> from Monterrey.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:18px;">
+        <p style="color:var(--gold);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Asking about others</p>
+        <p style="font-size:.95rem;color:#eee;line-height:1.7;">What <em style="color:var(--gold);font-style:normal;font-weight:700">is</em> your name? Where <em style="color:var(--gold);font-style:normal;font-weight:700">are</em> you from? How old <em style="color:var(--gold);font-style:normal;font-weight:700">are</em> you?</p>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:18px;">
+        <p style="color:var(--gold);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Typical Answers</p>
+        <p style="font-size:.95rem;color:#eee;line-height:1.7;">My name <em style="color:var(--gold);font-style:normal;font-weight:700">is</em> Ana. I <em style="color:var(--gold);font-style:normal;font-weight:700">am</em> from Oaxaca. I <em style="color:var(--gold);font-style:normal;font-weight:700">am</em> 22 years old.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 14 — DIALOGUES
+═════════════════════════════════════════════ -->
+<div class="slide bg-light" id="s14">
+  <div class="content-box" style="max-width:700px">
+    <div class="slide-tag dark">13 — Diálogos</div>
+    <h2 class="section-title">Real Dialogues</h2>
+    <div class="dialogue-box">
+      <div class="dialogue-title">🎤 Dialogue 1 — First meeting</div>
+      <div class="line"><div class="speaker spk-a">A</div><div class="line-text">Hi! I <em>'m</em> David. What <em>is</em> your name?</div></div>
+      <div class="line"><div class="speaker spk-b">B</div><div class="line-text">Hello, David! I <em>'m</em> Valeria. Nice to meet you.</div></div>
+      <div class="line"><div class="speaker spk-a">A</div><div class="line-text">Nice to meet you too! Where <em>are</em> you from?</div></div>
+      <div class="line"><div class="speaker spk-b">B</div><div class="line-text">I <em>am</em> from Puebla. And you?</div></div>
+      <div class="line"><div class="speaker spk-a">A</div><div class="line-text">I <em>'m</em> from Veracruz. <em>Are</em> you a student here?</div></div>
+      <div class="line"><div class="speaker spk-b">B</div><div class="line-text">Yes, I <em>am</em>. I <em>am</em> in my second year.</div></div>
+    </div>
+    <div class="dialogue-box">
+      <div class="dialogue-title">💼 Dialogue 2 — Work context</div>
+      <div class="line"><div class="speaker spk-a">A</div><div class="line-text">Good morning. I <em>'m</em> Marco, the new developer.</div></div>
+      <div class="line"><div class="speaker spk-b">B</div><div class="line-text">Welcome! We <em>are</em> glad you <em>are</em> here. I <em>'m</em> Patricia, the team lead.</div></div>
+      <div class="line"><div class="speaker spk-a">A</div><div class="line-text"><em>Is</em> the office always this busy?</div></div>
+      <div class="line"><div class="speaker spk-b">B</div><div class="line-text">Ha! Yes, it <em>is</em>. But the team <em>is</em> great.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 15 — EXERCISE SET D (greetings)
+═════════════════════════════════════════════ -->
+<div class="slide bg-fog" id="s15">
+  <div class="content-box">
+    <div class="slide-tag dark">14 — Práctica D</div>
+    <h2 class="section-title">Ejercicio: Introductions</h2>
+    <div class="ex-wrap">
+
+      <div class="ex-box">
+        <div class="ex-num-badge">10</div>
+        <div class="ex-instruction">Fill in with the correct form</div>
+        <p class="ex-sentence">Hi! My name <span class="ex-blank">____</span> Carlos.</p>
+        <input class="ex-input" id="ed1" placeholder="am / is / are" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ed1')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ed1','is','fb-ed1')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ed1')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ed1">"My name" = it → tercera persona singular.</div>
+        <div class="ex-ans-box" id="ans-ed1">✓ My name <em>is</em> Carlos.</div>
+        <div class="ex-feedback" id="fb-ed1"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">11</div>
+        <div class="ex-instruction">Complete the introduction</div>
+        <p class="ex-sentence">I <span class="ex-blank">____</span> from Guadalajara.</p>
+        <input class="ex-input" id="ed2" placeholder="am / is / are" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ed2')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ed2','am','fb-ed2')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ed2')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ed2">Sujeto "I" → siempre la misma forma.</div>
+        <div class="ex-ans-box" id="ans-ed2">✓ I <em>am</em> from Guadalajara.</div>
+        <div class="ex-feedback" id="fb-ed2"></div>
+      </div>
+
+      <div class="ex-box">
+        <div class="ex-num-badge">12</div>
+        <div class="ex-instruction">Write the question for this answer</div>
+        <p class="ex-sentence">Answer: "I am 24 years old."</p>
+        <input class="ex-input" id="ed3" placeholder="How old are you?" autocomplete="off">
+        <div class="ex-btns">
+          <button class="btn btn-hint" onclick="toggleBox('hint-ed3')">💡 Pista</button>
+          <button class="btn btn-check" onclick="check('ed3','how old are you?','fb-ed3')">Revisar</button>
+          <button class="btn btn-answer" onclick="toggleBox('ans-ed3')">Ver respuesta</button>
+        </div>
+        <div class="ex-hint-box" id="hint-ed3">Empieza con "How old…"</div>
+        <div class="ex-ans-box" id="ans-ed3">✓ How old are you?</div>
+        <div class="ex-feedback" id="fb-ed3"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SLIDE 16 — SUMMARY
+═════════════════════════════════════════════ -->
+<div class="slide bg-dark" id="s16">
+  <span class="hero-leaf" style="font-size:200px;opacity:.05;left:-20px;top:-20px;right:auto">🍁</span>
+  <div class="slide-tag">15 — Resumen</div>
+  <h2 class="slide-title" style="text-align:center;color:var(--white)">What We Learned</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:820px;margin-top:24px;">
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">📚</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Parts of Speech</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">Las 8 categorías gramaticales del inglés</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">👤</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Personal Pronouns</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">I, you, he, she, it, we, they — con su verbo</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">✅</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Affirmative</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">am / is / are + contracciones</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">❌</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Negative</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">am not / isn't / aren't</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">❓</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Questions</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">Are you…? / Is she…? + short answers</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px">🤝</div>
+      <div style="font-weight:700;color:var(--gold);margin-bottom:6px">Greetings</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5">I'm…, My name is…, Where are you from?</div>
+    </div>
+  </div>
+  <p style="margin-top:30px;color:rgba(255,255,255,.55);font-size:.9rem;letter-spacing:.5px">🍂 Great work! Keep practicing every day.</p>
+</div>
+
+<!-- NAV -->
+<nav class="nav-controls">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Anterior</button>
+  <div class="nav-dots" id="dotsContainer"></div>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente →</button>
+</nav>
+
+<script>
+const TOTAL = 16;
+let current = 1;
+
+// Build dots
+const dotsEl = document.getElementById('dotsContainer');
+for(let i=1;i<=TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===1?' active':'');
+  d.onclick=()=>goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function goTo(n){
+  document.getElementById('s'+current).classList.remove('active');
+  current=n;
+  const slide=document.getElementById('s'+current);
+  slide.classList.add('active');
+  slide.style.animation='none';
+  slide.offsetHeight;
+  slide.style.animation='';
+  document.getElementById('prevBtn').disabled=(current===1);
+  document.getElementById('nextBtn').disabled=(current===TOTAL);
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.toggle('active',i===current-1);
+  });
+  const pct=((current-1)/(TOTAL-1)*100).toFixed(1);
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('slide-counter').textContent=current+' / '+TOTAL;
+}
+
+function changeSlide(dir){
+  const next=current+dir;
+  if(next>=1&&next<=TOTAL) goTo(next);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') changeSlide(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') changeSlide(-1);
+});
+
+// Init counter
+document.getElementById('slide-counter').textContent='1 / '+TOTAL;
+document.getElementById('progress-bar').style.width='0%';
+
+// Exercise logic
+function toggleBox(id){
+  const el=document.getElementById(id);
+  el.style.display=(el.style.display==='block'?'none':'block');
+}
+
+function check(inputId,correct,fbId){
+  const val=document.getElementById(inputId).value.trim().toLowerCase();
+  const fb=document.getElementById(fbId);
+  if(!val){fb.textContent='⚠ Escribe tu respuesta primero.';fb.className='ex-feedback err';return;}
+  if(val===correct.toLowerCase()){
+    fb.textContent='✔ ¡Correcto! Excelente.';
+    fb.className='ex-feedback ok';
+  } else {
+    fb.textContent='✘ Incorrecto. Intenta de nuevo.';
+    fb.className='ex-feedback err';
+  }
+}
+
+function mcCheck(btn,fbId,correct){
+  const parent=btn.closest('.ex-box');
+  parent.querySelectorAll('.mc-btn').forEach(b=>b.className='mc-btn');
+  const fb=document.getElementById(fbId);
+  if(btn.textContent.trim().toLowerCase()===correct.toLowerCase()){
+    btn.classList.add('correct-choice');
+    fb.textContent='✔ ¡Correcto!';
+    fb.className='ex-feedback ok';
+  } else {
+    btn.classList.add('wrong-choice');
+    fb.textContent='✘ Incorrecto. Inténtalo de nuevo.';
+    fb.className='ex-feedback err';
+  }
+}
+
+// Enter key on inputs
+document.querySelectorAll('.ex-input').forEach(input=>{
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      const btn=input.nextElementSibling.querySelector('.btn-check');
+      if(btn) btn.click();
+    }
+  });
+});
+</script>
+</body>
+</html>

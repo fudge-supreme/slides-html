@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Materials — Ramón Reynoso</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:    #3b6fd4;
+  --blue-lt: #a8c0f0;
+  --blue-gl: rgba(59,111,212,.11);
+  --grn:     #1a9e6e;
+  --grn-lt:  #88d4b4;
+  --grn-gl:  rgba(26,158,110,.11);
+  --pur:     #7c3fbf;
+  --pur-lt:  #c4a0e8;
+  --pur-gl:  rgba(124,63,191,.11);
+  --yel:     #c47a0a;
+  --yel-lt:  #f0c060;
+  --yel-gl:  rgba(196,122,10,.11);
+  --rose:    #b83858;
+  --rose-lt: #e898b0;
+  --rose-gl: rgba(184,56,88,.11);
+  --ink:     #18181f;
+  --grey:    #5e5e70;
+  --grey-lt: #a0a0b8;
+  --cream:   #faf9f6;
+  --white:   #ffffff;
+  --fd:'Fraunces',serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+
+/* BG */
+.bg-a{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 0%   0%,  rgba(59,111,212,.1)  0%,transparent 65%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(124,63,191,.09) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 38% at 55%  45%,  rgba(26,158,110,.07) 0%,transparent 55%),
+    radial-gradient(ellipse 38% 32% at 82%  12%,  rgba(196,122,10,.06) 0%,transparent 52%);
+  animation:breathe 16s ease-in-out infinite alternate;}
+@keyframes breathe{0%{opacity:1}100%{opacity:.65}}
+.bg-b{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(80,80,160,.048) 1px,transparent 1px);
+  background-size:30px 30px;}
+
+/* PAGE */
+.page{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 32px 100px;}
+
+/* HEADER */
+header{
+  padding:68px 0 52px;
+  display:grid;grid-template-columns:1fr auto;align-items:end;gap:32px;
+  border-bottom:1px solid rgba(100,100,180,.12);margin-bottom:52px;
+}
+.eyebrow{
+  font-family:var(--fm);font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--blue);margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--blue-lt);}
+.h-title{
+  font-family:var(--fd);font-size:clamp(2.8rem,5vw,5rem);
+  font-weight:200;line-height:.95;color:var(--ink);
+  margin-bottom:14px;letter-spacing:-.02em;
+}
+.h-title em{font-style:italic;color:var(--blue);}
+.h-sub{font-size:.88rem;color:var(--grey);font-weight:300;line-height:1.72;max-width:400px;}
+.h-meta{text-align:right;}
+.meta-name{font-family:var(--fd);font-size:1.45rem;font-weight:300;color:var(--ink);margin-bottom:4px;letter-spacing:-.01em;}
+.meta-name em{font-style:italic;color:var(--pur);}
+.meta-role{font-family:var(--fm);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--grey-lt);}
+.meta-div{width:36px;height:1px;background:rgba(100,100,180,.15);margin:10px 0 10px auto;}
+.meta-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(124,63,191,.08);border:1px solid rgba(124,63,191,.2);
+  border-radius:20px;padding:4px 12px;
+  font-family:var(--fm);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--pur);
+}
+
+/* SECTION */
+.sec-label{display:flex;align-items:center;gap:16px;margin-bottom:26px;}
+.sec-label h2{font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--grey);white-space:nowrap;letter-spacing:-.01em;}
+.sec-label h2 em{font-style:italic;color:var(--blue);}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(100,100,180,.15),transparent);}
+.sec-ct{font-family:var(--fm);font-size:.6rem;color:var(--grey-lt);letter-spacing:1px;white-space:nowrap;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,.68);
+  border:1.5px solid rgba(255,255,255,.9);
+  border-radius:22px;padding:28px 26px 24px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+  box-shadow:0 4px 24px rgba(0,0,0,.055),0 1px 4px rgba(0,0,0,.04);
+  transition:transform .34s cubic-bezier(.22,1,.36,1),box-shadow .34s ease,border-color .3s ease;
+  animation:cardIn .5s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.04) 55%,rgba(180,180,255,.05) 100%);
+}
+.card::after{
+  content:'';position:absolute;top:0;left:22px;right:22px;height:2px;
+  border-radius:0 0 4px 4px;opacity:0;transition:opacity .28s ease;
+}
+.card:hover{transform:translateY(-7px);}
+.card:hover::after{opacity:1;}
+
+/* accent colours */
+.c-blue{--a:var(--blue);--al:var(--blue-lt);--ag:var(--blue-gl);}
+.c-grn {--a:var(--grn); --al:var(--grn-lt); --ag:var(--grn-gl);}
+.c-pur {--a:var(--pur); --al:var(--pur-lt); --ag:var(--pur-gl);}
+.c-yel {--a:var(--yel); --al:var(--yel-lt); --ag:var(--yel-gl);}
+.c-rose{--a:var(--rose);--al:var(--rose-lt);--ag:var(--rose-gl);}
+
+.c-blue:hover{box-shadow:0 22px 56px var(--blue-gl),0 4px 14px rgba(0,0,0,.06);border-color:var(--blue-lt);}
+.c-grn:hover {box-shadow:0 22px 56px var(--grn-gl), 0 4px 14px rgba(0,0,0,.06);border-color:var(--grn-lt);}
+.c-pur:hover {box-shadow:0 22px 56px var(--pur-gl), 0 4px 14px rgba(0,0,0,.06);border-color:var(--pur-lt);}
+.c-yel:hover {box-shadow:0 22px 56px var(--yel-gl), 0 4px 14px rgba(0,0,0,.06);border-color:var(--yel-lt);}
+.c-rose:hover{box-shadow:0 22px 56px var(--rose-gl),0 4px 14px rgba(0,0,0,.06);border-color:var(--rose-lt);}
+
+.c-blue::after{background:linear-gradient(90deg,transparent,var(--blue-lt),transparent);}
+.c-grn::after {background:linear-gradient(90deg,transparent,var(--grn-lt),transparent);}
+.c-pur::after {background:linear-gradient(90deg,transparent,var(--pur-lt),transparent);}
+.c-yel::after {background:linear-gradient(90deg,transparent,var(--yel-lt),transparent);}
+.c-rose::after{background:linear-gradient(90deg,transparent,var(--rose-lt),transparent);}
+
+/* stagger */
+.card:nth-child(1){animation-delay:.04s}
+.card:nth-child(2){animation-delay:.10s}
+.card:nth-child(3){animation-delay:.17s}
+.card:nth-child(4){animation-delay:.24s}
+.card:nth-child(5){animation-delay:.31s}
+
+/* card internals */
+.card-num{
+  font-family:var(--fd);font-size:3.2rem;font-weight:200;line-height:1;
+  margin-bottom:16px;color:transparent;
+  -webkit-text-stroke:1px var(--al);letter-spacing:-.03em;
+}
+.card-tag{
+  font-family:var(--fm);font-size:9px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--a);margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.card-tag::before{content:'';width:14px;height:1px;background:var(--al);}
+.card-title{
+  font-family:var(--fd);font-size:1.85rem;font-weight:300;
+  color:var(--ink);line-height:1.1;margin-bottom:10px;letter-spacing:-.01em;
+}
+.card-title em{font-style:italic;color:var(--a);}
+.card-desc{font-size:.84rem;color:var(--grey);font-weight:300;line-height:1.68;flex:1;margin-bottom:20px;}
+.card-topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px;}
+.topic{
+  font-family:var(--fm);font-size:.57rem;letter-spacing:1px;
+  padding:3px 9px;border-radius:20px;
+  background:var(--ag);border:1px solid rgba(0,0,0,.07);color:var(--a);
+}
+.card-cta{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid rgba(120,120,200,.13);padding-top:14px;
+}
+.cta-txt{font-family:var(--fm);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--a);}
+.cta-arr{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--ag);border:1px solid rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .22s,transform .22s;
+}
+.card:hover .cta-arr{background:var(--a);transform:translateX(3px);}
+.cta-arr svg{width:13px;height:13px;stroke:var(--a);stroke-width:2;fill:none;transition:stroke .22s;}
+.card:hover .cta-arr svg{stroke:var(--white);}
+
+/* FOOTER */
+footer{
+  border-top:1px solid rgba(100,100,180,.12);padding:28px 0;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;margin-top:20px;
+}
+.foot-l{font-family:var(--fd);font-size:1rem;font-weight:300;color:var(--grey-lt);letter-spacing:-.01em;}
+.foot-l em{font-style:italic;color:var(--blue-lt);}
+.foot-r{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--grey-lt);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--blue-lt);border-radius:10px;}
+
+/* MOBILE */
+@media(max-width:640px){
+  .page{padding:0 16px 72px;}
+  header{grid-template-columns:1fr;padding:44px 0 36px;}
+  .h-meta{text-align:left;}
+  .meta-div{margin:10px 0;}
+  .grid{grid-template-columns:1fr;gap:12px;}
+  .h-title{font-size:2.8rem;}
+}
+</style>
+</head>
+<body>
+<div class="bg-a"></div>
+<div class="bg-b"></div>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="eyebrow">CESCA · English Course · A1</div>
+      <h1 class="h-title">English<br><em>Materials</em></h1>
+      <p class="h-sub">Recursos interactivos de inglés para estudiantes de nivel A1. Toca cualquier material para abrirlo directo en tu celular o computadora.</p>
+    </div>
+    <div class="h-meta">
+      <div class="meta-name">Ramón <em>Reynoso</em></div>
+      <div class="meta-role">English Teacher · CESCA</div>
+      <div class="meta-div"></div>
+      <span class="meta-badge">● Beginner · A1</span>
+    </div>
+  </header>
+
+  <div class="sec-label">
+    <h2>Tus <em>Materiales</em></h2>
+    <div class="sec-line"></div>
+    <span class="sec-ct">5 recursos</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- 01 — Introducción / Alfabeto -->
+    <a class="card c-blue" href="p4.html">
+      <div class="card-num">01</div>
+      <div class="card-tag">Introducción al inglés</div>
+      <div class="card-title">Welcome to<br><em>English</em></div>
+      <p class="card-desc">El punto de partida. Aprende el alfabeto, la pronunciación con el IPA y una primera introducción al Verb to Be.</p>
+      <div class="card-topics">
+        <span class="topic">Alphabet</span>
+        <span class="topic">Pronunciation</span>
+        <span class="topic">IPA</span>
+        <span class="topic">Verb to Be</span>
+      </div>
+      <div class="card-cta">
+        <span class="cta-txt">Abrir material</span>
+        <div class="cta-arr">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- 02 — Verb To Be Full -->
+    <a class="card c-grn" href="P3.html">
+      <div class="card-num">02</div>
+      <div class="card-tag">Curso completo</div>
+      <div class="card-title">The Verb<br><em>"To Be"</em></div>
+      <p class="card-desc">Guía completa del verbo to be con teoría, vocabulario, ejercicios interactivos y saludos. Formas positiva, negativa e interrogativa.</p>
+      <div class="card-topics">
+        <span class="topic">Affirmative</span>
+        <span class="topic">Negative</span>
+        <span class="topic">Questions</span>
+        <span class="topic">Greetings</span>
+        <span class="topic">Vocabulary</span>
+      </div>
+      <div class="card-cta">
+        <span class="cta-txt">Abrir curso</span>
+        <div class="cta-arr">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- 03 — Facialists Presentation -->
+    <a class="card c-pur" href="P1.html">
+      <div class="card-num">03</div>
+      <div class="card-tag">Presentación · 13 slides</div>
+      <div class="card-title">English for<br><em>Facialists</em></div>
+      <p class="card-desc">Presentación interactiva para esteticistas. Cómo comunicarte en inglés dentro de la cabina: saludar, dar instrucciones y describir tratamientos.</p>
+      <div class="card-topics">
+        <span class="topic">Present Simple</span>
+        <span class="topic">Continuous</span>
+        <span class="topic">Demonstratives</span>
+        <span class="topic">Prepositions</span>
+        <span class="topic">Possessives</span>
+      </div>
+      <div class="card-cta">
+        <span class="cta-txt">Abrir presentación</span>
+        <div class="cta-arr">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- 04 — Sofia's Story -->
+    <a class="card c-yel" href="p5.html">
+      <div class="card-num">04</div>
+      <div class="card-tag">Historia interactiva</div>
+      <div class="card-title">Meet<br><em>Sofia</em></div>
+      <p class="card-desc">Sigue la historia de Sofia y su día en Glow Spa. Aprende inglés en contexto real: vocabulario, rutinas y situaciones dentro de un salón de belleza.</p>
+      <div class="card-topics">
+        <span class="topic">Story</span>
+        <span class="topic">Daily Routine</span>
+        <span class="topic">Vocabulary</span>
+        <span class="topic">Spa Setting</span>
+      </div>
+      <div class="card-cta">
+        <span class="cta-txt">Leer historia</span>
+        <div class="cta-arr">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- 05 — Phrasal Verbs -->
+    <a class="card c-rose" href="P2.html">
+      <div class="card-num">05</div>
+      <div class="card-tag">Referencia interactiva</div>
+      <div class="card-title">Phrasal<br><em>Verbs</em></div>
+      <p class="card-desc">45 phrasal verbs organizados por categoría: cabina, trabajo, vida social y vida diaria. Tres ejemplos reales con traducción al español.</p>
+      <div class="card-topics">
+        <span class="topic">45 Verbs</span>
+        <span class="topic">135 Examples</span>
+        <span class="topic">Cabin</span>
+        <span class="topic">Work</span>
+        <span class="topic">Daily Life</span>
+      </div>
+      <div class="card-cta">
+        <span class="cta-txt">Explorar verbos</span>
+        <div class="cta-arr">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="foot-l">English for <em>Facialists</em> · Stage 1</div>
+    <div class="foot-r">CESCA · 2026</div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducción al Inglés · Alfabeto, Pronunciación & Verb To Be</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Geist:wght@300..900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-display: 'Fraunces', 'Times New Roman', serif;
+    --font-body: 'Geist', -apple-system, system-ui, sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+
+  html,body{
+    width:100%;height:100%;overflow:hidden;
+    font-family:var(--font-body);
+    background:#06060a;color:#fff;
+    letter-spacing:-0.01em;
+  }
+
+  /* ============= PRESENTATION SHELL ============= */
+  .stage{position:fixed;inset:0;overflow:hidden;}
+
+  .slide{
+    position:absolute;inset:0;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.7s var(--ease-out);
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(24px, 4vw, 64px);
+    isolation:isolate;
+  }
+  .slide.active{opacity:1;pointer-events:auto;}
+  .slide.active .slide-inner{transform:translateY(0) scale(1);opacity:1;}
+  .slide-inner{
+    position:relative;z-index:2;width:100%;height:100%;
+    display:flex;flex-direction:column;
+    transform:translateY(30px) scale(0.98);opacity:0;
+    transition:all 0.8s var(--ease-out) 0.15s;
+  }
+
+  /* ============= BACKDROPS ============= */
+  .bg-layer{position:absolute;inset:0;z-index:0;overflow:hidden;}
+  .bg-layer::before{
+    content:"";position:absolute;inset:-20%;
+    background:radial-gradient(circle at 25% 30%, var(--c1) 0%, transparent 55%),
+               radial-gradient(circle at 78% 70%, var(--c2) 0%, transparent 60%),
+               linear-gradient(135deg, #0a0a14 0%, #1a0a20 100%);
+    filter:saturate(1.1);
+  }
+  .orb{
+    position:absolute;border-radius:50%;filter:blur(90px);opacity:0.45;
+  }
+  .orb.a{width:520px;height:520px;background:var(--c1);top:-10%;left:-10%;}
+  .orb.b{width:420px;height:420px;background:var(--c2);bottom:-15%;right:-10%;}
+  .orb.c{width:320px;height:320px;background:var(--c1);top:40%;right:20%;opacity:0.28;}
+  /* subtle grain removed: mix-blend-mode:overlay on full-screen caused
+     compositor color shifts whenever hover triggered a repaint */
+
+  /* ============= GLASS ============= */
+  .glass{
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.18),
+                inset 0 -1px 0 rgba(0,0,0,0.15);
+  }
+  .glass-soft{
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:18px;
+  }
+
+  /* ============= NAVIGATION ============= */
+  .nav-btn{
+    position:fixed;top:50%;transform:translateY(-50%);
+    width:56px;height:56px;border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.18);
+    color:#fff;cursor:pointer;z-index:50;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    transition:background 0.25s ease, border-color 0.25s ease;
+    box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  }
+  .nav-btn:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.3);}
+  .nav-btn:active{background:rgba(255,255,255,0.28);}
+  .nav-btn.prev{left:24px;}
+  .nav-btn.next{right:24px;}
+  .nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+
+  /* Progress bar + counter */
+  .hud{
+    position:fixed;top:24px;left:50%;transform:translateX(-50%);
+    z-index:50;display:flex;gap:12px;align-items:center;
+    padding:8px 18px;
+  }
+  .hud-counter{font-family:var(--font-display);font-weight:500;font-size:14px;letter-spacing:0.08em;opacity:0.85;}
+  .progress-wrap{position:fixed;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.08);z-index:50;}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#fff,rgba(255,255,255,0.6));transition:width 0.5s var(--ease-out);width:0%;}
+
+  /* Menu button */
+  .menu-btn{
+    position:fixed;top:24px;right:24px;z-index:50;
+    padding:10px 18px;font-size:13px;
+    font-family:var(--font-body);font-weight:500;
+    cursor:pointer;border:none;color:#fff;
+    letter-spacing:0.04em;
+  }
+  .menu{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(6,6,10,0.7);
+    backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+    display:none;align-items:center;justify-content:center;padding:40px;
+  }
+  .menu.open{display:flex;}
+  .menu-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+    gap:10px;max-width:900px;width:100%;max-height:80vh;overflow-y:auto;padding:20px;
+  }
+  .menu-item{
+    aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-weight:700;font-size:32px;
+    cursor:pointer;transition:all 0.3s var(--ease-out);
+    border-radius:14px;padding:10px;
+  }
+  .menu-item:hover{transform:translateY(-3px) scale(1.03);}
+  .menu-item .mini{font-family:var(--font-body);font-size:10px;font-weight:400;opacity:0.7;margin-top:4px;text-align:center;letter-spacing:0.03em;}
+  .menu-close{position:absolute;top:24px;right:24px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;opacity:0.7;}
+  .menu-close:hover{opacity:1;}
+
+  /* ============= TYPOGRAPHY ============= */
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-0.03em;line-height:1.05;}
+
+  .eyebrow{
+    font-family:var(--font-body);font-size:12px;font-weight:500;
+    text-transform:uppercase;letter-spacing:0.25em;opacity:0.75;
+    margin-bottom:10px;
+  }
+
+  /* ============= LAYOUT: TITLE SLIDE ============= */
+  .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px;flex:1;}
+  .hero-tag{font-size:14px;letter-spacing:0.3em;text-transform:uppercase;opacity:0.8;}
+  .hero h1{
+    font-size:clamp(3rem, 9vw, 8rem);
+    font-weight:400;
+    font-style:italic;
+    max-width:14ch;line-height:0.95;
+  }
+  .hero h1 em{font-style:normal;font-weight:700;background:linear-gradient(90deg,#fff,rgba(255,255,255,0.6));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero p{font-size:clamp(1rem, 1.6vw, 1.3rem);max-width:60ch;line-height:1.6;opacity:0.85;margin-top:10px;}
+  .hero-hint{margin-top:40px;font-size:13px;opacity:0.55;letter-spacing:0.1em;text-transform:uppercase;display:flex;gap:18px;align-items:center;}
+  .key{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:26px;height:26px;padding:0 8px;border-radius:6px;
+    background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+    font-size:11px;font-family:var(--font-body);
+  }
+
+  /* ============= LAYOUT: LETTER SLIDE ============= */
+  .letter-slide{display:grid;grid-template-columns:minmax(280px, 38%) 1fr;gap:clamp(20px, 2.5vw, 40px);flex:1;height:100%;}
+
+  .letter-panel{
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:clamp(24px, 3vw, 44px);position:relative;overflow:hidden;
+  }
+  .letter-panel .letter-name{font-family:var(--font-body);font-size:13px;letter-spacing:0.3em;text-transform:uppercase;opacity:0.7;}
+  .letter-display{
+    font-family:var(--font-display);
+    font-weight:800;font-style:italic;
+    font-size:clamp(8rem, 22vw, 22rem);
+    line-height:0.85;
+    background:linear-gradient(160deg,#fff 30%, rgba(255,255,255,0.4) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    text-shadow:0 0 80px rgba(255,255,255,0.1);
+    margin:auto 0;
+  }
+  .letter-display .lower{
+    font-size:0.5em;opacity:0.55;font-style:normal;font-weight:500;margin-left:0.1em;
+  }
+  .letter-ipa{
+    font-family:var(--font-display);font-style:italic;
+    font-size:clamp(1.5rem, 2.5vw, 2.4rem);
+    opacity:0.9;margin-top:8px;
+  }
+  .letter-name-es{font-size:13px;opacity:0.7;margin-top:4px;letter-spacing:0.05em;}
+
+  .content-panel{
+    display:grid;grid-template-rows:auto auto 1fr auto;gap:clamp(12px, 1.5vw, 20px);
+    height:100%;min-height:0;
+  }
+
+  .tip-card, .words-card, .stress-card, .tobe-card{
+    padding:clamp(16px, 2vw, 24px);
+    display:flex;flex-direction:column;gap:6px;min-height:0;
+  }
+
+  .card-label{
+    display:flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+    font-weight:600;opacity:0.85;
+  }
+  .card-label .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  .tip-text{font-size:clamp(0.95rem, 1.15vw, 1.05rem);line-height:1.5;opacity:0.95;}
+  .tip-text .highlight{background:rgba(255,255,255,0.14);padding:2px 8px;border-radius:6px;font-weight:500;}
+
+  .words-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:10px;margin-top:4px;
+  }
+  .word-card{
+    padding:10px 14px;border-radius:12px;
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+    display:flex;flex-direction:column;gap:2px;
+    transition:background 0.25s ease, border-color 0.25s ease;
+    cursor:default;
+  }
+  .word-card:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);}
+  .word-card .w{font-family:var(--font-display);font-weight:700;font-size:1.2rem;font-style:italic;}
+  .word-card .ipa{font-size:0.85rem;opacity:0.75;font-style:italic;}
+  .word-card .es{font-size:0.75rem;opacity:0.6;margin-top:2px;}
+
+  .stress-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .stress-item{
+    padding:8px 14px;border-radius:10px;
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+    display:flex;flex-direction:column;gap:2px;min-width:120px;
+  }
+  .stress-item .s{font-family:var(--font-display);font-weight:600;font-size:1.05rem;}
+  .stress-item .s .strong{font-weight:900;font-style:italic;}
+  .stress-item .s-ipa{font-size:0.75rem;opacity:0.7;font-style:italic;}
+
+  .tobe-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px;}
+  .tobe-box{
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  }
+  .tobe-box .tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;opacity:0.7;margin-bottom:4px;}
+  .tobe-box .tag.aff::before{content:"✓ ";color:#7fffb6;}
+  .tobe-box .tag.neg::before{content:"✗ ";color:#ff8c8c;}
+  .tobe-box .tag.int::before{content:"? ";color:#9cc7ff;}
+  .tobe-box .sentence{font-size:0.95rem;line-height:1.4;}
+  .tobe-box .sentence b{background:rgba(255,255,255,0.16);padding:1px 6px;border-radius:4px;font-weight:600;}
+
+  /* ============= INTRO / OVERVIEW SLIDES ============= */
+  .overview{display:flex;flex-direction:column;gap:24px;flex:1;padding:0;}
+  .overview-header{padding:0 0 10px 0;}
+  .overview h2{font-size:clamp(2rem,4.5vw,4rem);font-weight:400;font-style:italic;}
+  .overview h2 em{font-style:normal;font-weight:700;}
+  .overview-subtitle{font-size:clamp(1rem,1.3vw,1.15rem);opacity:0.8;max-width:70ch;margin-top:8px;line-height:1.5;}
+
+  .alphabet-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
+    gap:10px;flex:1;min-height:0;
+  }
+  .alpha-cell{
+    aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border-radius:14px;cursor:pointer;
+    transition:all 0.4s var(--ease-out);
+    font-family:var(--font-display);font-weight:700;
+    position:relative;overflow:hidden;
+  }
+  .alpha-cell::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg,var(--c1),var(--c2));
+    opacity:0.85;z-index:0;
+  }
+  .alpha-cell > *{position:relative;z-index:1;}
+  .alpha-cell:hover{transform:translateY(-4px) scale(1.04);}
+  .alpha-cell .big{font-size:2.2rem;font-style:italic;line-height:1;}
+  .alpha-cell .name{font-family:var(--font-body);font-size:9px;font-weight:500;letter-spacing:0.1em;opacity:0.85;margin-top:2px;}
+
+  /* ============= SPELLING BEE SLIDE ============= */
+  .bee{display:grid;grid-template-columns:1fr 1fr;gap:30px;flex:1;align-items:stretch;}
+  .bee-left{display:flex;flex-direction:column;justify-content:center;gap:20px;padding:clamp(20px,3vw,40px);}
+  .bee-left h2{font-size:clamp(2rem,4.5vw,4.5rem);font-weight:500;font-style:italic;}
+  .bee-left h2 em{font-weight:800;font-style:normal;}
+  .bee-left p{font-size:clamp(1rem,1.3vw,1.2rem);line-height:1.6;opacity:0.9;}
+  .bee-right{padding:clamp(20px,3vw,40px);display:flex;flex-direction:column;gap:16px;justify-content:center;}
+  .bee-example{display:flex;align-items:baseline;gap:14px;font-family:var(--font-display);}
+  .bee-word{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;font-style:italic;}
+  .bee-letters{display:flex;gap:8px;flex-wrap:wrap;}
+  .bee-letter{
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    border-radius:10px;background:rgba(255,255,255,0.1);
+    font-family:var(--font-display);font-weight:700;font-size:1.3rem;
+    border:1px solid rgba(255,255,255,0.15);
+  }
+
+  /* ============= VERB TO BE / PRONOUNS SLIDES ============= */
+  .big-concept{display:flex;flex-direction:column;gap:clamp(16px,2vw,28px);flex:1;padding:0;height:100%;}
+  .big-concept h2{font-size:clamp(2.5rem,5.5vw,5rem);font-weight:400;font-style:italic;line-height:1;}
+  .big-concept h2 em{font-style:normal;font-weight:800;}
+  .big-concept .subtitle{font-size:clamp(0.95rem,1.2vw,1.1rem);opacity:0.8;max-width:75ch;line-height:1.5;}
+
+  .tobe-table{
+    display:grid;grid-template-columns:auto 1fr 1fr;gap:12px 20px;
+    padding:clamp(20px,2.5vw,36px);
+    font-size:clamp(0.95rem,1.2vw,1.15rem);
+    align-items:center;
+  }
+  .tobe-table .th{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.7;font-weight:600;padding-bottom:8px;}
+  .tobe-table .pron{font-family:var(--font-display);font-weight:700;font-style:italic;font-size:1.25em;}
+  .tobe-table .form{font-family:var(--font-display);}
+  .tobe-table .form .v{background:rgba(255,255,255,0.16);padding:2px 8px;border-radius:6px;font-weight:700;}
+  .tobe-table .contraction{opacity:0.75;font-size:0.9em;}
+  .tobe-table .divider{grid-column:1 / -1;height:1px;background:rgba(255,255,255,0.1);margin:4px 0;}
+
+  .examples-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:8px;}
+  .example-card{padding:14px 18px;border-radius:14px;}
+  .example-card .ex-tag{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;margin-bottom:6px;}
+  .example-card .ex-text{font-family:var(--font-display);font-size:1.05rem;line-height:1.5;}
+  .example-card .ex-text b{background:rgba(255,255,255,0.18);padding:1px 6px;border-radius:5px;}
+  .example-card .ex-es{font-size:0.78rem;opacity:0.6;margin-top:6px;font-style:italic;}
+
+  /* Pronoun cards */
+  .pron-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px;
+  }
+  .pron-card{
+    padding:18px;border-radius:16px;
+    display:flex;flex-direction:column;gap:6px;
+    background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  }
+  .pron-card .pn{font-family:var(--font-display);font-weight:700;font-style:italic;font-size:2rem;line-height:1;}
+  .pron-card .pn-es{font-size:0.8rem;opacity:0.7;}
+  .pron-card .use{font-size:0.85rem;opacity:0.85;margin-top:4px;line-height:1.4;}
+
+  /* Introduction dialog */
+  .dialog{
+    padding:clamp(22px,2.5vw,36px);
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .dialog-line{font-family:var(--font-display);font-size:clamp(1rem,1.4vw,1.3rem);line-height:1.5;}
+  .dialog-line b{background:rgba(255,255,255,0.18);padding:1px 8px;border-radius:5px;font-weight:700;}
+  .dialog-line .me{color:#a8e6cf;font-weight:600;font-style:italic;font-size:0.9em;margin-right:8px;}
+  .dialog-line .you{color:#ffd3b6;font-weight:600;font-style:italic;font-size:0.9em;margin-right:8px;}
+
+  /* ============= EXERCISES ============= */
+  .exercise{display:flex;flex-direction:column;gap:20px;flex:1;}
+  .ex-header{display:flex;align-items:baseline;gap:16px;}
+  .ex-header h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;font-style:italic;}
+  .ex-header h2 em{font-weight:800;font-style:normal;}
+  .ex-number{font-family:var(--font-display);font-size:3rem;font-weight:900;font-style:italic;opacity:0.3;}
+  .ex-instruction{font-size:1.05rem;opacity:0.85;line-height:1.5;max-width:70ch;}
+
+  .ex-body{flex:1;display:flex;flex-direction:column;gap:16px;padding:clamp(20px,2.5vw,32px);min-height:0;overflow:auto;}
+
+  .question{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);}
+  .question-prompt{font-family:var(--font-display);font-size:1.15rem;}
+  .question-prompt .blank{
+    display:inline-block;min-width:80px;border-bottom:2px dashed rgba(255,255,255,0.4);
+    padding:0 8px;text-align:center;font-weight:700;font-style:italic;
+  }
+  .question-prompt .blank.filled{border-bottom-color:transparent;background:rgba(255,255,255,0.12);border-radius:6px;padding:2px 10px;}
+  .question-prompt .blank.correct{background:rgba(127,255,182,0.2);color:#a8ffcf;}
+  .question-prompt .blank.wrong{background:rgba(255,140,140,0.2);color:#ffb0b0;}
+  .options{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt-btn{
+    padding:8px 16px;border-radius:10px;
+    background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+    color:#fff;font-family:var(--font-body);font-size:0.95rem;cursor:pointer;
+    transition:all 0.2s var(--ease-out);
+  }
+  .opt-btn:hover{background:rgba(255,255,255,0.15);transform:translateY(-1px);}
+  .opt-btn.correct{background:rgba(127,255,182,0.25);border-color:rgba(127,255,182,0.5);}
+  .opt-btn.wrong{background:rgba(255,140,140,0.2);border-color:rgba(255,140,140,0.5);}
+  .opt-btn:disabled{cursor:default;}
+
+  .ex-result{padding:12px 18px;border-radius:12px;font-size:1rem;font-weight:500;margin-top:8px;min-height:44px;display:flex;align-items:center;gap:10px;}
+  .ex-result.good{background:rgba(127,255,182,0.15);color:#b8ffdb;}
+  .ex-result.bad{background:rgba(255,140,140,0.12);color:#ffc8c8;}
+
+  .ex-actions{display:flex;gap:10px;flex-wrap:wrap;align-self:flex-start;}
+  .ex-action{
+    padding:10px 22px;border-radius:12px;
+    background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);
+    color:#fff;font-family:var(--font-body);font-weight:500;font-size:0.95rem;cursor:pointer;
+    transition:background 0.2s, transform 0.15s;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .ex-action:hover{background:rgba(255,255,255,0.25);}
+  .ex-action:active{transform:scale(0.97);}
+  .ex-action.secondary{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);}
+  .ex-action.secondary:hover{background:rgba(255,255,255,0.12);}
+  .ex-action:disabled{opacity:0.4;cursor:not-allowed;}
+  .ex-action:disabled:hover{background:rgba(255,255,255,0.15);}
+
+  /* ============= END SLIDE ============= */
+  .end{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:24px;flex:1;}
+  .end-mark{font-family:var(--font-display);font-style:italic;font-weight:700;font-size:clamp(5rem,14vw,14rem);line-height:1;background:linear-gradient(135deg,#fff,rgba(255,255,255,0.5));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .end h2{font-size:clamp(2rem,5vw,4rem);font-weight:400;font-style:italic;}
+  .end h2 em{font-weight:800;font-style:normal;}
+  .end p{max-width:50ch;line-height:1.6;opacity:0.85;font-size:1.1rem;}
+  .end-btn{margin-top:14px;padding:14px 32px;border-radius:14px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;cursor:pointer;font-size:1rem;font-weight:500;font-family:var(--font-body);transition:all 0.3s;}
+  .end-btn:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px);}
+
+  /* ============= RESPONSIVE ============= */
+  @media (max-width: 860px){
+    .slide{padding:16px;}
+    .slide-inner{overflow-y:auto;overflow-x:hidden;}
+    .slide-inner::-webkit-scrollbar{width:0;height:0;}
+    .letter-slide{grid-template-columns:1fr;grid-template-rows:auto auto;height:auto;}
+    .letter-panel{padding:20px;min-height:auto;}
+    .letter-display{font-size:clamp(5rem,28vw,10rem);margin:16px 0;}
+    .content-panel{height:auto;}
+    .bee{grid-template-columns:1fr;}
+    .nav-btn{width:44px;height:44px;font-size:18px;}
+    .nav-btn.prev{left:8px;}
+    .nav-btn.next{right:8px;}
+    .tobe-row{grid-template-columns:1fr;}
+    .hud{top:12px;padding:6px 12px;}
+    .hud-counter{font-size:12px;}
+    .menu-btn{top:12px;right:12px;padding:8px 12px;font-size:12px;}
+    .words-grid{grid-template-columns:repeat(2,1fr);}
+    .tobe-table{grid-template-columns:auto 1fr;gap:8px 14px;font-size:0.9rem;}
+    .tobe-table .th:nth-child(3),.tobe-table .contraction{display:none;}
+  }
+
+  /* Print style: show first slide only */
+  @media print{.slide:not(.active){display:none;}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+
+<button class="nav-btn prev" id="prevBtn" aria-label="Anterior">‹</button>
+<button class="nav-btn next" id="nextBtn" aria-label="Siguiente">›</button>
+
+<div class="hud glass-soft">
+  <span class="hud-counter" id="hudCounter">01 / 38</span>
+</div>
+
+<button class="menu-btn glass-soft" id="menuBtn">☰ Índice</button>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="menu" id="menu">
+  <button class="menu-close" id="menuClose">×</button>
+  <div class="menu-grid" id="menuGrid"></div>
+</div>
+
+<script>
+// ===========================================================
+// SLIDE DATA
+// ===========================================================
+
+const LETTERS = [
+  { L:'A', name:'ey', ipa:'/eɪ/', nameEs:'se pronuncia "ei"',
+    colors:['#FF6B6B','#FFA07A'],
+    tip:'Para el sonido <span class="highlight">/æ/</span> (como en <i>cat</i>): abre bien la boca, baja la lengua y sonríe un poco. <b>No existe en español</b> — está entre la "a" y la "e".',
+    key:'Corto /æ/ vs largo /eɪ/ (diptongo como en <i>cake</i>).',
+    words:[
+      {w:'cat',ipa:'/kæt/',es:'gato'},
+      {w:'apple',ipa:'/ˈæpəl/',es:'manzana'},
+      {w:'age',ipa:'/eɪdʒ/',es:'edad'},
+      {w:'arm',ipa:'/ɑːrm/',es:'brazo'}
+    ],
+    stress:[
+      {s:'<span class="strong">AP</span>ple',ipa:'/ˈæpəl/'},
+      {s:'a<span class="strong">GAIN</span>',ipa:'/əˈɡen/'}
+    ],
+    tobe:{aff:'I <b>am</b> an <b>artist</b>.', neg:'I <b>am not</b> <b>angry</b>.', int:'<b>Are</b> you <b>American</b>?'}
+  },
+  { L:'B', name:'bee', ipa:'/biː/', nameEs:'se pronuncia "bi"',
+    colors:['#FFA94D','#FFD166'],
+    tip:'Junta los labios, acumula aire y <span class="highlight">libéralo con vibración</span>. Es igual a la "b" del español, pero siempre explosiva (nunca suave como en "lobo").',
+    key:'Sonido /b/ oclusivo — con vibración de cuerdas vocales.',
+    words:[
+      {w:'book',ipa:'/bʊk/',es:'libro'},
+      {w:'baby',ipa:'/ˈbeɪbi/',es:'bebé'},
+      {w:'big',ipa:'/bɪɡ/',es:'grande'},
+      {w:'blue',ipa:'/bluː/',es:'azul'}
+    ],
+    stress:[
+      {s:'<span class="strong">BA</span>by',ipa:'/ˈbeɪbi/'},
+      {s:'be<span class="strong">FORE</span>',ipa:'/bɪˈfɔːr/'}
+    ],
+    tobe:{aff:'You <b>are</b> my <b>brother</b>.', neg:'He <b>is not</b> <b>busy</b>.', int:'<b>Is</b> she a <b>ballerina</b>?'}
+  },
+  { L:'C', name:'see', ipa:'/siː/', nameEs:'se pronuncia "si"',
+    colors:['#FFD93D','#FFE66D'],
+    tip:'Dos sonidos: <span class="highlight">/k/ duro</span> antes de <i>a, o, u</i> (cat, cold) y <span class="highlight">/s/ suave</span> antes de <i>e, i, y</i> (city, cell).',
+    key:'Regla: C + (e/i/y) = /s/ · C + (a/o/u) = /k/.',
+    words:[
+      {w:'city',ipa:'/ˈsɪti/',es:'ciudad'},
+      {w:'cake',ipa:'/keɪk/',es:'pastel'},
+      {w:'cup',ipa:'/kʌp/',es:'taza'},
+      {w:'clean',ipa:'/kliːn/',es:'limpio'}
+    ],
+    stress:[
+      {s:'<span class="strong">CI</span>ty',ipa:'/ˈsɪti/'},
+      {s:'com<span class="strong">PLETE</span>',ipa:'/kəmˈpliːt/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>curious</b>.', neg:'We <b>are not</b> <b>cold</b>.', int:'<b>Are</b> they <b>coworkers</b>?'}
+  },
+  { L:'D', name:'dee', ipa:'/diː/', nameEs:'se pronuncia "di"',
+    colors:['#C3F0CA','#8FD694'],
+    tip:'La <span class="highlight">punta de la lengua toca detrás de los dientes superiores</span>, no los dientes mismos (así es más limpio que la "d" en español).',
+    key:'La "d" inglesa vibra en el paladar, no en los dientes.',
+    words:[
+      {w:'dog',ipa:'/dɔːɡ/',es:'perro'},
+      {w:'door',ipa:'/dɔːr/',es:'puerta'},
+      {w:'day',ipa:'/deɪ/',es:'día'},
+      {w:'dark',ipa:'/dɑːrk/',es:'oscuro'}
+    ],
+    stress:[
+      {s:'<span class="strong">DOC</span>tor',ipa:'/ˈdɑːktər/'},
+      {s:'de<span class="strong">CIDE</span>',ipa:'/dɪˈsaɪd/'}
+    ],
+    tobe:{aff:'He <b>is</b> a <b>doctor</b>.', neg:'She <b>is not</b> <b>Danish</b>.', int:'<b>Are</b> you <b>different</b>?'}
+  },
+  { L:'E', name:'ee', ipa:'/iː/', nameEs:'se pronuncia "i" larga',
+    colors:['#7BE495','#44D7B6'],
+    tip:'Dos sonidos: <span class="highlight">/iː/ larga</span> como en <i>see</i>, y <span class="highlight">/e/ corta</span> como en <i>pen</i>. Y la famosa <b>"e muda" (silent e)</b>: al final de palabra no suena, pero alarga la vocal anterior: <i>mak<s>e</s></i>, <i>tim<s>e</s></i>, <i>hom<s>e</s></i>.',
+    key:'Silent E: la "e" al final NO se pronuncia, pero convierte la vocal anterior en larga.',
+    words:[
+      {w:'egg',ipa:'/eɡ/',es:'huevo'},
+      {w:'eat',ipa:'/iːt/',es:'comer'},
+      {w:'make',ipa:'/meɪk/',es:'hacer (e muda)'},
+      {w:'time',ipa:'/taɪm/',es:'tiempo (e muda)'}
+    ],
+    stress:[
+      {s:'<span class="strong">EM</span>pty',ipa:'/ˈempti/'},
+      {s:'e<span class="strong">RA</span>ser',ipa:'/ɪˈreɪsər/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>excited</b>.', neg:'They <b>are not</b> <b>early</b>.', int:'<b>Is</b> he an <b>engineer</b>?'}
+  },
+  { L:'F', name:'ef', ipa:'/ef/', nameEs:'se pronuncia "ef"',
+    colors:['#4FC3F7','#29B6F6'],
+    tip:'Coloca los <span class="highlight">dientes superiores sobre el labio inferior</span> y deja salir el aire. Es igual que la "f" del español, pero sin voz (sin vibración).',
+    key:'Sonido /f/ fricativo, sin vibración vocal.',
+    words:[
+      {w:'fish',ipa:'/fɪʃ/',es:'pez'},
+      {w:'family',ipa:'/ˈfæməli/',es:'familia'},
+      {w:'four',ipa:'/fɔːr/',es:'cuatro'},
+      {w:'fun',ipa:'/fʌn/',es:'diversión'}
+    ],
+    stress:[
+      {s:'<span class="strong">FA</span>ther',ipa:'/ˈfɑːðər/'},
+      {s:'for<span class="strong">GET</span>',ipa:'/fərˈɡet/'}
+    ],
+    tobe:{aff:'She <b>is</b> my <b>friend</b>.', neg:'We <b>are not</b> <b>far</b>.', int:'<b>Are</b> you <b>funny</b>?'}
+  },
+  { L:'G', name:'jee', ipa:'/dʒiː/', nameEs:'se pronuncia "dchi"',
+    colors:['#81C784','#4CAF50'],
+    tip:'Dos sonidos: <span class="highlight">/ɡ/ duro</span> (go, good) y <span class="highlight">/dʒ/ suave</span> (gym, giant) — el suave suena como una "y" argentina fuerte. ¡No existe en español!',
+    key:'G suave /dʒ/ antes de e, i, y. G dura /ɡ/ en el resto.',
+    words:[
+      {w:'go',ipa:'/ɡoʊ/',es:'ir'},
+      {w:'gym',ipa:'/dʒɪm/',es:'gimnasio'},
+      {w:'girl',ipa:'/ɡɜːrl/',es:'chica'},
+      {w:'gentle',ipa:'/ˈdʒentəl/',es:'amable'}
+    ],
+    stress:[
+      {s:'<span class="strong">GEN</span>tle',ipa:'/ˈdʒentəl/'},
+      {s:'gi<span class="strong">GAN</span>tic',ipa:'/dʒaɪˈɡæntɪk/'}
+    ],
+    tobe:{aff:'He <b>is</b> a <b>genius</b>.', neg:'I <b>am not</b> a <b>guest</b>.', int:'<b>Is</b> she <b>German</b>?'}
+  },
+  { L:'H', name:'aitch', ipa:'/eɪtʃ/', nameEs:'se pronuncia "eich"',
+    colors:['#64B5F6','#2196F3'],
+    tip:'La H en inglés <span class="highlight">SÍ se pronuncia</span> — es un soplo suave, como si empañaras un espejo. <b>Diferente al español</b>, donde la "h" es muda.',
+    key:'Siempre aspirada. Nunca es muda (excepto en "hour", "honest").',
+    words:[
+      {w:'house',ipa:'/haʊs/',es:'casa (diptongo)'},
+      {w:'happy',ipa:'/ˈhæpi/',es:'feliz'},
+      {w:'hello',ipa:'/həˈloʊ/',es:'hola'},
+      {w:'home',ipa:'/hoʊm/',es:'hogar'}
+    ],
+    stress:[
+      {s:'<span class="strong">HAP</span>py',ipa:'/ˈhæpi/'},
+      {s:'ho<span class="strong">TEL</span>',ipa:'/hoʊˈtel/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>happy</b>.', neg:'You <b>are not</b> at <b>home</b>.', int:'<b>Are</b> they <b>here</b>?'}
+  },
+  { L:'I', name:'eye', ipa:'/aɪ/', nameEs:'se pronuncia "ai"',
+    colors:['#9575CD','#7E57C2'],
+    tip:'Tres sonidos principales: <span class="highlight">/aɪ/ largo</span> (diptongo, como <i>ice</i>), <span class="highlight">/ɪ/ corto</span> (como <i>sit</i> — más relajado que la "i" española) y a veces <span class="highlight">/i/</span>.',
+    key:'Diptongo /aɪ/: empieza en "a" y termina en "i".',
+    words:[
+      {w:'ice',ipa:'/aɪs/',es:'hielo'},
+      {w:'in',ipa:'/ɪn/',es:'en'},
+      {w:'island',ipa:'/ˈaɪlənd/',es:'isla (s muda)'},
+      {w:'idea',ipa:'/aɪˈdiːə/',es:'idea'}
+    ],
+    stress:[
+      {s:'<span class="strong">IN</span>teresting',ipa:'/ˈɪntrəstɪŋ/'},
+      {s:'im<span class="strong">POR</span>tant',ipa:'/ɪmˈpɔːrtənt/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>Italian</b>.', neg:'I <b>am not</b> <b>ill</b>.', int:'<b>Are</b> you <b>independent</b>?'}
+  },
+  { L:'J', name:'jay', ipa:'/dʒeɪ/', nameEs:'se pronuncia "dchei"',
+    colors:['#BA68C8','#AB47BC'],
+    tip:'Sonido <span class="highlight">/dʒ/</span> — como la "ll" argentina exagerada o como pronunciar "y" con mucha fuerza. La punta de la lengua toca el paladar y libera aire con vibración. <b>No existe en español estándar</b>.',
+    key:'/dʒ/ es africada: una combinación rápida de /d/ + /ʒ/.',
+    words:[
+      {w:'juice',ipa:'/dʒuːs/',es:'jugo'},
+      {w:'jump',ipa:'/dʒʌmp/',es:'saltar'},
+      {w:'June',ipa:'/dʒuːn/',es:'junio'},
+      {w:'joy',ipa:'/dʒɔɪ/',es:'alegría (diptongo)'}
+    ],
+    stress:[
+      {s:'Ja<span class="strong">PAN</span>',ipa:'/dʒəˈpæn/'},
+      {s:'<span class="strong">JOB</span>less',ipa:'/ˈdʒɑːbləs/'}
+    ],
+    tobe:{aff:'She <b>is</b> <b>Japanese</b>.', neg:'He <b>is not</b> <b>jealous</b>.', int:'<b>Are</b> you in <b>January</b>?'}
+  },
+  { L:'K', name:'kay', ipa:'/keɪ/', nameEs:'se pronuncia "kei"',
+    colors:['#F06292','#EC407A'],
+    tip:'Sonido <span class="highlight">/k/</span>: parte posterior de la lengua toca el paladar y libera aire con una pequeña "explosión". <b>Cuidado con la K muda</b>: al inicio con <i>n</i>, la k no suena (knee, know, knife).',
+    key:'K + N al inicio → la K es muda. Ejemplos: knee, know, knife.',
+    words:[
+      {w:'key',ipa:'/kiː/',es:'llave'},
+      {w:'kid',ipa:'/kɪd/',es:'niño'},
+      {w:'king',ipa:'/kɪŋ/',es:'rey'},
+      {w:'knee',ipa:'/niː/',es:'rodilla (k muda)'}
+    ],
+    stress:[
+      {s:'<span class="strong">KITCH</span>en',ipa:'/ˈkɪtʃən/'},
+      {s:'Ko<span class="strong">RE</span>a',ipa:'/kəˈriːə/'}
+    ],
+    tobe:{aff:'He <b>is</b> a <b>kid</b>.', neg:'We <b>are not</b> in the <b>kitchen</b>.', int:'<b>Is</b> she <b>kind</b>?'}
+  },
+  { L:'L', name:'el', ipa:'/el/', nameEs:'se pronuncia "el"',
+    colors:['#FF80AB','#F48FB1'],
+    tip:'Dos variantes: <span class="highlight">"L clara"</span> al inicio (like, love) — punta de lengua al paladar; y <span class="highlight">"L oscura"</span> al final (call, ball) — más profunda, casi como "uol".',
+    key:'Al final de palabra la L suena "oscura" — casi como una "o".',
+    words:[
+      {w:'love',ipa:'/lʌv/',es:'amor'},
+      {w:'light',ipa:'/laɪt/',es:'luz'},
+      {w:'late',ipa:'/leɪt/',es:'tarde'},
+      {w:'ball',ipa:'/bɔːl/',es:'pelota (L oscura)'}
+    ],
+    stress:[
+      {s:'<span class="strong">LOVE</span>ly',ipa:'/ˈlʌvli/'},
+      {s:'<span class="strong">LON</span>don',ipa:'/ˈlʌndən/'}
+    ],
+    tobe:{aff:'I <b>am</b> in <b>love</b>.', neg:'They <b>are not</b> <b>lazy</b>.', int:'<b>Are</b> you a <b>lawyer</b>?'}
+  },
+  { L:'M', name:'em', ipa:'/em/', nameEs:'se pronuncia "em"',
+    colors:['#FF7043','#FF5722'],
+    tip:'Labios cerrados, aire sale por la <span class="highlight">nariz</span> con vibración. Igual a la "m" del español. Fácil — ¡una letra de regalo!',
+    key:'Consonante nasal bilabial. Igual que en español.',
+    words:[
+      {w:'mom',ipa:'/mɑːm/',es:'mamá'},
+      {w:'moon',ipa:'/muːn/',es:'luna'},
+      {w:'music',ipa:'/ˈmjuːzɪk/',es:'música'},
+      {w:'mouth',ipa:'/maʊθ/',es:'boca (diptongo + th)'}
+    ],
+    stress:[
+      {s:'<span class="strong">MO</span>ther',ipa:'/ˈmʌðər/'},
+      {s:'mu<span class="strong">SE</span>um',ipa:'/mjuːˈziːəm/'}
+    ],
+    tobe:{aff:'She <b>is</b> my <b>mother</b>.', neg:'I <b>am not</b> <b>married</b>.', int:'<b>Are</b> they <b>Mexican</b>?'}
+  },
+  { L:'N', name:'en', ipa:'/en/', nameEs:'se pronuncia "en"',
+    colors:['#FFCA28','#FFA726'],
+    tip:'Punta de la lengua en el <span class="highlight">paladar superior</span> (no en los dientes), aire sale por la nariz. Muy parecida a la "n" del español.',
+    key:'Consonante nasal alveolar. Cuidado: "ng" al final = /ŋ/ (sing, king).',
+    words:[
+      {w:'name',ipa:'/neɪm/',es:'nombre'},
+      {w:'nine',ipa:'/naɪn/',es:'nueve'},
+      {w:'night',ipa:'/naɪt/',es:'noche (gh muda)'},
+      {w:'new',ipa:'/nuː/',es:'nuevo'}
+    ],
+    stress:[
+      {s:'<span class="strong">NA</span>tion',ipa:'/ˈneɪʃən/'},
+      {s:'no<span class="strong">VEM</span>ber',ipa:'/noʊˈvembər/'}
+    ],
+    tobe:{aff:'I <b>am</b> from the <b>North</b>.', neg:'He <b>is not</b> <b>nervous</b>.', int:'<b>Are</b> we <b>neighbors</b>?'}
+  },
+  { L:'O', name:'oh', ipa:'/oʊ/', nameEs:'se pronuncia "ou"',
+    colors:['#26A69A','#00897B'],
+    tip:'Varios sonidos: <span class="highlight">/oʊ/</span> diptongo (no, go — empieza en "o" y termina en "u"), <span class="highlight">/ɑː/</span> abierto (hot, not), <span class="highlight">/ʌ/</span> (son, love). El diptongo /oʊ/ <b>no existe en español</b>.',
+    key:'La "o" inglesa casi nunca es pura: casi siempre es diptongo /oʊ/.',
+    words:[
+      {w:'open',ipa:'/ˈoʊpən/',es:'abrir'},
+      {w:'ocean',ipa:'/ˈoʊʃən/',es:'océano'},
+      {w:'old',ipa:'/oʊld/',es:'viejo'},
+      {w:'one',ipa:'/wʌn/',es:'uno'}
+    ],
+    stress:[
+      {s:'<span class="strong">O</span>pen',ipa:'/ˈoʊpən/'},
+      {s:'Oc<span class="strong">TO</span>ber',ipa:'/ɑːkˈtoʊbər/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>old</b>.', neg:'She <b>is not</b> at the <b>office</b>.', int:'<b>Are</b> you <b>online</b>?'}
+  },
+  { L:'P', name:'pee', ipa:'/piː/', nameEs:'se pronuncia "pi"',
+    colors:['#AB47BC','#8E24AA'],
+    tip:'Sonido <span class="highlight">/p/ aspirado</span> al inicio de palabra: pon la mano frente a la boca al decir <i>pen</i> — debes sentir el soplo. <b>Importante</b>: a veces la P es muda (psychology, pneumatic).',
+    key:'Aspirada al inicio: hay un pequeño soplo después de la /p/.',
+    words:[
+      {w:'pen',ipa:'/pen/',es:'pluma'},
+      {w:'phone',ipa:'/foʊn/',es:'teléfono (ph=/f/)'},
+      {w:'pie',ipa:'/paɪ/',es:'pay (diptongo)'},
+      {w:'play',ipa:'/pleɪ/',es:'jugar'}
+    ],
+    stress:[
+      {s:'<span class="strong">PA</span>per',ipa:'/ˈpeɪpər/'},
+      {s:'po<span class="strong">LICE</span>',ipa:'/pəˈliːs/'}
+    ],
+    tobe:{aff:'He <b>is</b> a <b>painter</b>.', neg:'We <b>are not</b> <b>perfect</b>.', int:'<b>Is</b> she a <b>pilot</b>?'}
+  },
+  { L:'Q', name:'kyoo', ipa:'/kjuː/', nameEs:'se pronuncia "kiu"',
+    colors:['#5C6BC0','#3949AB'],
+    tip:'La Q casi siempre va con U: <span class="highlight">"qu" = /kw/</span>. Labios redondeados, como dando un beso, al empezar la palabra.',
+    key:'Q + U = /kw/ en la mayoría de palabras.',
+    words:[
+      {w:'queen',ipa:'/kwiːn/',es:'reina'},
+      {w:'quick',ipa:'/kwɪk/',es:'rápido'},
+      {w:'quiet',ipa:'/ˈkwaɪət/',es:'silencioso'},
+      {w:'question',ipa:'/ˈkwestʃən/',es:'pregunta'}
+    ],
+    stress:[
+      {s:'<span class="strong">QUES</span>tion',ipa:'/ˈkwestʃən/'},
+      {s:'quar<span class="strong">TET</span>',ipa:'/kwɔːrˈtet/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>quiet</b>.', neg:'You <b>are not</b> the <b>queen</b>.', int:'<b>Are</b> they <b>quick</b>?'}
+  },
+  { L:'R', name:'ar', ipa:'/ɑːr/', nameEs:'se pronuncia "ar"',
+    colors:['#EF5350','#E53935'],
+    tip:'<span class="highlight">La R americana NO vibra</span>. La lengua se <b>curva hacia atrás</b> sin tocar nada. Labios ligeramente redondeados. <b>¡Olvida la "rr" española!</b>',
+    key:'NO vibra, NO toca el paladar. Lengua curvada, libre.',
+    words:[
+      {w:'red',ipa:'/red/',es:'rojo'},
+      {w:'rain',ipa:'/reɪn/',es:'lluvia'},
+      {w:'run',ipa:'/rʌn/',es:'correr'},
+      {w:'right',ipa:'/raɪt/',es:'correcto (gh muda)'}
+    ],
+    stress:[
+      {s:'<span class="strong">RAI</span>ny',ipa:'/ˈreɪni/'},
+      {s:'re<span class="strong">CEIVE</span>',ipa:'/rɪˈsiːv/'}
+    ],
+    tobe:{aff:'She <b>is</b> <b>right</b>.', neg:'They <b>are not</b> <b>ready</b>.', int:'<b>Are</b> you from <b>Russia</b>?'}
+  },
+  { L:'S', name:'ess', ipa:'/es/', nameEs:'se pronuncia "es"',
+    colors:['#42A5F5','#1E88E5'],
+    tip:'Sonido <span class="highlight">/s/ sin voz</span> en la mayoría de casos. Pero <b>entre vocales</b> o al final después de vocal suele sonar como <span class="highlight">/z/</span> (roses, is, has, these).',
+    key:'S puede sonar /s/ o /z/ según el contexto.',
+    words:[
+      {w:'sun',ipa:'/sʌn/',es:'sol'},
+      {w:'sea',ipa:'/siː/',es:'mar'},
+      {w:'six',ipa:'/sɪks/',es:'seis'},
+      {w:'rose',ipa:'/roʊz/',es:'rosa (s=/z/)'}
+    ],
+    stress:[
+      {s:'<span class="strong">SIS</span>ter',ipa:'/ˈsɪstər/'},
+      {s:'Sep<span class="strong">TEM</span>ber',ipa:'/sepˈtembər/'}
+    ],
+    tobe:{aff:'I <b>am</b> a <b>student</b>.', neg:'He <b>is not</b> <b>sad</b>.', int:'<b>Are</b> we <b>safe</b>?'}
+  },
+  { L:'T', name:'tee', ipa:'/tiː/', nameEs:'se pronuncia "ti"',
+    colors:['#66BB6A','#43A047'],
+    tip:'Punta de la lengua <span class="highlight">en el paladar</span>, detrás de los dientes (NO en los dientes como en español). Al inicio es <b>aspirada</b> — hay un pequeño soplo.',
+    key:'Aspirada al inicio. Entre vocales suena como una "d" suave (water → "wader").',
+    words:[
+      {w:'tea',ipa:'/tiː/',es:'té'},
+      {w:'time',ipa:'/taɪm/',es:'tiempo'},
+      {w:'two',ipa:'/tuː/',es:'dos (w muda)'},
+      {w:'table',ipa:'/ˈteɪbəl/',es:'mesa'}
+    ],
+    stress:[
+      {s:'<span class="strong">TEA</span>cher',ipa:'/ˈtiːtʃər/'},
+      {s:'to<span class="strong">DAY</span>',ipa:'/təˈdeɪ/'}
+    ],
+    tobe:{aff:'I <b>am</b> a <b>teacher</b>.', neg:'She <b>is not</b> <b>tired</b>.', int:'<b>Are</b> you <b>thirsty</b>?'}
+  },
+  { L:'U', name:'you', ipa:'/juː/', nameEs:'se pronuncia "yu"',
+    colors:['#FFB74D','#FF9800'],
+    tip:'Tres sonidos: <span class="highlight">/juː/</span> largo (use, unit — empieza con "y"!), <span class="highlight">/ʌ/</span> corto (cup, bus), y <span class="highlight">/ʊ/</span> (put, book).',
+    key:'/ʌ/ es un sonido neutro, relajado — no existe igual en español.',
+    words:[
+      {w:'umbrella',ipa:'/ʌmˈbrelə/',es:'paraguas'},
+      {w:'use',ipa:'/juːz/',es:'usar'},
+      {w:'under',ipa:'/ˈʌndər/',es:'debajo'},
+      {w:'unique',ipa:'/juːˈniːk/',es:'único'}
+    ],
+    stress:[
+      {s:'<span class="strong">UN</span>der',ipa:'/ˈʌndər/'},
+      {s:'u<span class="strong">NIQUE</span>',ipa:'/juːˈniːk/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>unique</b>.', neg:'We <b>are not</b> <b>upset</b>.', int:'<b>Are</b> you in the <b>UK</b>?'}
+  },
+  { L:'V', name:'vee', ipa:'/viː/', nameEs:'se pronuncia "vi"',
+    colors:['#26C6DA','#00ACC1'],
+    tip:'<b>¡Muy importante!</b> Dientes superiores sobre labio inferior (como F) PERO <span class="highlight">CON vibración</span>. <b>No es como la "b" española</b>, donde V y B suenan igual. Práctica: "very"  vs "berry".',
+    key:'V es labiodental y CON voz. Distinta de B en inglés.',
+    words:[
+      {w:'voice',ipa:'/vɔɪs/',es:'voz (diptongo)'},
+      {w:'van',ipa:'/væn/',es:'camioneta'},
+      {w:'very',ipa:'/ˈveri/',es:'muy'},
+      {w:'visit',ipa:'/ˈvɪzɪt/',es:'visitar'}
+    ],
+    stress:[
+      {s:'<span class="strong">VE</span>ry',ipa:'/ˈveri/'},
+      {s:'vi<span class="strong">BRA</span>tion',ipa:'/vaɪˈbreɪʃən/'}
+    ],
+    tobe:{aff:'I <b>am</b> <b>vegetarian</b>.', neg:'He <b>is not</b> on <b>vacation</b>.', int:'<b>Are</b> they <b>Venezuelan</b>?'}
+  },
+  { L:'W', name:'double-you', ipa:'/ˈdʌbəljuː/', nameEs:'se pronuncia "dabliu"',
+    colors:['#7986CB','#5C6BC0'],
+    tip:'Labios <span class="highlight">redondeados y adelantados</span> (como para silbar), luego se abren. Parecido a la "u" española en "hueso", pero más firme. <b>W muda</b> antes de "r": write, wrong, wrist.',
+    key:'Labios como para dar un beso. WR → la W es muda.',
+    words:[
+      {w:'water',ipa:'/ˈwɔːtər/',es:'agua'},
+      {w:'win',ipa:'/wɪn/',es:'ganar'},
+      {w:'wash',ipa:'/wɔːʃ/',es:'lavar'},
+      {w:'write',ipa:'/raɪt/',es:'escribir (w muda)'}
+    ],
+    stress:[
+      {s:'<span class="strong">WA</span>ter',ipa:'/ˈwɔːtər/'},
+      {s:'Wed<span class="strong">NES</span>day',ipa:'/ˈwenzdeɪ/'}
+    ],
+    tobe:{aff:'We <b>are</b> in the <b>world</b>.', neg:'I <b>am not</b> <b>worried</b>.', int:'<b>Are</b> you <b>wise</b>?'}
+  },
+  { L:'X', name:'ex', ipa:'/eks/', nameEs:'se pronuncia "ex"',
+    colors:['#EC407A','#D81B60'],
+    tip:'Casi siempre suena como <span class="highlight">/ks/</span> al final (box, six, fox). Al inicio de palabra (muy raro) suena como <span class="highlight">/z/</span>: xylophone /ˈzaɪləfoʊn/.',
+    key:'Final: /ks/. Inicial: /z/. En medio a veces /ɡz/ (example).',
+    words:[
+      {w:'box',ipa:'/bɑːks/',es:'caja'},
+      {w:'six',ipa:'/sɪks/',es:'seis'},
+      {w:'fox',ipa:'/fɑːks/',es:'zorro'},
+      {w:'exit',ipa:'/ˈeɡzɪt/',es:'salida'}
+    ],
+    stress:[
+      {s:'<span class="strong">EX</span>it',ipa:'/ˈeɡzɪt/'},
+      {s:'ex<span class="strong">AM</span>',ipa:'/ɪɡˈzæm/'}
+    ],
+    tobe:{aff:'She <b>is</b> <b>extraordinary</b>.', neg:'I <b>am not</b> an <b>expert</b>.', int:'<b>Are</b> you <b>excited</b>?'}
+  },
+  { L:'Y', name:'why', ipa:'/waɪ/', nameEs:'se pronuncia "uai"',
+    colors:['#FFEE58','#FDD835'],
+    tip:'Consonante <span class="highlight">/j/</span> al inicio (yes, you — como la "i" española en "hielo", pero firme). Como vocal, puede sonar <span class="highlight">/i/</span> (happy) o <span class="highlight">/aɪ/</span> (my, cry).',
+    key:'Al inicio de palabra: consonante /j/. En medio o final: vocal.',
+    words:[
+      {w:'yes',ipa:'/jes/',es:'sí'},
+      {w:'you',ipa:'/juː/',es:'tú'},
+      {w:'year',ipa:'/jɪər/',es:'año'},
+      {w:'young',ipa:'/jʌŋ/',es:'joven'}
+    ],
+    stress:[
+      {s:'<span class="strong">YEL</span>low',ipa:'/ˈjeloʊ/'},
+      {s:'<span class="strong">YES</span>terday',ipa:'/ˈjestərdeɪ/'}
+    ],
+    tobe:{aff:'You <b>are</b> <b>young</b>.', neg:'I <b>am not</b> <b>yours</b>.', int:'<b>Are</b> they from <b>Yemen</b>?'}
+  },
+  { L:'Z', name:'zee', ipa:'/ziː/', nameEs:'se pronuncia "zi" (USA) / "zed" (UK)',
+    colors:['#42B883','#26A69A'],
+    tip:'Sonido <span class="highlight">/z/ con vibración</span> — pon la mano en la garganta y debes sentir el zumbido. <b>No existe en español</b> como sonido puro (en español la "z" suena /s/).',
+    key:'La Z inglesa vibra. La S española nunca vibra así.',
+    words:[
+      {w:'zero',ipa:'/ˈzɪroʊ/',es:'cero'},
+      {w:'zoo',ipa:'/zuː/',es:'zoológico'},
+      {w:'zebra',ipa:'/ˈziːbrə/',es:'cebra'},
+      {w:'zone',ipa:'/zoʊn/',es:'zona'}
+    ],
+    stress:[
+      {s:'<span class="strong">ZE</span>ro',ipa:'/ˈzɪroʊ/'},
+      {s:'Zim<span class="strong">BAB</span>we',ipa:'/zɪmˈbɑːbweɪ/'}
+    ],
+    tobe:{aff:'She <b>is</b> <b>zealous</b>.', neg:'We <b>are not</b> at the <b>zoo</b>.', int:'<b>Are</b> you in <b>Zone</b> 1?'}
+  }
+];
+
+// ===========================================================
+// SLIDE BUILDERS
+// ===========================================================
+
+function bgLayer(c1, c2){
+  return `<div class="bg-layer" style="--c1:${c1};--c2:${c2}">
+    <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+  </div>`;
+}
+
+function titleSlide(){
+  return `
+  <div class="slide" data-title="Intro">
+    ${bgLayer('#8b5cf6','#ec4899')}
+    <div class="slide-inner">
+      <div class="hero">
+        <div class="hero-tag">Curso CESCA · English Level 1</div>
+        <h1>Welcome to <em>English.</em></h1>
+        <p>Introducción al inglés para principiantes: alfabeto, pronunciación, sonidos que no existen en español, y tu primera herramienta para presentarte — el <em>verb to be</em>.</p>
+        <div class="hero-hint">
+          <span>Navega con</span>
+          <span class="key">←</span><span class="key">→</span>
+          <span>o con los botones</span>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function howToSlide(){
+  return `
+  <div class="slide" data-title="Cómo leer esta guía">
+    ${bgLayer('#06b6d4','#3b82f6')}
+    <div class="slide-inner">
+      <div class="overview">
+        <div class="overview-header">
+          <div class="eyebrow">Antes de empezar</div>
+          <h2>¿Qué es el <em>IPA</em>?</h2>
+          <p class="overview-subtitle">IPA (Alfabeto Fonético Internacional) es el sistema universal para escribir sonidos. Los verás entre barras: <b>/kæt/</b>. Son los "mapas" que te dicen cómo suena cada palabra, sin importar cómo se escriba.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;flex:1;align-content:start;">
+          <div class="glass example-card">
+            <div class="ex-tag">Vocal corta</div>
+            <div class="ex-text"><b>/æ/</b> como en <i>cat</i></div>
+            <div class="ex-es">Entre "a" y "e" en español</div>
+          </div>
+          <div class="glass example-card">
+            <div class="ex-tag">Vocal larga</div>
+            <div class="ex-text"><b>/iː/</b> como en <i>see</i></div>
+            <div class="ex-es">"i" sostenida, más larga</div>
+          </div>
+          <div class="glass example-card">
+            <div class="ex-tag">Diptongo</div>
+            <div class="ex-text"><b>/aɪ/</b> como en <i>my</i></div>
+            <div class="ex-es">Dos sonidos en uno: "a" + "i"</div>
+          </div>
+          <div class="glass example-card">
+            <div class="ex-tag">Acento (stress)</div>
+            <div class="ex-text"><b>ˈ</b> indica sílaba fuerte</div>
+            <div class="ex-es">/ˈæpəl/ → AP-ple</div>
+          </div>
+          <div class="glass example-card">
+            <div class="ex-tag">Sin voz</div>
+            <div class="ex-text">/p/ /t/ /k/ /f/ /s/</div>
+            <div class="ex-es">No vibran las cuerdas vocales</div>
+          </div>
+          <div class="glass example-card">
+            <div class="ex-tag">Con voz</div>
+            <div class="ex-text">/b/ /d/ /g/ /v/ /z/</div>
+            <div class="ex-es">Sí vibran las cuerdas vocales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function alphabetOverviewSlide(){
+  const cells = LETTERS.map(l => `
+    <div class="alpha-cell" style="--c1:${l.colors[0]};--c2:${l.colors[1]}" data-jump="${l.L}">
+      <span class="big">${l.L}</span>
+      <span class="name">${l.name}</span>
+    </div>
+  `).join('');
+  return `
+  <div class="slide" data-title="El Alfabeto">
+    ${bgLayer('#ec4899','#f59e0b')}
+    <div class="slide-inner">
+      <div class="overview">
+        <div class="overview-header">
+          <div class="eyebrow">Las 26 letras</div>
+          <h2>The <em>Alphabet</em></h2>
+          <p class="overview-subtitle">El inglés tiene las mismas 26 letras que el español, pero sin la Ñ. <b>Haz clic en cualquier letra</b> para saltar directo a su pronunciación, sonidos y ejemplos.</p>
+        </div>
+        <div class="alphabet-grid">${cells}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function letterSlide(l, idx){
+  const words = l.words.map(w => `
+    <div class="word-card">
+      <span class="w">${w.w}</span>
+      <span class="ipa">${w.ipa}</span>
+      <span class="es">${w.es}</span>
+    </div>`).join('');
+  const stress = l.stress.map(s => `
+    <div class="stress-item">
+      <span class="s">${s.s}</span>
+      <span class="s-ipa">${s.ipa}</span>
+    </div>`).join('');
+  return `
+  <div class="slide" data-title="${l.L} — ${l.name}" data-letter="${l.L}">
+    ${bgLayer(l.colors[0], l.colors[1])}
+    <div class="slide-inner">
+      <div class="letter-slide">
+        <div class="letter-panel glass">
+          <div class="letter-name">Letter ${idx + 1} of 26</div>
+          <div class="letter-display">${l.L}<span class="lower">${l.L.toLowerCase()}</span></div>
+          <div>
+            <div class="letter-ipa">${l.ipa} <span style="opacity:0.7;font-size:0.7em;">· ${l.name}</span></div>
+            <div class="letter-name-es">${l.nameEs}</div>
+          </div>
+        </div>
+        <div class="content-panel">
+          <div class="tip-card glass">
+            <div class="card-label"><span class="dot"></span>Posición de la lengua / Tip</div>
+            <div class="tip-text">${l.tip}</div>
+            <div class="tip-text" style="opacity:0.78;font-size:0.9em;"><b style="opacity:0.9">Sonido clave:</b> ${l.key}</div>
+          </div>
+          <div class="words-card glass">
+            <div class="card-label"><span class="dot"></span>Palabras · Words</div>
+            <div class="words-grid">${words}</div>
+          </div>
+          <div class="stress-card glass">
+            <div class="card-label"><span class="dot"></span>Acento · Stress (2 sílabas)</div>
+            <div class="stress-list">${stress}</div>
+            <div style="font-size:0.78rem;opacity:0.65;margin-top:4px;font-style:italic;">La sílaba en MAYÚSCULAS suena más fuerte y larga.</div>
+          </div>
+          <div class="tobe-card glass">
+            <div class="card-label"><span class="dot"></span>Verb To Be · mini-práctica con la letra ${l.L}</div>
+            <div class="tobe-row">
+              <div class="tobe-box"><div class="tag aff">Afirmativa</div><div class="sentence">${l.tobe.aff}</div></div>
+              <div class="tobe-box"><div class="tag neg">Negativa</div><div class="sentence">${l.tobe.neg}</div></div>
+              <div class="tobe-box"><div class="tag int">Interrogativa</div><div class="sentence">${l.tobe.int}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function spellingBeeSlide(){
+  return `
+  <div class="slide" data-title="Spelling Bee">
+    ${bgLayer('#f97316','#eab308')}
+    <div class="slide-inner">
+      <div class="bee">
+        <div class="bee-left glass">
+          <div class="eyebrow">El juego clásico</div>
+          <h2>Spelling <em>Bee</em></h2>
+          <p>Un <b>Spelling Bee</b> es un concurso donde escuchas una palabra y tienes que deletrearla letra por letra, en voz alta, usando los nombres de las letras en inglés.</p>
+          <p>Ahora que conoces el alfabeto, estás listo. La clave: pronuncia cada letra con su <b>nombre</b>, no con su sonido.</p>
+          <p style="opacity:0.85;font-size:0.95rem;"><b>Ejemplo:</b> "Spell 'cat'" → <i>"C-A-T: cat."</i> → <i>"si - ey - ti: cat."</i></p>
+        </div>
+        <div class="bee-right glass">
+          <div class="eyebrow">Ejemplos</div>
+          <div>
+            <div style="font-family:var(--font-display);font-style:italic;font-size:1.1rem;opacity:0.85;margin-bottom:6px;">Cat</div>
+            <div class="bee-letters">
+              <div class="bee-letter">C</div><div class="bee-letter">A</div><div class="bee-letter">T</div>
+            </div>
+            <div style="font-size:0.85rem;opacity:0.7;margin-top:6px;font-style:italic;">"si - ey - ti"</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-style:italic;font-size:1.1rem;opacity:0.85;margin-bottom:6px;">House</div>
+            <div class="bee-letters">
+              <div class="bee-letter">H</div><div class="bee-letter">O</div><div class="bee-letter">U</div><div class="bee-letter">S</div><div class="bee-letter">E</div>
+            </div>
+            <div style="font-size:0.85rem;opacity:0.7;margin-top:6px;font-style:italic;">"eich - ou - yu - es - i"</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-style:italic;font-size:1.1rem;opacity:0.85;margin-bottom:6px;">Juice</div>
+            <div class="bee-letters">
+              <div class="bee-letter">J</div><div class="bee-letter">U</div><div class="bee-letter">I</div><div class="bee-letter">C</div><div class="bee-letter">E</div>
+            </div>
+            <div style="font-size:0.85rem;opacity:0.7;margin-top:6px;font-style:italic;">"dchei - yu - ai - si - i"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function verbToBeAffSlide(){
+  return `
+  <div class="slide" data-title="Verb To Be · Afirmativa">
+    ${bgLayer('#10b981','#0ea5e9')}
+    <div class="slide-inner">
+      <div class="big-concept">
+        <div>
+          <div class="eyebrow">Ser / Estar · afirmativa</div>
+          <h2>Verb <em>To Be</em></h2>
+          <p class="subtitle">El verbo <b>to be</b> es el más importante del inglés. Significa <b>ser</b> y <b>estar</b> al mismo tiempo. Cambia según el pronombre.</p>
+        </div>
+        <div class="glass tobe-table">
+          <div class="th">Pronoun</div><div class="th">Forma completa</div><div class="th">Contracción</div>
+          <div class="divider"></div>
+          <div class="pron">I</div><div class="form">I <span class="v">am</span> happy.</div><div class="form contraction">I'm happy.</div>
+          <div class="pron">You</div><div class="form">You <span class="v">are</span> tall.</div><div class="form contraction">You're tall.</div>
+          <div class="pron">He</div><div class="form">He <span class="v">is</span> a teacher.</div><div class="form contraction">He's a teacher.</div>
+          <div class="pron">She</div><div class="form">She <span class="v">is</span> kind.</div><div class="form contraction">She's kind.</div>
+          <div class="pron">It</div><div class="form">It <span class="v">is</span> cold.</div><div class="form contraction">It's cold.</div>
+          <div class="pron">We</div><div class="form">We <span class="v">are</span> friends.</div><div class="form contraction">We're friends.</div>
+          <div class="pron">You</div><div class="form">You <span class="v">are</span> ready.</div><div class="form contraction">You're ready.</div>
+          <div class="pron">They</div><div class="form">They <span class="v">are</span> students.</div><div class="form contraction">They're students.</div>
+        </div>
+        <div style="font-size:0.95rem;opacity:0.8;font-style:italic;">💡 <b>Regla de oro:</b> I → <b>am</b>  ·  He/She/It → <b>is</b>  ·  You/We/They → <b>are</b></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function verbToBeNegSlide(){
+  return `
+  <div class="slide" data-title="Verb To Be · Negativa">
+    ${bgLayer('#ef4444','#f97316')}
+    <div class="slide-inner">
+      <div class="big-concept">
+        <div>
+          <div class="eyebrow">Ser / Estar · negativa</div>
+          <h2>Not <em>To Be</em></h2>
+          <p class="subtitle">Para negar, simplemente agrega <b>not</b> después del verbo: <i>am not, is not, are not</i>. Las contracciones son muy comunes en el habla diaria.</p>
+        </div>
+        <div class="glass tobe-table">
+          <div class="th">Pronoun</div><div class="th">Forma completa</div><div class="th">Contracción</div>
+          <div class="divider"></div>
+          <div class="pron">I</div><div class="form">I <span class="v">am not</span> tired.</div><div class="form contraction">I'm not tired.</div>
+          <div class="pron">You</div><div class="form">You <span class="v">are not</span> late.</div><div class="form contraction">You aren't late.</div>
+          <div class="pron">He</div><div class="form">He <span class="v">is not</span> here.</div><div class="form contraction">He isn't here.</div>
+          <div class="pron">She</div><div class="form">She <span class="v">is not</span> Spanish.</div><div class="form contraction">She isn't Spanish.</div>
+          <div class="pron">It</div><div class="form">It <span class="v">is not</span> red.</div><div class="form contraction">It isn't red.</div>
+          <div class="pron">We</div><div class="form">We <span class="v">are not</span> lost.</div><div class="form contraction">We aren't lost.</div>
+          <div class="pron">They</div><div class="form">They <span class="v">are not</span> busy.</div><div class="form contraction">They aren't busy.</div>
+        </div>
+        <div style="font-size:0.95rem;opacity:0.8;font-style:italic;">⚠️ "I amn't" <b>no existe</b>. Siempre se dice <b>"I'm not"</b>.</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function verbToBeIntSlide(){
+  return `
+  <div class="slide" data-title="Verb To Be · Interrogativa">
+    ${bgLayer('#8b5cf6','#06b6d4')}
+    <div class="slide-inner">
+      <div class="big-concept">
+        <div>
+          <div class="eyebrow">Ser / Estar · preguntas</div>
+          <h2>Questions with <em>To Be</em></h2>
+          <p class="subtitle">Para preguntar, <b>invierte el orden</b>: el verbo va primero, luego el pronombre. Y siempre responde con <b>short answers</b>.</p>
+        </div>
+        <div class="glass tobe-table">
+          <div class="th">Pregunta</div><div class="th">Respuesta corta ✓</div><div class="th">Respuesta corta ✗</div>
+          <div class="divider"></div>
+          <div class="form"><span class="v">Am</span> I right?</div><div class="form">Yes, you are.</div><div class="form">No, you aren't.</div>
+          <div class="form"><span class="v">Are</span> you ready?</div><div class="form">Yes, I am.</div><div class="form">No, I'm not.</div>
+          <div class="form"><span class="v">Is</span> he your friend?</div><div class="form">Yes, he is.</div><div class="form">No, he isn't.</div>
+          <div class="form"><span class="v">Is</span> she Mexican?</div><div class="form">Yes, she is.</div><div class="form">No, she isn't.</div>
+          <div class="form"><span class="v">Is</span> it cold?</div><div class="form">Yes, it is.</div><div class="form">No, it isn't.</div>
+          <div class="form"><span class="v">Are</span> we lost?</div><div class="form">Yes, we are.</div><div class="form">No, we aren't.</div>
+          <div class="form"><span class="v">Are</span> they happy?</div><div class="form">Yes, they are.</div><div class="form">No, they aren't.</div>
+        </div>
+        <div style="font-size:0.95rem;opacity:0.8;font-style:italic;">💡 En respuestas cortas <b>NO</b> uses contracciones afirmativas: ✓ "Yes, I am." · ✗ "Yes, I'm."</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function personalPronounsSlide(){
+  return `
+  <div class="slide" data-title="Personal Pronouns">
+    ${bgLayer('#ec4899','#a855f7')}
+    <div class="slide-inner">
+      <div class="big-concept">
+        <div>
+          <div class="eyebrow">Pronombres personales</div>
+          <h2>Personal <em>Pronouns</em></h2>
+          <p class="subtitle">Los pronombres son las palabras que usas para referirte a ti, a otros, o a las cosas. <b>Son la base para presentarte.</b></p>
+        </div>
+        <div class="pron-grid">
+          <div class="pron-card"><div class="pn">I</div><div class="pn-es">Yo</div><div class="use">Cuando hablas <b>de ti mismo</b>.</div></div>
+          <div class="pron-card"><div class="pn">You</div><div class="pn-es">Tú / Usted / Ustedes</div><div class="use">Para la persona con quien hablas (singular o plural).</div></div>
+          <div class="pron-card"><div class="pn">He</div><div class="pn-es">Él</div><div class="use">Para un hombre o niño.</div></div>
+          <div class="pron-card"><div class="pn">She</div><div class="pn-es">Ella</div><div class="use">Para una mujer o niña.</div></div>
+          <div class="pron-card"><div class="pn">It</div><div class="pn-es">Eso / Ello</div><div class="use">Para objetos, animales, el clima, ideas.</div></div>
+          <div class="pron-card"><div class="pn">We</div><div class="pn-es">Nosotros / Nosotras</div><div class="use">Tú y otras personas incluyéndote.</div></div>
+          <div class="pron-card"><div class="pn">They</div><div class="pn-es">Ellos / Ellas</div><div class="use">Grupo de personas o cosas (sin género).</div></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function introduceYourselfSlide(){
+  return `
+  <div class="slide" data-title="Presentarse">
+    ${bgLayer('#06b6d4','#10b981')}
+    <div class="slide-inner">
+      <div class="big-concept">
+        <div>
+          <div class="eyebrow">Todo junto</div>
+          <h2>Present <em>Yourself</em></h2>
+          <p class="subtitle">Usa <b>to be</b> + <b>pronombres</b> para hablar sobre ti: nombre, nacionalidad, profesión, género y estado de ánimo.</p>
+        </div>
+        <div class="glass dialog">
+          <div class="dialog-line"><span class="me">You:</span>Hi! My name <b>is</b> Ramón. I <b>am</b> from Mexico. I <b>am</b> a teacher.</div>
+          <div class="dialog-line"><span class="me">You:</span>I <b>am</b> a man. I <b>am</b> happy today.</div>
+          <div class="dialog-line" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:14px;"><span class="you">Them:</span><b>Are</b> you American?</div>
+          <div class="dialog-line"><span class="me">You:</span>No, I <b>am not</b>. I <b>am</b> Mexican.</div>
+          <div class="dialog-line"><span class="you">Them:</span><b>Are</b> you a student?</div>
+          <div class="dialog-line"><span class="me">You:</span>No, I <b>am not</b> a student. I <b>am</b> a teacher. And you? <b>Are</b> you a student?</div>
+        </div>
+        <div class="examples-row">
+          <div class="glass-soft example-card"><div class="ex-tag">Nombre</div><div class="ex-text">My name <b>is</b> Ana.</div><div class="ex-es">I <b>am</b> Ana.</div></div>
+          <div class="glass-soft example-card"><div class="ex-tag">Nacionalidad</div><div class="ex-text">I <b>am</b> Mexican.</div><div class="ex-es">She <b>is</b> Canadian.</div></div>
+          <div class="glass-soft example-card"><div class="ex-tag">Profesión</div><div class="ex-text">He <b>is</b> a doctor.</div><div class="ex-es">We <b>are</b> students.</div></div>
+          <div class="glass-soft example-card"><div class="ex-tag">Género / Identidad</div><div class="ex-text">I <b>am</b> a woman.</div><div class="ex-es">They <b>are</b> friends.</div></div>
+          <div class="glass-soft example-card"><div class="ex-tag">Estado de ánimo</div><div class="ex-text">I <b>am</b> tired.</div><div class="ex-es">We <b>are</b> excited.</div></div>
+          <div class="glass-soft example-card"><div class="ex-tag">Edad</div><div class="ex-text">I <b>am</b> 25 years old.</div><div class="ex-es">She <b>is</b> young.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ========================== EXERCISES ==========================
+
+function exercise1Slide(){
+  return `
+  <div class="slide" data-title="Exercise 1 · Alphabet">
+    ${bgLayer('#f59e0b','#ef4444')}
+    <div class="slide-inner">
+      <div class="exercise">
+        <div class="ex-header">
+          <div class="ex-number">01</div>
+          <div>
+            <div class="eyebrow">Exercise 1</div>
+            <h2>Letters & <em>Sounds</em></h2>
+          </div>
+        </div>
+        <div class="ex-instruction">Elige la <b>letra correcta</b> para cada pista. Lee el IPA y piensa con qué letra comienza la palabra.</div>
+        <div class="glass ex-body" id="ex1-body"></div>
+        <div class="ex-actions">
+          <button class="ex-action" id="ex1-check">✓ Verificar respuestas</button>
+          <button class="ex-action secondary" id="ex1-reset">↺ Reintentar</button>
+        </div>
+        <div class="ex-result" id="ex1-result"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function exercise2Slide(){
+  return `
+  <div class="slide" data-title="Exercise 2 · Verb To Be">
+    ${bgLayer('#06b6d4','#8b5cf6')}
+    <div class="slide-inner">
+      <div class="exercise">
+        <div class="ex-header">
+          <div class="ex-number">02</div>
+          <div>
+            <div class="eyebrow">Exercise 2</div>
+            <h2>Verb <em>To Be</em></h2>
+          </div>
+        </div>
+        <div class="ex-instruction">Completa cada oración con la forma correcta del <b>verb to be</b>: <i>am, is, are, am not, isn't, aren't</i>.</div>
+        <div class="glass ex-body" id="ex2-body"></div>
+        <div class="ex-actions">
+          <button class="ex-action" id="ex2-check">✓ Verificar respuestas</button>
+          <button class="ex-action secondary" id="ex2-reset">↺ Reintentar</button>
+        </div>
+        <div class="ex-result" id="ex2-result"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function exercise3Slide(){
+  return `
+  <div class="slide" data-title="Exercise 3 · Introduce Yourself">
+    ${bgLayer('#10b981','#ec4899')}
+    <div class="slide-inner">
+      <div class="exercise">
+        <div class="ex-header">
+          <div class="ex-number">03</div>
+          <div>
+            <div class="eyebrow">Exercise 3</div>
+            <h2>Introduce <em>Yourself</em></h2>
+          </div>
+        </div>
+        <div class="ex-instruction">Arma una presentación eligiendo el <b>pronombre</b> y la <b>forma del verbo</b> correctos para cada oración.</div>
+        <div class="glass ex-body" id="ex3-body"></div>
+        <div class="ex-actions">
+          <button class="ex-action" id="ex3-check">✓ Verificar respuestas</button>
+          <button class="ex-action secondary" id="ex3-reset">↺ Reintentar</button>
+        </div>
+        <div class="ex-result" id="ex3-result"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function endSlide(){
+  return `
+  <div class="slide" data-title="Great job!">
+    ${bgLayer('#a855f7','#06b6d4')}
+    <div class="slide-inner">
+      <div class="end">
+        <div class="end-mark">★</div>
+        <h2>Great <em>Job!</em></h2>
+        <p>Completaste la introducción al inglés: alfabeto, pronunciación, spelling bee, verb to be y personal pronouns. <b>You are ready</b> para tu siguiente lección.</p>
+        <button class="end-btn" onclick="go(0)">Volver al inicio ↺</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ===========================================================
+// BUILD ALL SLIDES
+// ===========================================================
+
+const stage = document.getElementById('stage');
+let html = '';
+html += titleSlide();
+html += howToSlide();
+html += alphabetOverviewSlide();
+LETTERS.forEach((l, i) => html += letterSlide(l, i));
+html += spellingBeeSlide();
+html += verbToBeAffSlide();
+html += verbToBeNegSlide();
+html += verbToBeIntSlide();
+html += personalPronounsSlide();
+html += introduceYourselfSlide();
+html += exercise1Slide();
+html += exercise2Slide();
+html += exercise3Slide();
+html += endSlide();
+stage.innerHTML = html;
+
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+
+// ===========================================================
+// NAVIGATION
+// ===========================================================
+function go(i){
+  if(i < 0 || i >= total) return;
+  slides[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  document.getElementById('hudCounter').textContent =
+    String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  document.getElementById('progressBar').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+}
+go(0);
+
+document.getElementById('prevBtn').addEventListener('click', () => go(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => go(current + 1));
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+  else if(e.key === 'Home') { go(0); }
+  else if(e.key === 'End') { go(total - 1); }
+  else if(e.key === 'Escape'){ document.getElementById('menu').classList.remove('open'); }
+});
+
+// Touch swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if(Math.abs(dx) < 50) return;
+  if(dx < 0) go(current + 1); else go(current - 1);
+}, {passive:true});
+
+// ===========================================================
+// MENU (INDEX)
+// ===========================================================
+const menuGrid = document.getElementById('menuGrid');
+slides.forEach((s, i) => {
+  const t = s.dataset.title || 'Slide ' + (i+1);
+  const letter = s.dataset.letter || '';
+  const isLetter = !!letter;
+  const bg = isLetter
+    ? (() => { const l = LETTERS.find(x => x.L === letter); return `background:linear-gradient(135deg,${l.colors[0]},${l.colors[1]});`; })()
+    : 'background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);';
+  const label = isLetter ? letter : (i+1);
+  menuGrid.innerHTML += `
+    <div class="menu-item" style="${bg}" data-idx="${i}">
+      ${isLetter ? `<div style="font-size:2.6rem;">${letter}</div>` : `<div style="font-family:var(--font-display);font-size:1.8rem;">${i+1}</div>`}
+      <div class="mini">${t}</div>
+    </div>`;
+});
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('menu').classList.add('open');
+});
+document.getElementById('menuClose').addEventListener('click', () => {
+  document.getElementById('menu').classList.remove('open');
+});
+menuGrid.addEventListener('click', e => {
+  const item = e.target.closest('.menu-item');
+  if(item){
+    go(parseInt(item.dataset.idx));
+    document.getElementById('menu').classList.remove('open');
+  }
+});
+
+// Alphabet overview click to jump
+document.addEventListener('click', e => {
+  const cell = e.target.closest('.alpha-cell');
+  if(cell && cell.dataset.jump){
+    const idx = slides.findIndex(s => s.dataset.letter === cell.dataset.jump);
+    if(idx >= 0) go(idx);
+  }
+});
+
+// ===========================================================
+// EXERCISES
+// ===========================================================
+
+// --- Exercise 1: alphabet first-letter ---
+const ex1Questions = [
+  { prompt: '¿Con qué letra empieza la palabra <i>/kæt/</i> (gato)?', options: ['B','C','K','Q'], answer: 'C' },
+  { prompt: '¿Con qué letra empieza la palabra <i>/dʒuːs/</i> (jugo)?', options: ['G','J','Y','Z'], answer: 'J' },
+  { prompt: '¿Con qué letra empieza la palabra <i>/haʊs/</i> (casa)?', options: ['H','A','O','U'], answer: 'H' },
+  { prompt: '¿Con qué letra empieza la palabra <i>/juːˈniːk/</i> (único)?', options: ['Y','U','O','I'], answer: 'U' },
+  { prompt: '¿Con qué letra empieza la palabra <i>/ziːroʊ/</i> (cero)?', options: ['S','Z','C','X'], answer: 'Z' },
+  { prompt: '¿Con qué letra empieza la palabra <i>/kwiːn/</i> (reina)?', options: ['K','C','Q','G'], answer: 'Q' }
+];
+const ex1Body = document.getElementById('ex1-body');
+ex1Questions.forEach((q, qi) => {
+  const opts = q.options.map(o => `<button class="opt-btn" data-q="${qi}" data-val="${o}">${o}</button>`).join('');
+  ex1Body.innerHTML += `<div class="question" data-q="${qi}">
+    <div class="question-prompt">${qi+1}. ${q.prompt}</div>
+    <div class="options">${opts}</div>
+  </div>`;
+});
+ex1Body.addEventListener('click', e => {
+  const btn = e.target.closest('.opt-btn');
+  if(!btn) return;
+  const qi = btn.dataset.q;
+  const qBlock = ex1Body.querySelector(`.question[data-q="${qi}"]`);
+  qBlock.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected','correct','wrong'));
+  btn.classList.add('selected');
+  qBlock.dataset.selected = btn.dataset.val;
+});
+document.getElementById('ex1-check').addEventListener('click', () => {
+  let correct = 0, answered = 0;
+  ex1Questions.forEach((q, qi) => {
+    const qBlock = ex1Body.querySelector(`.question[data-q="${qi}"]`);
+    const sel = qBlock.dataset.selected;
+    if(sel) answered++;
+    qBlock.querySelectorAll('.opt-btn').forEach(b => {
+      b.classList.remove('correct','wrong');
+      if(b.dataset.val === q.answer) b.classList.add('correct');
+      else if(b.classList.contains('selected')) b.classList.add('wrong');
+      b.disabled = true;
+    });
+    if(sel === q.answer) correct++;
+  });
+  const res = document.getElementById('ex1-result');
+  if(answered === 0){
+    res.className = 'ex-result bad';
+    res.innerHTML = `⚠️ Primero elige una respuesta para cada pregunta.`;
+    ex1Body.querySelectorAll('.opt-btn').forEach(b => b.disabled = false);
+    return;
+  }
+  res.className = 'ex-result ' + (correct === ex1Questions.length ? 'good' : (correct >= ex1Questions.length/2 ? 'good' : 'bad'));
+  res.innerHTML = correct === ex1Questions.length
+    ? `🎉 ¡Perfecto! ${correct}/${ex1Questions.length} correctas. Presiona ↺ Reintentar para practicar otra vez.`
+    : `${correct >= ex1Questions.length/2 ? '👍 Bien hecho' : '💪 Sigue practicando'} · ${correct}/${ex1Questions.length} correctas. Las respuestas en verde son las correctas.`;
+});
+document.getElementById('ex1-reset').addEventListener('click', () => {
+  ex1Body.querySelectorAll('.opt-btn').forEach(b => {
+    b.classList.remove('selected','correct','wrong');
+    b.disabled = false;
+  });
+  ex1Body.querySelectorAll('.question').forEach(q => delete q.dataset.selected);
+  const res = document.getElementById('ex1-result');
+  res.className = 'ex-result';
+  res.innerHTML = '';
+});
+
+// --- Exercise 2: Verb to be fill-in ---
+const ex2Questions = [
+  { parts: ['She ', ' a teacher from Canada.'], options: ['am','is','are'], answer: 'is' },
+  { parts: ['I ', ' very happy today!'], options: ['am','is','are'], answer: 'am' },
+  { parts: ['They ', ' students at UNAM.'], options: ['am','is','are'], answer: 'are' },
+  { parts: ['He ', ' not my brother.'], options: ['am not','isn\'t','aren\'t'], answer: "isn't" },
+  { parts: ['', ' you from Mexico?'], options: ['Am','Is','Are'], answer: 'Are' },
+  { parts: ['We ', ' not late — we\'re early!'], options: ["am not","isn't","aren't"], answer: "aren't" }
+];
+const ex2Body = document.getElementById('ex2-body');
+ex2Questions.forEach((q, qi) => {
+  const opts = q.options.map(o => `<button class="opt-btn" data-q="${qi}" data-val="${o}">${o}</button>`).join('');
+  ex2Body.innerHTML += `<div class="question" data-q="${qi}">
+    <div class="question-prompt">${qi+1}. ${q.parts[0]}<span class="blank" data-qblank="${qi}">?</span>${q.parts[1]}</div>
+    <div class="options">${opts}</div>
+  </div>`;
+});
+ex2Body.addEventListener('click', e => {
+  const btn = e.target.closest('.opt-btn');
+  if(!btn) return;
+  const qi = btn.dataset.q;
+  const qBlock = ex2Body.querySelector(`.question[data-q="${qi}"]`);
+  qBlock.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected','correct','wrong'));
+  btn.classList.add('selected');
+  const blank = qBlock.querySelector('.blank');
+  blank.textContent = btn.dataset.val;
+  blank.classList.add('filled');
+  blank.classList.remove('correct','wrong');
+  qBlock.dataset.selected = btn.dataset.val;
+});
+document.getElementById('ex2-check').addEventListener('click', () => {
+  let correct = 0, answered = 0;
+  ex2Questions.forEach((q, qi) => {
+    const qBlock = ex2Body.querySelector(`.question[data-q="${qi}"]`);
+    const sel = qBlock.dataset.selected;
+    if(sel) answered++;
+    const blank = qBlock.querySelector('.blank');
+    blank.classList.remove('correct','wrong');
+    qBlock.querySelectorAll('.opt-btn').forEach(b => {
+      b.classList.remove('correct','wrong');
+      if(b.dataset.val === q.answer) b.classList.add('correct');
+      else if(b.classList.contains('selected')) b.classList.add('wrong');
+      b.disabled = true;
+    });
+    if(sel === q.answer){ correct++; blank.classList.add('correct'); }
+    else if(sel) blank.classList.add('wrong');
+  });
+  const res = document.getElementById('ex2-result');
+  if(answered === 0){
+    res.className = 'ex-result bad';
+    res.innerHTML = `⚠️ Primero completa al menos una oración.`;
+    ex2Body.querySelectorAll('.opt-btn').forEach(b => b.disabled = false);
+    return;
+  }
+  res.className = 'ex-result ' + (correct === ex2Questions.length ? 'good' : (correct >= ex2Questions.length/2 ? 'good' : 'bad'));
+  res.innerHTML = correct === ex2Questions.length
+    ? `🎉 ¡Excelente! ${correct}/${ex2Questions.length} correctas. Presiona ↺ Reintentar para practicar otra vez.`
+    : `${correct >= ex2Questions.length/2 ? '👍 Muy bien' : '💪 Repasa la tabla del verb to be'} · ${correct}/${ex2Questions.length} correctas.`;
+});
+document.getElementById('ex2-reset').addEventListener('click', () => {
+  ex2Body.querySelectorAll('.opt-btn').forEach(b => {
+    b.classList.remove('selected','correct','wrong');
+    b.disabled = false;
+  });
+  ex2Body.querySelectorAll('.question').forEach(q => delete q.dataset.selected);
+  ex2Body.querySelectorAll('.blank').forEach(b => {
+    b.textContent = '?';
+    b.classList.remove('filled','correct','wrong');
+  });
+  const res = document.getElementById('ex2-result');
+  res.className = 'ex-result';
+  res.innerHTML = '';
+});
+
+// --- Exercise 3: personal pronouns + to be combo ---
+const ex3Questions = [
+  { parts: ['', ' am Ramón. I am Mexican.'], options: ['I','He','She','They'], answer: 'I' },
+  { parts: ['My sister is a doctor. ', ' is very smart.'], options: ['He','She','It','They'], answer: 'She' },
+  { parts: ['Look at that cat! ', ' is so cute.'], options: ['He','She','It','We'], answer: 'It' },
+  { parts: ['Ana and I are friends. ', ' are from Oaxaca.'], options: ['They','We','You','I'], answer: 'We' },
+  { parts: ['Are Peter and John brothers? Yes, ', ' are.'], options: ['we','you','they','he'], answer: 'they' },
+  { parts: ['Hi! My name ', ' Sofia. I am a student.'], options: ['am','is','are'], answer: 'is' }
+];
+const ex3Body = document.getElementById('ex3-body');
+ex3Questions.forEach((q, qi) => {
+  const opts = q.options.map(o => `<button class="opt-btn" data-q="${qi}" data-val="${o}">${o}</button>`).join('');
+  ex3Body.innerHTML += `<div class="question" data-q="${qi}">
+    <div class="question-prompt">${qi+1}. ${q.parts[0]}<span class="blank" data-qblank="${qi}">?</span>${q.parts[1]}</div>
+    <div class="options">${opts}</div>
+  </div>`;
+});
+ex3Body.addEventListener('click', e => {
+  const btn = e.target.closest('.opt-btn');
+  if(!btn) return;
+  const qi = btn.dataset.q;
+  const qBlock = ex3Body.querySelector(`.question[data-q="${qi}"]`);
+  qBlock.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected','correct','wrong'));
+  btn.classList.add('selected');
+  const blank = qBlock.querySelector('.blank');
+  blank.textContent = btn.dataset.val;
+  blank.classList.add('filled');
+  blank.classList.remove('correct','wrong');
+  qBlock.dataset.selected = btn.dataset.val;
+});
+document.getElementById('ex3-check').addEventListener('click', () => {
+  let correct = 0, answered = 0;
+  ex3Questions.forEach((q, qi) => {
+    const qBlock = ex3Body.querySelector(`.question[data-q="${qi}"]`);
+    const sel = qBlock.dataset.selected;
+    if(sel) answered++;
+    const blank = qBlock.querySelector('.blank');
+    blank.classList.remove('correct','wrong');
+    qBlock.querySelectorAll('.opt-btn').forEach(b => {
+      b.classList.remove('correct','wrong');
+      if(b.dataset.val === q.answer) b.classList.add('correct');
+      else if(b.classList.contains('selected')) b.classList.add('wrong');
+      b.disabled = true;
+    });
+    if(sel === q.answer){ correct++; blank.classList.add('correct'); }
+    else if(sel) blank.classList.add('wrong');
+  });
+  const res = document.getElementById('ex3-result');
+  if(answered === 0){
+    res.className = 'ex-result bad';
+    res.innerHTML = `⚠️ Primero completa al menos una oración.`;
+    ex3Body.querySelectorAll('.opt-btn').forEach(b => b.disabled = false);
+    return;
+  }
+  res.className = 'ex-result ' + (correct === ex3Questions.length ? 'good' : (correct >= ex3Questions.length/2 ? 'good' : 'bad'));
+  res.innerHTML = correct === ex3Questions.length
+    ? `🎉 ¡Increíble! ${correct}/${ex3Questions.length} — ¡listo para conversar en inglés!`
+    : `${correct >= ex3Questions.length/2 ? '👍 Buen trabajo' : '💪 Revisa pronombres y to be'} · ${correct}/${ex3Questions.length} correctas.`;
+});
+document.getElementById('ex3-reset').addEventListener('click', () => {
+  ex3Body.querySelectorAll('.opt-btn').forEach(b => {
+    b.classList.remove('selected','correct','wrong');
+    b.disabled = false;
+  });
+  ex3Body.querySelectorAll('.question').forEach(q => delete q.dataset.selected);
+  ex3Body.querySelectorAll('.blank').forEach(b => {
+    b.textContent = '?';
+    b.classList.remove('filled','correct','wrong');
+  });
+  const res = document.getElementById('ex3-result');
+  res.className = 'ex-result';
+  res.innerHTML = '';
+});
+</script>
+</body>
+</html>

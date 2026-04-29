@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sofia's Beautiful World — English Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a16;--card:#14142a;--card2:#1c1c36;--border:#252545;
+  --gold:#c9956c;--gold-l:#e8c09a;--rose:#e8a4b8;--text:#f0e8e0;--dim:#8a8aaa;
+  --ps:#74b9ff;--pc:#2ed8a8;--pv:#ff9f57;--adj:#c3a3e8;--adv:#ffd93d;
+  --cn:#ff9eb5;--un:#ffbb82;--dem:#7fdbff;--comp:#b8e0ff;--prep:#a8d8ea;
+  --conj:#9ab0c0;--inter:#ff6b9d;--nf:#00d2a4;
+}
+html,body{width:100%;height:100%;margin:0;padding:0;font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;position:fixed;top:0;left:0}
+#pb{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--rose));transition:width .4s;z-index:100}
+.track{display:flex;width:calc(13*100vw);height:100vh;transition:transform .55s cubic-bezier(.25,.46,.45,.94)}
+.slide{width:100vw;min-height:100vh;flex-shrink:0;overflow-y:auto;padding:48px 20px 90px;display:flex;flex-direction:column;align-items:center}
+.sh{width:100%;max-width:860px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sn{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.sc{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);border-left:1px solid var(--border);padding-left:12px}
+h1.title{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,40px);color:var(--gold-l);width:100%;max-width:860px;margin-bottom:18px;line-height:1.2}
+.accent{width:50px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px;margin-bottom:14px;max-width:860px;width:100%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 36px;max-width:860px;width:100%;line-height:1.95;font-size:clamp(13.5px,1.55vw,17px)}
+.card p{margin-bottom:14px}
+.card p:last-child{margin-bottom:0}
+.em-note{color:var(--dim);font-style:italic;font-size:.88em;margin-bottom:10px}
+.dialogue{background:var(--card2);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:16px 20px;margin:12px 0}
+.dl{display:flex;gap:10px;margin-bottom:10px}
+.dl:last-child{margin-bottom:0}
+.spk{font-weight:700;color:var(--gold);min-width:62px;flex-shrink:0;font-style:normal}
+.spt{font-style:italic}
+
+/* ── Grammar spans: plain by default ─────────────────────────── */
+.ps,.pc,.pv,.adj,.adv,.cn,.un,.dem,.comp,.prep,.conj,.inter,.nf{
+  color:inherit;font-weight:inherit;font-style:inherit;
+  text-decoration:none;transition:color .22s,text-decoration .22s
+}
+/* Activated states (.hi added/removed by JS) */
+.ps.hi  {color:var(--ps);text-decoration:underline;text-underline-offset:3px}
+.pc.hi  {color:var(--pc);text-decoration:underline;text-underline-offset:3px;font-style:italic}
+.pv.hi  {color:var(--pv);text-decoration:underline dotted;text-underline-offset:3px;font-weight:700}
+.adj.hi {color:var(--adj);text-decoration:underline;text-underline-offset:3px}
+.adv.hi {color:var(--adv);text-decoration:underline;text-underline-offset:3px}
+.cn.hi  {color:var(--cn);text-decoration:underline;text-underline-offset:3px}
+.un.hi  {color:var(--un);text-decoration:underline;text-underline-offset:3px}
+.dem.hi {color:var(--dem);text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.comp.hi{color:var(--comp);text-decoration:underline;text-underline-offset:3px;font-style:italic}
+.prep.hi{color:var(--prep);text-decoration:underline dotted;text-underline-offset:3px}
+.conj.hi{color:var(--conj);text-decoration:underline;text-underline-offset:3px}
+.inter.hi{color:var(--inter);text-decoration:underline;text-underline-offset:3px;font-weight:900}
+.nf.hi  {color:var(--nf);text-decoration:underline;text-underline-offset:3px}
+
+/* ── Legend ──────────────────────────────────────────────────── */
+.legend{display:flex;flex-wrap:wrap;gap:6px;max-width:860px;width:100%;margin-top:16px}
+.leg-lbl{width:100%;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;background:var(--card);
+    padding:4px 10px 4px 8px;border-radius:20px;border:1px solid var(--border);
+    color:var(--dim);cursor:pointer;user-select:none;transition:all .2s}
+.li:hover{border-color:rgba(201,149,108,.55);color:var(--text);background:rgba(201,149,108,.07)}
+.li.on{border-color:var(--gold);background:rgba(201,149,108,.16);color:var(--text)}
+.ld{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:box-shadow .2s}
+.li.on .ld{box-shadow:0 0 6px 1px}
+.clr{font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid var(--border);
+      background:var(--card);color:var(--dim);cursor:pointer;transition:all .2s}
+.clr:hover{border-color:var(--rose);color:var(--rose)}
+
+/* ── Gram tip ─────────────────────────────────────────────────── */
+.gtip{background:var(--card2);border:1px solid rgba(116,185,255,.18);border-radius:10px;
+       padding:12px 16px;max-width:860px;width:100%;margin-top:14px;font-size:12.5px;
+       color:var(--dim);line-height:1.65}
+.gtip strong{color:var(--ps)}
+.gtip.g{border-color:rgba(46,216,168,.18)}
+.gtip.g strong{color:var(--pc)}
+
+/* ── Character cards ─────────────────────────────────────────── */
+.row{display:flex;gap:10px;align-items:flex-start;max-width:860px;width:100%;margin-bottom:16px;flex-wrap:wrap}
+.chb{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;text-align:center;min-width:96px}
+.che{font-size:44px;line-height:1}
+.chn{font-family:'Playfair Display',serif;color:var(--gold);font-size:13px;font-weight:700;margin-top:6px}
+.chr{font-size:10px;color:var(--dim);margin-top:3px}
+
+/* ── Quiz ────────────────────────────────────────────────────── */
+.qwrap{max-width:760px;width:100%}
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:16px}
+.qnum{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.qtext{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:18px;line-height:1.45;color:var(--text)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:13px 15px;
+     color:var(--text);font-size:13.5px;font-family:'Lato',sans-serif;cursor:pointer;
+     transition:all .2s;text-align:left;line-height:1.35}
+.opt:hover:not(:disabled){border-color:var(--gold);background:rgba(201,149,108,.1)}
+.opt.ok{background:rgba(46,216,168,.15);border-color:var(--pc);color:var(--pc)}
+.opt.no{background:rgba(255,107,157,.15);border-color:var(--inter);color:var(--inter)}
+.fb{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
+.fb.show{display:block}
+.fb.ok{background:rgba(46,216,168,.1);color:var(--pc);border:1px solid var(--pc)}
+.fb.no{background:rgba(255,107,157,.1);color:var(--inter);border:1px solid var(--inter)}
+.srow{display:flex;align-items:center;gap:14px;max-width:760px;width:100%;margin-bottom:18px;
+       background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 22px}
+.slbl{font-size:12px;color:var(--dim)}
+.sval{font-size:22px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:700}
+
+/* ── Crossword ───────────────────────────────────────────────── */
+.cwlay{display:flex;gap:28px;max-width:920px;width:100%;align-items:flex-start;flex-wrap:wrap}
+.cwg{display:grid;grid-template-columns:repeat(6,50px);grid-template-rows:repeat(10,50px);gap:3px;flex-shrink:0}
+.cwc{width:50px;height:50px;position:relative}
+.cwc.in{background:var(--card2);border:1px solid var(--border);border-radius:4px}
+.cwc.ck{background:rgba(46,216,168,.2)!important;border-color:var(--pc)!important}
+.cwc.cx{background:rgba(255,107,157,.2)!important;border-color:var(--inter)!important}
+.cwn{position:absolute;top:2px;left:3px;font-size:9px;color:var(--gold);pointer-events:none;font-family:'Playfair Display',serif}
+.cwi{width:100%;height:100%;background:transparent;border:none;outline:none;color:var(--text);
+      font-size:22px;font-family:'Playfair Display',serif;font-weight:700;text-align:center;
+      text-transform:uppercase;caret-color:var(--gold)}
+.cwbox{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px}
+.cwbox h4{font-family:'Playfair Display',serif;color:var(--gold);font-size:15px;margin-bottom:12px;
+           padding-bottom:7px;border-bottom:1px solid var(--border)}
+.cwcl{font-size:13px;margin-bottom:9px;line-height:1.45;color:var(--dim)}
+.cwcl strong{color:var(--gold-l)}
+.cwbtns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.gbtn{background:linear-gradient(135deg,var(--gold),var(--rose));border:none;border-radius:9px;
+       padding:11px 24px;color:#0a0a16;font-size:13px;font-weight:700;font-family:'Lato',sans-serif;
+       cursor:pointer;letter-spacing:.5px;transition:opacity .2s}
+.gbtn:hover{opacity:.82}
+.gbtn.sec{background:var(--card2);color:var(--gold);border:1px solid var(--gold)}
+.gbtn.sec:hover{background:rgba(201,149,108,.1)}
+.cwres{margin-top:12px;font-size:14px;font-style:italic;color:var(--gold);display:none}
+
+/* ── Matching ────────────────────────────────────────────────── */
+.mwrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:860px;width:100%}
+.mcol h4{font-family:'Playfair Display',serif;color:var(--gold);font-size:14px;margin-bottom:12px;
+          padding-bottom:7px;border-bottom:1px solid var(--border)}
+.mit{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:11px 15px;
+     margin-bottom:9px;cursor:pointer;font-size:13.5px;transition:all .2s;user-select:none;line-height:1.4}
+.mit:hover:not(.matched):not(.msel){border-color:var(--gold);background:rgba(201,149,108,.08)}
+.mit.msel{border-color:var(--pv);background:rgba(255,159,87,.15);box-shadow:0 0 0 2px rgba(255,159,87,.3)}
+.mit.matched{border-color:var(--pc);background:rgba(46,216,168,.1);cursor:default;opacity:.8}
+.mit.mwrong{animation:mshake .42s ease}
+@keyframes mshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mscore{max-width:860px;width:100%;text-align:center;margin-top:14px;font-size:15px;color:var(--gold)}
+.mtick{color:var(--pc);font-weight:700;margin-left:6px}
+
+/* ── Fill in Blank ───────────────────────────────────────────── */
+.fibwrap{max-width:820px;width:100%}
+.wbank{display:flex;flex-wrap:wrap;gap:8px;background:var(--card);border:1px solid var(--border);
+        border-radius:12px;padding:14px 18px;margin-bottom:22px}
+.wlbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);width:100%;margin-bottom:6px}
+.wchip{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:6px 15px;
+        font-size:13.5px;cursor:pointer;transition:all .2s;font-weight:700;color:var(--pv)}
+.wchip:hover:not(.used){border-color:var(--pv);background:rgba(255,159,87,.1)}
+.wchip.wsel{border-color:var(--pv);background:rgba(255,159,87,.2);box-shadow:0 0 0 2px rgba(255,159,87,.35)}
+.wchip.used{opacity:.35;cursor:default;text-decoration:line-through}
+.fibrow{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px 18px;
+         margin-bottom:10px;font-size:15.5px;line-height:1.7;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.fibn{font-size:12px;color:var(--gold);font-weight:700;background:rgba(201,149,108,.15);border-radius:50%;
+       width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blank{display:inline-block;min-width:120px;border-bottom:2px solid var(--gold);text-align:center;
+        cursor:pointer;padding:2px 8px;color:var(--gold);font-weight:700;border-radius:4px;transition:all .2s}
+.blank:hover{background:rgba(201,149,108,.1)}
+.blank.filled{color:var(--pv);border-color:var(--pv)}
+.blank.bok{color:var(--pc);border-color:var(--pc);background:rgba(46,216,168,.1)}
+.blank.bno{color:var(--inter);border-color:var(--inter);background:rgba(255,107,157,.1)}
+.fibbtns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+.nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;
+     gap:14px;z-index:50;background:rgba(20,20,42,.9);backdrop-filter:blur(14px);
+     border:1px solid var(--border);border-radius:50px;padding:9px 18px}
+.nb{background:transparent;border:1px solid var(--border);border-radius:50%;width:38px;height:38px;
+     color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.nb:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.nb:disabled{opacity:.25;cursor:default}
+.nc{font-size:12px;color:var(--dim);min-width:55px;text-align:center;letter-spacing:.5px}
+.dots{display:flex;gap:5px;align-items:center}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.dot:hover{background:var(--dim)}
+.dot.act{background:var(--gold);width:14px;border-radius:3px}
+
+/* ── Animations ──────────────────────────────────────────────── */
+@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide>*{animation:fi .5s ease both}
+.slide>*:nth-child(2){animation-delay:.07s}
+.slide>*:nth-child(3){animation-delay:.13s}
+.slide>*:nth-child(4){animation-delay:.18s}
+.slide>*:nth-child(5){animation-delay:.23s}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media(max-width:600px){
+  .opts{grid-template-columns:1fr}
+  .mwrap{grid-template-columns:1fr}
+  .cwlay{flex-direction:column}
+  .cwg{grid-template-columns:repeat(6,42px);grid-template-rows:repeat(10,42px)}
+  .cwc{width:42px;height:42px}
+  .cwi{font-size:18px}
+  .card{padding:18px}
+}
+</style>
+</head>
+<body>
+<div id="pb"></div>
+<div class="track" id="track">
+
+<!-- ═══ SLIDE 1 — Meet Sofia ════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 01 / 13</span><span class="sc">📖 Story — Part 1</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Meet Sofia</h1>
+  <div class="row">
+    <div class="chb"><div class="che">💆‍♀️</div><div class="chn">Sofia</div><div class="chr">Facialist</div></div>
+    <div class="chb"><div class="che">🌿</div><div class="chn">Glow Spa</div><div class="chr">Beauty Center</div></div>
+  </div>
+  <div class="card">
+    <p><span class="inter">Wow!</span> <span class="dem">This</span> <span class="ps">is</span> <strong>Sofia</strong>. She <span class="ps">is</span> a <span class="adj">young</span> <span class="conj">and</span> <span class="adj">talented</span> <span class="cn">facialist</span>. Sofia <span class="ps">works</span> <span class="prep">at</span> <em>Glow Spa</em> — a <span class="adj">small</span> <span class="conj">but</span> <span class="adj">beautiful</span> <span class="cn">beauty center</span> <span class="prep">in</span> the city.</p>
+    <p><span class="dem">This</span> spa <span class="ps">is</span> <span class="nf">near</span> the main plaza. It <span class="ps">is</span> <span class="nf">close to</span> the park, <span class="conj">but</span> <span class="nf">far from</span> the highway. <span class="dem">That</span> <span class="adj">big</span> <span class="cn">building</span> <span class="prep">across</span> the street <span class="ps">is</span> a hotel, <span class="conj">but</span> <span class="dem">this</span> building <span class="ps">is</span> Sofia's favorite place <span class="prep">in</span> the world.</p>
+    <p>Sofia <span class="ps">loves</span> her job. She <span class="adv">always</span> <span class="pv">shows up</span> <span class="adv">early</span>. She <span class="ps">doesn't</span> like to be late. <span class="dem">These</span> <span class="ps">are</span> her tools: <span class="adj">clean</span> <span class="cn">towels</span>, <span class="adj">small</span> <span class="cn">brushes</span>, <span class="cn">bottles</span>, <span class="conj">and</span> <span class="adj">special</span> <span class="un">cream</span>. <span class="adj">Soft</span> <span class="un">music</span> <span class="adv">always</span> <span class="ps">plays</span> <span class="prep">inside</span> the spa. <span class="inter">Oh,</span> it <span class="ps">is</span> a <span class="adj">magical</span> place!</p>
+  </div>
+  <div class="gtip"><strong>Present Simple (+):</strong> subject + verb(+s) → She <span style="color:var(--ps)">works</span> / Music <span style="color:var(--ps)">plays</span> &nbsp;|&nbsp; <strong>Present Simple (−):</strong> subject + doesn't + base verb → She <span style="color:var(--ps)">doesn't like</span> to be late.</div>
+  <div class="legend" id="leg1"></div>
+</div>
+
+<!-- ═══ SLIDE 2 — Glow Spa ══════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 02 / 13</span><span class="sc">📖 Story — Part 2</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Glow Spa</h1>
+  <div class="card">
+    <p><em>Glow Spa</em> <span class="ps">is</span> <span class="comp">more relaxing than</span> a regular clinic. It <span class="ps">is</span> <span class="comp">cleaner than</span> most places <span class="prep">in</span> the city. In fact, it <span class="ps">is</span> <span class="comp">the most beautiful</span> spa <span class="prep">in</span> the neighborhood.</p>
+    <p><span class="dem">These</span> <span class="cn">bottles</span> <span class="prep">on</span> the shelf <span class="ps">are</span> new — they <span class="ps">contain</span> <span class="adj">organic</span> <span class="un">cream</span> <span class="conj">and</span> <span class="adj">natural</span> <span class="un">oil</span>. <span class="dem">Those</span> <span class="adj">old</span> <span class="cn">cabinets</span> <span class="prep">in</span> the corner <span class="ps">have</span> extra supplies. Sofia <span class="ps">doesn't</span> use <span class="adj">chemical</span> products — she <span class="ps">believes</span> <span class="prep">in</span> <span class="adj">natural</span> beauty. <span class="inter">Well,</span> that <span class="ps">is</span> a <span class="adj">great</span> philosophy!</p>
+    <p>Sofia <span class="pv">sets up</span> the treatment room every morning. She <span class="pv">turns on</span> the <span class="adj">soft</span> <span class="un">music</span> <span class="conj">and</span> the <span class="adj">warm</span> lamp. The room <span class="ps">is</span> <span class="adj">small</span>, <span class="conj">but</span> it <span class="ps">is</span> <span class="comp">more comfortable than</span> a <span class="adj">big</span> hospital room. It <span class="ps">is</span> <span class="comp">the most peaceful</span> place Sofia <span class="ps">knows</span>.</p>
+  </div>
+  <div class="gtip"><strong>Comparatives:</strong> adj + -er than / more + adj + than → <span style="color:var(--ps)">cleaner than</span> / <span style="color:var(--ps)">more relaxing than</span><br><strong>Superlatives:</strong> the + adj + -est / the most + adj → <span style="color:var(--ps)">the most beautiful</span> / <span style="color:var(--ps)">the most peaceful</span></div>
+  <div class="legend" id="leg2"></div>
+</div>
+
+<!-- ═══ SLIDE 3 — Morning Routine ══════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 03 / 13</span><span class="sc">📖 Story — Part 3</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Sofia's Morning Routine</h1>
+  <div class="card">
+    <p>Sofia <span class="pv">wakes up</span> <span class="adv">early</span> every day. She <span class="pv">puts on</span> her <span class="adj">white</span> uniform <span class="conj">and</span> <span class="pv">picks up</span> her <span class="cn">bag</span>. She <span class="pv">shows up</span> <span class="prep">at</span> the spa <span class="prep">at</span> 8:00 AM, <span class="conj">because</span> she <span class="ps">likes</span> to prepare everything before the <span class="cn">clients</span> <span class="pv">come in</span>.</p>
+    <p>She <span class="adv">usually</span> <span class="ps">makes</span> a cup of <span class="un">tea</span>, <span class="conj">but</span> she <span class="ps">doesn't</span> eat <span class="prep">at</span> work. She <span class="adv">quickly</span> <span class="ps">cleans</span> the treatment table <span class="conj">and</span> <span class="ps">checks</span> her schedule. She <span class="ps">has</span> five <span class="cn">clients</span> today — <span class="dem">that</span> <span class="ps">is</span> a <span class="adj">busy</span> day!</p>
+    <p>Sofia <span class="ps">works</span> <span class="adv">hard</span>, <span class="conj">but</span> she <span class="ps">loves</span> every moment. She <span class="ps">is</span> a <span class="adj">professional</span>, <span class="conj">so</span> she <span class="adv">never</span> <span class="pv">gives up</span>. She <span class="pv">takes care of</span> every detail, <span class="conj">because</span> she <span class="ps">wants</span> the <span class="comp">best</span> results <span class="prep">for</span> her <span class="cn">clients</span>.</p>
+  </div>
+  <div class="gtip"><strong>Adverbs of frequency:</strong> <span style="color:var(--adv)">always → usually → sometimes → never</span><br>She <span style="color:var(--adv)">always</span> shows up early. &nbsp;/&nbsp; She <span style="color:var(--adv)">usually</span> makes tea. &nbsp;/&nbsp; She <span style="color:var(--adv)">never</span> gives up.</div>
+  <div class="legend" id="leg3"></div>
+</div>
+
+<!-- ═══ SLIDE 4 — At Work ═══════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 04 / 13</span><span class="sc">📖 Story — Part 4</span></div>
+  <div class="accent"></div>
+  <h1 class="title">A Morning at Work</h1>
+  <div class="row">
+    <div class="chb"><div class="che">💆‍♀️</div><div class="chn">Sofia</div><div class="chr">Facialist</div></div>
+    <div class="chb"><div class="che">😌</div><div class="chn">Maria</div><div class="chr">Client</div></div>
+    <div class="chb"><div class="che">📋</div><div class="chn">Lena</div><div class="chr">Receptionist</div></div>
+  </div>
+  <div class="card">
+    <p>Right now, it <span class="ps">is</span> 10:00 AM. Sofia <span class="pc">is applying</span> a <span class="adj">thick</span> <span class="un">cream</span> <span class="prep">to</span> Maria's face. Maria <span class="pc">is lying</span> <span class="adv">comfortably</span> <span class="prep">on</span> the treatment table. The <span class="un">cream</span> <span class="pc">is working</span> <span class="prep">on</span> Maria's <span class="un">skin</span> <span class="adv">slowly</span> <span class="conj">and</span> <span class="adv">gently</span>.</p>
+    <p>Sofia <span class="pc">is not talking</span> <span class="adv">loudly</span>. She <span class="pc">is mixing</span> two products <span class="prep">in</span> a <span class="adj">small</span> <span class="cn">bowl</span>. She <span class="pv">is looking after</span> Maria <span class="adv">very</span> <span class="adv">attentively</span>. <span class="prep">Next to</span> the table, there <span class="ps">is</span> a glass of <span class="un">water</span> <span class="conj">and</span> some <span class="cn">cotton pads</span>.</p>
+    <p>The receptionist, Lena, <span class="pc">is coming in</span> <span class="prep">to</span> the room. She <span class="pc">is carrying</span> a new <span class="cn">bottle</span> of <span class="un">serum</span>. "Sofia, we <span class="pv">are running out of</span> the <span class="un">rose oil</span>!" she <span class="ps">says</span>. Sofia <span class="pv">is working on</span> a solution — she <span class="pc">is not giving up</span>.</p>
+  </div>
+  <div class="gtip g"><strong>Present Continuous (+):</strong> is/are + verb-ING → <span style="color:var(--pc)">She is applying</span> cream.<br><strong>Present Continuous (−):</strong> isn't/aren't + verb-ING → <span style="color:var(--pc)">She is not talking</span> loudly.<br><strong>Present Continuous (?):</strong> Is/Are + subject + verb-ING? → <span style="color:var(--pc)">Is she mixing</span> products?</div>
+  <div class="legend" id="leg4"></div>
+</div>
+
+<!-- ═══ SLIDE 5 — Dialogue ══════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 05 / 13</span><span class="sc">📖 Story — Part 5</span></div>
+  <div class="accent"></div>
+  <h1 class="title">A Conversation</h1>
+  <div class="card">
+    <p class="em-note">(Sofia finishes the treatment. Maria opens her eyes and smiles.)</p>
+    <div class="dialogue">
+      <div class="dl"><span class="spk">Maria:</span><span class="spt">"<span class="inter">Wow!</span> Sofia, my <span class="un">skin</span> <span class="pc">is feeling</span> so <span class="adj">soft</span>! <span class="ps">Is</span> <span class="dem">this</span> the new <span class="un">cream</span>?"</span></div>
+      <div class="dl"><span class="spk">Sofia:</span><span class="spt">"Yes, it <span class="ps">is</span>. <span class="dem">This</span> <span class="ps">is</span> our <span class="comp">best</span> <span class="adj">organic</span> <span class="un">cream</span>. <span class="dem">Those</span> <span class="ps">are</span> the results after only one session!"</span></div>
+      <div class="dl"><span class="spk">Maria:</span><span class="spt">"<span class="inter">Oh!</span> Really? <span class="ps">Does</span> it work <span class="prep">for</span> <span class="adj">sensitive</span> <span class="un">skin</span>?"</span></div>
+      <div class="dl"><span class="spk">Sofia:</span><span class="spt">"Of course! It <span class="ps">doesn't</span> contain <span class="adj">chemical</span> additives. It <span class="ps">is</span> <span class="adv">very</span> <span class="adj">gentle</span>. <span class="dem">That</span> <span class="ps">is</span> why your <span class="un">skin</span> <span class="ps">looks</span> so <span class="adj">smooth</span> right now."</span></div>
+      <div class="dl"><span class="spk">Maria:</span><span class="spt">"<span class="inter">Well…</span> <span class="ps">Is</span> the next appointment <span class="nf">far from</span> today?"</span></div>
+      <div class="dl"><span class="spk">Sofia:</span><span class="spt">"Not at all! We <span class="ps">have</span> availability next week. <span class="dem">This</span> treatment <span class="ps">is</span> <span class="comp">the most effective</span> one we offer, <span class="conj">and</span> you <span class="pc">are going</span> to love the results!"</span></div>
+      <div class="dl"><span class="spk">Maria:</span><span class="spt">"<span class="inter">Great!</span> I <span class="adv">always</span> <span class="pv">come back</span> <span class="prep">to</span> Glow Spa. It <span class="ps">is</span> <span class="comp">the best</span> place <span class="prep">in</span> the city!"</span></div>
+    </div>
+  </div>
+  <div class="gtip"><strong>Questions — Present Simple:</strong> Does + subject + base verb? → <span style="color:var(--ps)">Does it work?</span><br><strong>Questions — Present Continuous:</strong> Is/Are + subject + verb-ING? → <span style="color:var(--pc)">Is she applying</span> it?</div>
+  <div class="legend" id="leg5"></div>
+</div>
+
+<!-- ═══ SLIDE 6 — End of Day ════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 06 / 13</span><span class="sc">📖 Story — Part 6</span></div>
+  <div class="accent"></div>
+  <h1 class="title">The End of the Day</h1>
+  <div class="card">
+    <p>It <span class="ps">is</span> 6:00 PM. Sofia <span class="pc">is putting away</span> the products <span class="conj">and</span> <span class="pc">is cleaning up</span> the treatment room. She <span class="ps">doesn't</span> leave anything <span class="prep">on</span> the table. She <span class="pv">picks up</span> the <span class="cn">towels</span> <span class="conj">and</span> <span class="ps">places</span> them <span class="prep">in</span> the <span class="cn">basket</span>.</p>
+    <p>Today <span class="ps">is</span> a <span class="adj">great</span> day. Sofia <span class="ps">has</span> five <span class="adj">happy</span> <span class="cn">clients</span>. She <span class="ps">is</span> <span class="comp">the most careful</span> <span class="cn">facialist</span> <span class="prep">at</span> <em>Glow Spa</em>. Her treatments <span class="ps">are</span> <span class="comp">more effective than</span> those <span class="prep">at</span> other spas, <span class="conj">and</span> her <span class="cn">clients</span> <span class="adv">always</span> <span class="pv">come back</span>.</p>
+    <p>"<span class="dem">This</span> job <span class="ps">is</span> <span class="comp">the best</span> job <span class="prep">in</span> the world," Sofia <span class="ps">thinks</span>. She <span class="pv">looks at</span> her reflection <span class="prep">in</span> the mirror. Her <span class="un">skin</span> <span class="ps">is</span> as <span class="adj">soft</span> as her <span class="cn">clients</span>'. She <span class="pv">takes care of</span> herself too — <span class="conj">because</span> a <span class="adj">good</span> <span class="cn">facialist</span> <span class="adv">never</span> <span class="pv">gives up</span> <span class="prep">on</span> her own <span class="un">skin</span>. <span class="inter">Amazing!</span> 🌟</p>
+  </div>
+  <div class="gtip"><strong>Phrasal verbs in the story:</strong> <span style="color:var(--pv)">wake up · put on · pick up · show up · come in · set up · turn on · look after · run out of · give up · take care of · put away · clean up · come back · look at · work on</span></div>
+  <div class="legend" id="leg6"></div>
+</div>
+
+<!-- ═══ SLIDE 7 — Reading Quiz 1 ════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 07 / 13</span><span class="sc">✅ Reading Comprehension — Part 1</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Reading Quiz — Part 1</h1>
+  <div class="qwrap">
+    <div class="srow"><span class="slbl">Total Score</span><span class="sval" id="sv1">0 / 12</span></div>
+    <div class="qcard" id="qc1">
+      <div class="qnum">Question 1 of 12</div>
+      <div class="qtext">Where does Sofia work?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(1,0)">A) At a hospital</button>
+        <button class="opt" onclick="ans(1,1)">B) At Glow Spa</button>
+        <button class="opt" onclick="ans(1,2)">C) At a school</button>
+        <button class="opt" onclick="ans(1,3)">D) At home</button>
+      </div>
+      <div class="fb" id="fb1"></div>
+    </div>
+    <div class="qcard" id="qc2">
+      <div class="qnum">Question 2 of 12</div>
+      <div class="qtext">What time does Sofia arrive at the spa?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(2,0)">A) 9:00 AM</button>
+        <button class="opt" onclick="ans(2,1)">B) 7:00 AM</button>
+        <button class="opt" onclick="ans(2,2)">C) 8:00 AM</button>
+        <button class="opt" onclick="ans(2,3)">D) 10:00 AM</button>
+      </div>
+      <div class="fb" id="fb2"></div>
+    </div>
+    <div class="qcard" id="qc3">
+      <div class="qnum">Question 3 of 12</div>
+      <div class="qtext">Where is Glow Spa located?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(3,0)">A) Far from the city</button>
+        <button class="opt" onclick="ans(3,1)">B) Near the highway</button>
+        <button class="opt" onclick="ans(3,2)">C) Close to the main plaza</button>
+        <button class="opt" onclick="ans(3,3)">D) Next to a hospital</button>
+      </div>
+      <div class="fb" id="fb3"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — Reading Quiz 2 ════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 08 / 13</span><span class="sc">✅ Reading Comprehension — Part 2</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Reading Quiz — Part 2</h1>
+  <div class="qwrap">
+    <div class="srow"><span class="slbl">Total Score</span><span class="sval" id="sv2">0 / 12</span></div>
+    <div class="qcard" id="qc4">
+      <div class="qnum">Question 4 of 12</div>
+      <div class="qtext">What is Sofia applying to Maria's face?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(4,0)">A) Rose oil</button>
+        <button class="opt" onclick="ans(4,1)">B) Water</button>
+        <button class="opt" onclick="ans(4,2)">C) A thick cream</button>
+        <button class="opt" onclick="ans(4,3)">D) A serum</button>
+      </div>
+      <div class="fb" id="fb4"></div>
+    </div>
+    <div class="qcard" id="qc5">
+      <div class="qnum">Question 5 of 12</div>
+      <div class="qtext">Who is Lena?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(5,0)">A) A client</button>
+        <button class="opt" onclick="ans(5,1)">B) Sofia's sister</button>
+        <button class="opt" onclick="ans(5,2)">C) The receptionist</button>
+        <button class="opt" onclick="ans(5,3)">D) A facialist</button>
+      </div>
+      <div class="fb" id="fb5"></div>
+    </div>
+    <div class="qcard" id="qc6">
+      <div class="qnum">Question 6 of 12</div>
+      <div class="qtext">What does Maria say about Glow Spa?</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(6,0)">A) It is expensive</button>
+        <button class="opt" onclick="ans(6,1)">B) It is far from her house</button>
+        <button class="opt" onclick="ans(6,2)">C) It is the best place in the city</button>
+        <button class="opt" onclick="ans(6,3)">D) She doesn't like it</button>
+      </div>
+      <div class="fb" id="fb6"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — Grammar: Present Simple ═══════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 09 / 13</span><span class="sc">📝 Grammar — Present Simple</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Grammar Quiz — Present Simple</h1>
+  <div class="qwrap">
+    <div class="srow"><span class="slbl">Total Score</span><span class="sval" id="sv3">0 / 12</span></div>
+    <div class="qcard" id="qc7">
+      <div class="qnum">Question 7 — ✅ AFFIRMATIVE</div>
+      <div class="qtext">Choose the correct Present Simple affirmative sentence:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(7,0)">A) Sofia work at a spa.</button>
+        <button class="opt" onclick="ans(7,1)">B) Sofia works at a spa.</button>
+        <button class="opt" onclick="ans(7,2)">C) Sofia is work at a spa.</button>
+        <button class="opt" onclick="ans(7,3)">D) Sofia working at a spa.</button>
+      </div>
+      <div class="fb" id="fb7"></div>
+    </div>
+    <div class="qcard" id="qc8">
+      <div class="qnum">Question 8 — ❌ NEGATIVE</div>
+      <div class="qtext">Choose the correct Present Simple negative sentence:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(8,0)">A) Sofia don't use chemicals.</button>
+        <button class="opt" onclick="ans(8,1)">B) Sofia doesn't uses chemicals.</button>
+        <button class="opt" onclick="ans(8,2)">C) Sofia doesn't use chemicals.</button>
+        <button class="opt" onclick="ans(8,3)">D) Sofia not use chemicals.</button>
+      </div>
+      <div class="fb" id="fb8"></div>
+    </div>
+    <div class="qcard" id="qc9">
+      <div class="qnum">Question 9 — ❓ INTERROGATIVE</div>
+      <div class="qtext">Choose the correct Present Simple question:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(9,0)">A) Does Sofia arrives early?</button>
+        <button class="opt" onclick="ans(9,1)">B) Does Sofia arrive early?</button>
+        <button class="opt" onclick="ans(9,2)">C) Do Sofia arrives early?</button>
+        <button class="opt" onclick="ans(9,3)">D) Is Sofia arrive early?</button>
+      </div>
+      <div class="fb" id="fb9"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — Grammar: Present Continuous ══════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 10 / 13</span><span class="sc">📝 Grammar — Present Continuous</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Grammar Quiz — Present Continuous</h1>
+  <div class="qwrap">
+    <div class="srow"><span class="slbl">Total Score</span><span class="sval" id="sv4">0 / 12</span></div>
+    <div class="qcard" id="qc10">
+      <div class="qnum">Question 10 — ✅ AFFIRMATIVE</div>
+      <div class="qtext">Choose the correct Present Continuous affirmative sentence:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(10,0)">A) Sofia is apply cream.</button>
+        <button class="opt" onclick="ans(10,1)">B) Sofia applying cream.</button>
+        <button class="opt" onclick="ans(10,2)">C) Sofia is applying cream.</button>
+        <button class="opt" onclick="ans(10,3)">D) Sofia are applying cream.</button>
+      </div>
+      <div class="fb" id="fb10"></div>
+    </div>
+    <div class="qcard" id="qc11">
+      <div class="qnum">Question 11 — ❌ NEGATIVE</div>
+      <div class="qtext">Choose the correct Present Continuous negative sentence:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(11,0)">A) Sofia isn't talking loudly.</button>
+        <button class="opt" onclick="ans(11,1)">B) Sofia not talking loudly.</button>
+        <button class="opt" onclick="ans(11,2)">C) Sofia don't talking loudly.</button>
+        <button class="opt" onclick="ans(11,3)">D) Sofia isn't talk loudly.</button>
+      </div>
+      <div class="fb" id="fb11"></div>
+    </div>
+    <div class="qcard" id="qc12">
+      <div class="qnum">Question 12 — ❓ INTERROGATIVE</div>
+      <div class="qtext">Choose the correct Present Continuous question:</div>
+      <div class="opts">
+        <button class="opt" onclick="ans(12,0)">A) Is Sofia mixing products?</button>
+        <button class="opt" onclick="ans(12,1)">B) Does Sofia mixing products?</button>
+        <button class="opt" onclick="ans(12,2)">C) Is Sofia mix products?</button>
+        <button class="opt" onclick="ans(12,3)">D) Are Sofia mixing products?</button>
+      </div>
+      <div class="fb" id="fb12"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — Crossword ════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 11 / 13</span><span class="sc">🔤 Crossword Puzzle</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Crossword Puzzle</h1>
+  <div class="cwlay">
+    <div>
+      <div class="cwg" id="cwgrid"></div>
+      <div class="cwbtns">
+        <button class="gbtn" onclick="checkCW()">Check Answers</button>
+        <button class="gbtn sec" onclick="resetCW()">Reset</button>
+        <button class="gbtn sec" onclick="revealCW()">Reveal All</button>
+      </div>
+      <div class="cwres" id="cwres"></div>
+    </div>
+    <div class="cwbox">
+      <h4>→ Across</h4>
+      <div class="cwcl"><strong>3.</strong> A beauty treatment for the face (6 letters)</div>
+      <div class="cwcl"><strong>4.</strong> The name of Sofia's spa (4 letters)</div>
+      <div class="cwcl"><strong>5.</strong> Sofia takes care of this part of your body (4 letters)</div>
+      <div class="cwcl"><strong>6.</strong> Sofia applies this thick product to the face (5 letters)</div>
+      <h4 style="margin-top:20px">↓ Down</h4>
+      <div class="cwcl"><strong>1.</strong> How the cream makes skin feel — smooth and ___ (4 letters)</div>
+      <div class="cwcl"><strong>2.</strong> Feeling peaceful and relaxed (4 letters)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12 — Matching ══════════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 12 / 13</span><span class="sc">🔗 Phrasal Verb Match</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Match the Phrasal Verbs</h1>
+  <div class="mwrap">
+    <div class="mcol"><h4>💬 Phrasal Verb</h4><div id="mLeft"></div></div>
+    <div class="mcol"><h4>📖 Definition</h4><div id="mRight"></div></div>
+  </div>
+  <div class="mscore" id="mscore">👆 Tap a phrasal verb on the left, then tap its definition on the right.</div>
+</div>
+
+<!-- ═══ SLIDE 13 — Fill in Blank ════════════════════════════════ -->
+<div class="slide">
+  <div class="sh"><span class="sn">Slide 13 / 13</span><span class="sc">✏️ Fill in the Blank</span></div>
+  <div class="accent"></div>
+  <h1 class="title">Fill in the Blank</h1>
+  <div class="fibwrap">
+    <div class="wbank">
+      <div class="wlbl">📦 Word Bank — click a word, then click the blank &nbsp;|&nbsp; click a filled blank to clear it</div>
+      <span class="wchip" id="wc0" onclick="selWord(0)">wake up</span>
+      <span class="wchip" id="wc1" onclick="selWord(1)">puts on</span>
+      <span class="wchip" id="wc2" onclick="selWord(2)">looks after</span>
+      <span class="wchip" id="wc3" onclick="selWord(3)">running out of</span>
+      <span class="wchip" id="wc4" onclick="selWord(4)">gives up</span>
+      <span class="wchip" id="wc5" onclick="selWord(5)">puts away</span>
+    </div>
+    <div id="fibsents"></div>
+    <div class="fibbtns">
+      <button class="gbtn" onclick="checkFIB()">Check Answers</button>
+      <button class="gbtn sec" onclick="resetFIB()">Reset</button>
+    </div>
+    <div class="cwres" id="fibres"></div>
+  </div>
+</div>
+
+</div><!-- end .track -->
+
+<nav class="nav">
+  <button class="nb" id="pBtn" onclick="go(-1)" disabled>&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <span class="nc" id="nc">1 / 13</span>
+  <button class="nb" id="nBtn" onclick="go(1)">&#8594;</button>
+</nav>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+const TOTAL = 13;
+let cur = 0, score = 0;
+const done = {};
+const activeG = new Set();
+
+// Legend items: each legend div gets the same set of buttons, built once
+const GRAM = [
+  {cls:'ps',  label:'Present Simple',            color:'var(--ps)'},
+  {cls:'pc',  label:'Present Continuous',         color:'var(--pc)'},
+  {cls:'pv',  label:'Phrasal Verbs',              color:'var(--pv)'},
+  {cls:'adj', label:'Adjectives',                 color:'var(--adj)'},
+  {cls:'adv', label:'Adverbs',                    color:'var(--adv)'},
+  {cls:'cn',  label:'Countable Nouns',            color:'var(--cn)'},
+  {cls:'un',  label:'Uncountable Nouns',          color:'var(--un)'},
+  {cls:'dem', label:'This / That / These / Those',color:'var(--dem)'},
+  {cls:'nf',  label:'Near / Far / Close to',      color:'var(--nf)'},
+  {cls:'comp',label:'Comparatives &amp; Superlatives',color:'var(--comp)'},
+  {cls:'prep',label:'Prepositions',               color:'var(--prep)'},
+  {cls:'conj',label:'Conjunctions',               color:'var(--conj)'},
+  {cls:'inter',label:'Interjections',             color:'var(--inter)'},
+];
+
+function buildLegends() {
+  for (let i = 1; i <= 6; i++) {
+    const div = document.getElementById('leg' + i);
+    let html = '<div class="leg-lbl">👇 Click to highlight grammar in the text:</div>';
+    GRAM.forEach(g => {
+      html += `<div class="li" data-g="${g.cls}" onclick="tog('${g.cls}')">
+        <div class="ld" style="background:${g.color}"></div>${g.label}</div>`;
+    });
+    html += `<div class="clr" onclick="clearAll()">✕ Clear all</div>`;
+    div.innerHTML = html;
+  }
+}
+
+// ── Navigation ───────────────────────────────────────────────────────────────
+function go(d) {
+  cur = Math.max(0, Math.min(TOTAL - 1, cur + d));
+  document.getElementById('track').style.transform = `translateX(-${cur * 100}vw)`;
+  sync();
+}
+
+function sync() {
+  document.getElementById('pb').style.width = ((cur + 1) / TOTAL * 100) + '%';
+  document.getElementById('nc').textContent = (cur + 1) + ' / ' + TOTAL;
+  document.getElementById('pBtn').disabled = cur === 0;
+  document.getElementById('nBtn').disabled = cur === TOTAL - 1;
+  const dc = document.getElementById('dots');
+  dc.innerHTML = '';
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === cur ? ' act' : '');
+    d.title = 'Slide ' + (i + 1);
+    d.onclick = (j => () => { cur = j; document.getElementById('track').style.transform = `translateX(-${j * 100}vw)`; sync(); })(i);
+    dc.appendChild(d);
+  }
+  ['sv1','sv2','sv3','sv4'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = score + ' / 12';
+  });
+  syncLegends();
+}
+
+// ── Grammar toggle ────────────────────────────────────────────────────────────
+function tog(cls) {
+  if (activeG.has(cls)) {
+    activeG.delete(cls);
+    document.querySelectorAll('.' + cls).forEach(el => el.classList.remove('hi'));
+  } else {
+    activeG.add(cls);
+    document.querySelectorAll('.' + cls).forEach(el => el.classList.add('hi'));
+  }
+  syncLegends();
+}
+
+function clearAll() {
+  activeG.clear();
+  GRAM.forEach(g => document.querySelectorAll('.' + g.cls).forEach(el => el.classList.remove('hi')));
+  syncLegends();
+}
+
+function syncLegends() {
+  document.querySelectorAll('.li[data-g]').forEach(li => {
+    li.classList.toggle('on', activeG.has(li.dataset.g));
+  });
+}
+
+// ── Quiz ─────────────────────────────────────────────────────────────────────
+const QA = {
+  1:{c:1, x:"Sofia works at Glow Spa, a small but beautiful beauty center."},
+  2:{c:2, x:"Sofia shows up at the spa at 8:00 AM every morning."},
+  3:{c:2, x:"The spa is close to the main plaza, but far from the highway."},
+  4:{c:2, x:"Sofia is applying a thick cream to Maria's face."},
+  5:{c:2, x:"Lena is the receptionist at Glow Spa."},
+  6:{c:2, x:"Maria says: 'It is the best place in the city!'"},
+  7:{c:1, x:"✔ Subject + verb(+s): Sofia WORKS (third person singular needs -s)."},
+  8:{c:2, x:"✔ Negative: subject + doesn't + BASE verb. → doesn't USE (not 'uses')."},
+  9:{c:1, x:"✔ Question: Does + subject + BASE verb? → Does Sofia ARRIVE? (no -s)."},
+  10:{c:2, x:"✔ Affirmative: subject + is/are + verb-ING → Sofia IS APPLYING."},
+  11:{c:0, x:"✔ Negative: subject + isn't/aren't + verb-ING → Sofia ISN'T TALKING."},
+  12:{c:0, x:"✔ Question: Is/Are + subject + verb-ING? → IS Sofia MIXING?"}
+};
+
+function ans(qid, chosen) {
+  if (done[qid]) return;
+  done[qid] = true;
+  const a = QA[qid];
+  const card = document.getElementById('qc' + qid);
+  const btns = card.querySelectorAll('.opt');
+  const fb = document.getElementById('fb' + qid);
+  btns.forEach(b => b.disabled = true);
+  if (chosen === a.c) {
+    score++;
+    btns[chosen].classList.add('ok');
+    fb.className = 'fb ok show';
+    fb.innerHTML = '✅ Correct! ' + a.x;
+  } else {
+    btns[chosen].classList.add('no');
+    btns[a.c].classList.add('ok');
+    fb.className = 'fb no show';
+    fb.innerHTML = '❌ Not quite. ' + a.x;
+  }
+  sync();
+}
+
+// ── Crossword ─────────────────────────────────────────────────────────────────
+const CW = [
+  [{l:'S',n:1},null,null,null,null,{l:'C',n:2}],
+  [{l:'O'},null,null,null,null,{l:'A'}],
+  [{l:'F',n:3},{l:'A'},{l:'C'},{l:'I'},{l:'A'},{l:'L'}],
+  [{l:'T'},null,null,null,null,{l:'M'}],
+  [null,null,null,null,null,null],
+  [null,{l:'G',n:4},{l:'L'},{l:'O'},{l:'W'},null],
+  [null,null,null,null,null,null],
+  [{l:'S',n:5},{l:'K'},{l:'I'},{l:'N'},null,null],
+  [null,null,null,null,null,null],
+  [{l:'C',n:6},{l:'R'},{l:'E'},{l:'A'},{l:'M'},null]
+];
+
+function buildCW() {
+  const g = document.getElementById('cwgrid');
+  for (let r = 0; r < 10; r++) {
+    for (let c = 0; c < 6; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cwc';
+      const d = CW[r][c];
+      if (d) {
+        cell.classList.add('in');
+        cell.dataset.l = d.l;
+        if (d.n) { const s = document.createElement('span'); s.className='cwn'; s.textContent=d.n; cell.appendChild(s); }
+        const inp = document.createElement('input');
+        inp.className = 'cwi'; inp.maxLength = 1; inp.id = `ci_${r}_${c}`;
+        inp.setAttribute('autocomplete','off');
+        inp.addEventListener('input', e => {
+          e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g,'');
+          cell.classList.remove('ck','cx');
+          if (e.target.value) nextCell(r,c);
+        });
+        inp.addEventListener('keydown', e => { if (e.key==='Backspace' && !e.target.value) prevCell(r,c); });
+        cell.appendChild(inp);
+      }
+      g.appendChild(cell);
+    }
+  }
+}
+function nextCell(r,c){ for(let nc=c+1;nc<6;nc++){if(CW[r][nc]){document.getElementById(`ci_${r}_${nc}`)?.focus();return;}} for(let nr=r+1;nr<10;nr++){if(CW[nr]&&CW[nr][c]){document.getElementById(`ci_${nr}_${c}`)?.focus();return;}} }
+function prevCell(r,c){ for(let nc=c-1;nc>=0;nc--){if(CW[r][nc]){document.getElementById(`ci_${r}_${nc}`)?.focus();return;}} for(let nr=r-1;nr>=0;nr--){if(CW[nr]&&CW[nr][c]){document.getElementById(`ci_${nr}_${c}`)?.focus();return;}} }
+function checkCW(){
+  let ok=0,tot=0;
+  for(let r=0;r<10;r++) for(let c=0;c<6;c++){
+    if(!CW[r][c]) continue; tot++;
+    const inp=document.getElementById(`ci_${r}_${c}`), cell=inp.parentElement;
+    cell.classList.remove('ck','cx');
+    if(inp.value===CW[r][c].l){ok++;cell.classList.add('ck');}else cell.classList.add('cx');
+  }
+  const res=document.getElementById('cwres'); res.style.display='block';
+  res.textContent = ok===tot ? '🎉 Perfect! All '+tot+' letters correct!' : `You got ${ok} of ${tot} correct. Keep going! 💪`;
+}
+function resetCW(){
+  for(let r=0;r<10;r++) for(let c=0;c<6;c++){
+    if(!CW[r][c]) continue;
+    const inp=document.getElementById(`ci_${r}_${c}`);
+    inp.value=''; inp.parentElement.classList.remove('ck','cx');
+  }
+  document.getElementById('cwres').style.display='none';
+}
+function revealCW(){
+  for(let r=0;r<10;r++) for(let c=0;c<6;c++){
+    if(!CW[r][c]) continue;
+    const inp=document.getElementById(`ci_${r}_${c}`);
+    inp.value=CW[r][c].l; inp.parentElement.classList.remove('cx'); inp.parentElement.classList.add('ck');
+  }
+  const res=document.getElementById('cwres'); res.style.display='block'; res.textContent='✨ Answers revealed!';
+}
+
+// ── Matching ──────────────────────────────────────────────────────────────────
+const PAIRS = [
+  {pv:"wake up",    def:"stop sleeping and get out of bed",      id:0},
+  {pv:"put on",     def:"wear a piece of clothing",              id:1},
+  {pv:"look after", def:"take care of someone or something",     id:2},
+  {pv:"run out of", def:"have no more of something",             id:3},
+  {pv:"give up",    def:"stop trying to do something",           id:4},
+  {pv:"show up",    def:"arrive at a place",                     id:5},
+  {pv:"turn on",    def:"start a machine or device",             id:6},
+  {pv:"put away",   def:"return objects to their correct place", id:7}
+];
+let mSel=null, mLock=false, mDone=new Set();
+
+function buildMatching(){
+  const L=document.getElementById('mLeft'), R=document.getElementById('mRight');
+  const sh=[...PAIRS].sort(()=>Math.random()-.5);
+  PAIRS.forEach(p=>{
+    const el=document.createElement('div'); el.className='mit'; el.textContent='🔸 '+p.pv; el.dataset.id=p.id;
+    el.onclick=()=>{ if(el.classList.contains('matched')||mLock) return; if(mSel){mSel.classList.remove('msel');} if(mSel===el){mSel=null;return;} mSel=el; el.classList.add('msel'); };
+    L.appendChild(el);
+  });
+  sh.forEach(p=>{
+    const el=document.createElement('div'); el.className='mit'; el.textContent=p.def; el.dataset.id=p.id;
+    el.onclick=()=>{
+      if(el.classList.contains('matched')||mLock||!mSel) return;
+      const lid=parseInt(mSel.dataset.id), rid=parseInt(el.dataset.id);
+      if(lid===rid){
+        mSel.classList.remove('msel'); mSel.classList.add('matched'); mSel.innerHTML+=' <span class="mtick">✓</span>';
+        el.classList.add('matched'); el.innerHTML+=' <span class="mtick">✓</span>';
+        mDone.add(lid); mSel=null;
+        document.getElementById('mscore').textContent = mDone.size===PAIRS.length
+          ? '🎉 All '+PAIRS.length+' phrasal verbs matched correctly!'
+          : `✅ Correct! ${mDone.size} / ${PAIRS.length} matched.`;
+      } else {
+        mLock=true;
+        mSel.classList.add('mwrong'); el.classList.add('mwrong');
+        document.getElementById('mscore').textContent = "❌ Not a match — try again!";
+        setTimeout(()=>{ mSel.classList.remove('msel','mwrong'); mSel=null; el.classList.remove('mwrong'); mLock=false; },500);
+      }
+    };
+    R.appendChild(el);
+  });
+}
+
+// ── Fill in Blank ─────────────────────────────────────────────────────────────
+const FIBS=[
+  {id:0,pre:"Sofia",         post:"every morning at 6:00 AM. She is never late.", ans:"wake up"},
+  {id:1,pre:"She",           post:"her white uniform before leaving home.",        ans:"puts on"},
+  {id:2,pre:"Sofia always",  post:"her clients with great attention.",             ans:"looks after"},
+  {id:3,pre:'"We are',       post:'the rose oil!" says Lena.',                     ans:"running out of"},
+  {id:4,pre:"Sofia never",   post:". She always finds a solution.",                ans:"gives up"},
+  {id:5,pre:"She",           post:"the products at the end of every workday.",     ans:"puts away"}
+];
+const FBANK=["wake up","puts on","looks after","running out of","gives up","puts away"];
+let fSel=null; const fFilled={};
+
+function buildFIB(){
+  const c=document.getElementById('fibsents');
+  FIBS.forEach(f=>{
+    const row=document.createElement('div'); row.className='fibrow';
+    row.innerHTML=`<span class="fibn">${f.id+1}</span><span>${f.pre}</span><span class="blank" id="bl${f.id}" onclick="fillBlank(${f.id})">______</span><span>${f.post}</span>`;
+    c.appendChild(row);
+  });
+}
+function selWord(i){
+  const chip=document.getElementById('wc'+i); if(chip.classList.contains('used')) return;
+  FBANK.forEach((_,j)=>{ const c=document.getElementById('wc'+j); if(c&&!c.classList.contains('used')) c.classList.remove('wsel'); });
+  if(fSel===i){fSel=null;return;} fSel=i; chip.classList.add('wsel');
+}
+function fillBlank(id){
+  const bl=document.getElementById('bl'+id);
+  if(fFilled[id]!==undefined && fSel===null){
+    document.getElementById('wc'+fFilled[id].i)?.classList.remove('used');
+    delete fFilled[id]; bl.textContent='______'; bl.classList.remove('filled','bok','bno'); return;
+  }
+  if(fSel===null) return;
+  if(fFilled[id]!==undefined) document.getElementById('wc'+fFilled[id].i)?.classList.remove('used');
+  const w=FBANK[fSel]; fFilled[id]={w,i:fSel};
+  bl.textContent=w; bl.classList.remove('bok','bno'); bl.classList.add('filled');
+  document.getElementById('wc'+fSel).classList.remove('wsel'); document.getElementById('wc'+fSel).classList.add('used');
+  fSel=null;
+}
+function checkFIB(){
+  let ok=0;
+  FIBS.forEach(f=>{ const bl=document.getElementById('bl'+f.id); bl.classList.remove('filled','bok','bno');
+    if(fFilled[f.id]&&fFilled[f.id].w.toLowerCase()===f.ans.toLowerCase()){ok++;bl.classList.add('bok');}
+    else if(fFilled[f.id]) bl.classList.add('bno');
+  });
+  const res=document.getElementById('fibres'); res.style.display='block';
+  res.textContent=ok===FIBS.length?'🎉 Perfect! All '+FIBS.length+' sentences correct!':`✅ ${ok} of ${FIBS.length} correct. Review the highlighted ones!`;
+}
+function resetFIB(){
+  FIBS.forEach(f=>{ const bl=document.getElementById('bl'+f.id); bl.textContent='______'; bl.classList.remove('filled','bok','bno'); delete fFilled[f.id]; });
+  FBANK.forEach((_,i)=>{ const c=document.getElementById('wc'+i); if(c) c.classList.remove('used','wsel'); });
+  fSel=null; document.getElementById('fibres').style.display='none';
+}
+
+// ── Keyboard ──────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e=>{
+  if(document.activeElement.tagName==='INPUT') return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(-1);
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildLegends();
+buildCW();
+buildMatching();
+buildFIB();
+sync();
+</script>
+</body>
+</html>
