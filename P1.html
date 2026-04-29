@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English for Facialists — Stage 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#050508;--card:#13131f;--border:#1e1e30;
+  --white:#f0f0ff;--dim:#8888aa;
+  --blue:#00c8ff;--bg:rgba(0,200,255,.2);
+  --pink:#ff2d9b;--pg:rgba(255,45,155,.18);
+  --green:#00ff88;--gg:rgba(0,255,136,.16);
+  --yellow:#ffe600;--yg:rgba(255,230,0,.16);
+  --fd:'Syne',sans-serif;--fm:'Space Mono',monospace;--fb:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white);font-family:var(--fb);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:60px 60px;}
+
+/* DECK */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:42px 58px 88px;opacity:0;pointer-events:none;transition:opacity .45s ease,transform .45s ease;transform:translateX(54px);overflow-y:auto;}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.slide.exit{opacity:0;transform:translateX(-54px);}
+.slide::-webkit-scrollbar{width:3px;}
+.slide::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* PROGRESS */
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--pink));transition:width .4s;z-index:300;box-shadow:0 0 10px var(--blue);}
+
+/* NAV */
+.nav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:200;background:rgba(13,13,20,.92);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:40px;padding:8px 16px;}
+.nb{background:none;border:none;color:var(--dim);cursor:pointer;font-size:1.1rem;padding:5px 10px;border-radius:8px;transition:color .2s,background .2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;line-height:1;}
+.nb:hover{color:var(--white);background:var(--border);}
+.nb:active{transform:scale(.93);}
+.nc{font-family:var(--fm);font-size:.7rem;color:var(--dim);min-width:46px;text-align:center;}
+.nb.fs{font-size:.82rem;border:1px solid var(--border);padding:5px 10px;letter-spacing:.5px;}
+.nb.fs:hover{border-color:var(--blue);color:var(--blue);}
+
+/* TYPE */
+.lbl{display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:.62rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.st{font-family:var(--fd);font-weight:900;font-size:clamp(1.65rem,3.3vw,2.9rem);line-height:1.05;margin-bottom:6px;}
+.ss{color:var(--dim);font-size:.92rem;font-weight:300;margin-bottom:26px;line-height:1.55;}
+.gb{color:var(--blue);text-shadow:0 0 16px var(--bg);}
+.gp{color:var(--pink);text-shadow:0 0 16px var(--pg);}
+.gg{color:var(--green);text-shadow:0 0 16px var(--gg);}
+.gy{color:var(--yellow);text-shadow:0 0 16px var(--yg);}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:17px 21px;}
+.cb{border-color:rgba(0,200,255,.26);box-shadow:inset 0 0 26px rgba(0,200,255,.035);}
+.cp{border-color:rgba(255,45,155,.26);box-shadow:inset 0 0 26px rgba(255,45,155,.035);}
+.cg{border-color:rgba(0,255,136,.26);box-shadow:inset 0 0 26px rgba(0,255,136,.035);}
+.cy{border-color:rgba(255,230,0,.26);box-shadow:inset 0 0 26px rgba(255,230,0,.035);}
+.cg2{display:grid;gap:11px;}
+.c2{grid-template-columns:1fr 1fr;}
+.c3{grid-template-columns:1fr 1fr 1fr;}
+
+/* TAG */
+.tag{display:inline-block;font-family:var(--fm);font-size:.6rem;letter-spacing:1px;padding:2px 9px;border-radius:20px;font-weight:700;}
+.tb{background:rgba(0,200,255,.1);color:var(--blue);border:1px solid rgba(0,200,255,.26);}
+.tp{background:rgba(255,45,155,.1);color:var(--pink);border:1px solid rgba(255,45,155,.26);}
+.tg{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.26);}
+.ty{background:rgba(255,230,0,.1);color:var(--yellow);border:1px solid rgba(255,230,0,.26);}
+
+/* TABLE */
+.tw{overflow-x:auto;border-radius:11px;border:1px solid var(--border);}
+.nt{width:100%;border-collapse:collapse;font-size:.83rem;}
+.nt th{background:rgba(255,255,255,.034);font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);}
+.nt td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;line-height:1.45;}
+.nt tr:last-child td{border-bottom:none;}
+.nt tr:hover td{background:rgba(255,255,255,.017);}
+
+/* GRAMMAR */
+.gs{font-family:var(--fm);font-size:.86rem;background:rgba(0,200,255,.055);border:1px solid rgba(0,200,255,.2);border-radius:8px;padding:9px 15px;margin:9px 0;color:var(--blue);}
+.gex{padding:6px 15px;border-left:2px solid var(--green);margin:4px 0;font-size:.86rem;}
+.gex span{color:var(--green);}
+.ges{font-size:.74rem;color:var(--dim);margin-top:2px;}
+
+/* 2-COL */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+/* PREP CARDS */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px;}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px 15px;transition:border-color .2s;}
+.pc:hover{border-color:rgba(0,200,255,.32);}
+.pw{font-family:var(--fm);font-size:1.15rem;font-weight:700;margin-bottom:3px;}
+.pu{font-size:.72rem;color:var(--dim);font-style:italic;margin-bottom:5px;}
+.pex{font-size:.78rem;line-height:1.4;}
+.pex em{color:var(--green);}
+
+/* DIALOGUE */
+.bubble{display:inline-block;max-width:86%;padding:10px 15px;border-radius:12px;font-size:.86rem;line-height:1.5;margin:3px 0;}
+.by{background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:12px 12px 3px 12px;}
+.bc{background:rgba(255,45,155,.06);border:1px solid rgba(255,45,155,.17);border-radius:12px 12px 12px 3px;display:block;margin-left:auto;}
+.blbl{font-family:var(--fm);font-size:.56rem;letter-spacing:1.5px;color:var(--dim);margin-bottom:1px;text-transform:uppercase;}
+.bes{font-size:.72rem;color:var(--dim);margin-top:3px;font-style:italic;}
+
+/* MISC */
+.sbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,45,155,.07);border:1px solid rgba(255,45,155,.22);border-radius:8px;padding:6px 13px;margin-bottom:16px;font-size:.8rem;color:var(--pink);}
+.instr{background:rgba(0,200,255,.048);border:1px solid rgba(0,200,255,.13);border-radius:8px;padding:8px 13px;margin-bottom:12px;font-size:.78rem;color:var(--dim);line-height:1.5;}
+.instr strong{color:var(--blue);}
+.div{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:18px 0;}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:.83rem;}
+
+/* QUIZ */
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.qopt{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-family:var(--fm);font-size:.8rem;cursor:pointer;text-align:left;color:var(--white);transition:border-color .18s,background .18s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.qopt:hover:not(.answered){border-color:var(--blue);color:var(--blue);background:rgba(0,200,255,.055);}
+.qopt.correct{border-color:var(--green)!important;color:var(--green)!important;background:rgba(0,255,136,.065)!important;}
+.qopt.wrong{border-color:var(--pink)!important;color:var(--pink)!important;background:rgba(255,45,155,.065)!important;}
+.qfb{font-size:.84rem;padding:8px 13px;border-radius:8px;display:none;margin-top:2px;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(0,255,136,.065);border:1px solid rgba(0,255,136,.22);color:var(--green);}
+.qfb.err{background:rgba(255,45,155,.065);border:1px solid rgba(255,45,155,.22);color:var(--pink);}
+.qnxt{margin-top:10px;background:none;border:1px solid var(--blue);color:var(--blue);border-radius:8px;padding:8px 20px;font-family:var(--fm);font-size:.74rem;letter-spacing:1px;cursor:pointer;transition:all .2s;touch-action:manipulation;display:none;}
+.qnxt.show{display:inline-block;}
+.qnxt:hover{background:var(--blue);color:var(--black);}
+.qscr{font-family:var(--fm);font-size:.72rem;color:var(--dim);margin-bottom:12px;}
+
+/* BUILDER */
+.bprompt{background:rgba(255,230,0,.055);border:1px solid rgba(255,230,0,.2);border-radius:9px;padding:12px 15px;margin-bottom:14px;}
+.bprompt .es{font-size:1rem;font-weight:600;color:var(--yellow);margin-bottom:3px;}
+.bprompt .hint{font-size:.74rem;color:var(--dim);}
+.dz{min-height:50px;border:2px dashed var(--border);border-radius:9px;padding:8px 11px;margin-bottom:11px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--card);transition:border-color .2s,background .2s;}
+.dz.dov{border-color:var(--blue);background:rgba(0,200,255,.04);}
+.dzh{font-size:.7rem;color:var(--dim);font-style:italic;}
+.wpool{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.wch{padding:6px 13px;background:rgba(255,255,255,.056);border:1px solid var(--border);border-radius:20px;font-family:var(--fm);font-size:.78rem;color:var(--white);cursor:pointer;user-select:none;transition:all .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.wch:hover{border-color:var(--blue);color:var(--blue);background:rgba(0,200,255,.055);}
+.wch.placed{background:rgba(0,200,255,.11);border-color:rgba(0,200,255,.36);color:var(--blue);}
+.bchk{background:var(--blue);color:var(--black);border:none;border-radius:8px;padding:8px 20px;font-family:var(--fm);font-size:.76rem;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all .2s;touch-action:manipulation;margin-right:7px;}
+.bchk:hover{box-shadow:0 0 16px var(--bg);}
+.brst{background:none;border:1px solid var(--border);color:var(--dim);border-radius:8px;padding:8px 16px;font-family:var(--fm);font-size:.74rem;cursor:pointer;transition:all .2s;touch-action:manipulation;}
+.brst:hover{border-color:var(--white);color:var(--white);}
+.bfb{margin-top:9px;font-size:.84rem;padding:8px 12px;border-radius:8px;display:none;}
+.bfb.show{display:block;}
+.bfb.ok{background:rgba(0,255,136,.065);border:1px solid rgba(0,255,136,.22);color:var(--green);}
+.bfb.err{background:rgba(255,45,155,.065);border:1px solid rgba(255,45,155,.22);color:var(--pink);}
+
+/* HERO */
+#s1{justify-content:center;align-items:center;text-align:center;}
+.hbg::before{content:'';position:absolute;top:-18%;left:50%;transform:translateX(-50%);width:540px;height:540px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,255,.065) 0%,transparent 70%);animation:hp 4s ease-in-out infinite;pointer-events:none;}
+.hbg::after{content:'';position:absolute;bottom:-10%;right:7%;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,155,.055) 0%,transparent 70%);animation:hp 5s ease-in-out infinite reverse;pointer-events:none;}
+@keyframes hp{0%,100%{opacity:1}50%{opacity:.55}}
+.hey{font-family:var(--fm);font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:20px;animation:fu .6s ease both;}
+.ht{font-family:var(--fd);font-weight:900;font-size:clamp(2.2rem,5.2vw,4.8rem);line-height:1;margin-bottom:16px;animation:fu .7s ease .1s both;}
+.hs{color:var(--dim);font-size:.97rem;max-width:490px;margin:0 auto 32px;line-height:1.6;animation:fu .7s ease .2s both;}
+.htags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;animation:fu .7s ease .3s both;}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* FINAL */
+#sfinal{justify-content:center;align-items:center;text-align:center;}
+.fring{width:126px;height:126px;border-radius:50%;border:2px solid rgba(0,200,255,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 26px;font-size:3rem;box-shadow:0 0 32px var(--bg);animation:rp 3s ease-in-out infinite;}
+@keyframes rp{0%,100%{box-shadow:0 0 32px var(--bg)}50%{box-shadow:0 0 64px var(--bg)}}
+.ftitle{font-family:var(--fd);font-size:clamp(1.7rem,3.3vw,3rem);font-weight:900;margin-bottom:13px;}
+.fmsg{color:var(--dim);font-size:.92rem;max-width:500px;margin:0 auto 26px;line-height:1.7;}
+.fnext{display:inline-block;background:linear-gradient(135deg,rgba(0,200,255,.12),rgba(255,45,155,.07));border:1px solid rgba(0,200,255,.26);border-radius:12px;padding:17px 26px;max-width:440px;font-size:.88rem;line-height:1.65;color:var(--white);}
+.fnext strong{color:var(--blue);}
+
+/* MOBILE */
+@media(max-width:720px){
+  .slide{padding:26px 14px 86px;}
+  .two,.c2,.c3,.cg2.c3,.pgrid{grid-template-columns:1fr;}
+  .pgrid{grid-template-columns:1fr 1fr;}
+  .qopts{grid-template-columns:1fr;}
+  .ht{font-size:2.1rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<nav class="nav">
+  <button class="nb" onclick="go(-1)" title="Anterior">←</button>
+  <span class="nc" id="nctr">1 / 13</span>
+  <button class="nb" onclick="go(1)" title="Siguiente">→</button>
+  <button class="nb fs" onclick="toggleFS()" id="fsbtn" title="Pantalla completa">⛶ Full</button>
+</nav>
+
+<div class="deck hbg" id="deck">
+
+<!-- S1 HERO -->
+<section class="slide active" id="s1">
+  <div style="position:relative;z-index:1">
+    <div class="hey">✦ English for Beauty Professionals · Stage 1 ✦</div>
+    <h1 class="ht"><span class="gb">English</span><br>for Facialists</h1>
+    <p class="hs">Bienvenida, recepción e instrucciones iniciales para atender clientes en inglés.</p>
+    <div class="htags">
+      <span class="tag tb">Present Simple</span>
+      <span class="tag tp">Present Continuous</span>
+      <span class="tag tg">Demonstratives</span>
+      <span class="tag ty">Prepositions</span>
+      <span class="tag tb">Possessive Adjectives</span>
+      <span class="tag tp">30+ Verbs</span>
+    </div>
+    <p style="margin-top:30px;font-size:.74rem;color:var(--dim);font-family:var(--fm)">← → navegar &nbsp;|&nbsp; ⛶ Full = pantalla completa</p>
+  </div>
+</section>
+
+<!-- S2 PRESENT SIMPLE -->
+<section class="slide" id="s2">
+  <div class="lbl"><span class="dot" style="background:var(--blue)"></span>Gramática · Tense 1</div>
+  <h2 class="st">Present <span class="gb">Simple</span></h2>
+  <p class="ss">Usamos el Present Simple para rutinas, hechos y verdades generales en nuestro trabajo.</p>
+
+  <div class="cg2 c2">
+    <div class="card cb">
+      <div class="tag tb" style="margin-bottom:9px">Afirmativa</div>
+      <div class="gs">Subject + verb (+ s/es con he/she/it)</div>
+      <div class="gex">I <span>work</span> here every day.<div class="ges">Yo trabajo aquí todos los días.</div></div>
+      <div class="gex">She <span>cleans</span> the skin carefully.<div class="ges">Ella limpia la piel con cuidado.</div></div>
+      <div class="gex">This product <span>helps</span> your skin.<div class="ges">Este producto ayuda tu piel.</div></div>
+    </div>
+    <div class="card cb">
+      <div class="tag tb" style="margin-bottom:9px">Negativa · Pregunta</div>
+      <div class="gs">Subject + do / does + not + verb</div>
+      <div class="gex">I <span>don't</span> use harsh products.<div class="ges">No uso productos agresivos.</div></div>
+      <div class="gex">She <span>doesn't</span> work on Sundays.<div class="ges">Ella no trabaja los domingos.</div></div>
+      <div class="gs" style="margin-top:9px">Do / Does + subject + verb?</div>
+      <div class="gex"><span>Do</span> you have any allergies?<div class="ges">¿Tienes alguna alergia?</div></div>
+      <div class="gex"><span>Does</span> this feel comfortable?<div class="ges">¿Esto se siente cómodo?</div></div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+  <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:9px">Frases de rutina en el salón</p>
+  <div class="cg2 c3">
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">I work at Glow Spa.</div><div style="font-size:.73rem;color:var(--dim)">Trabajo en Glow Spa.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">We use organic products.</div><div style="font-size:.73rem;color:var(--dim)">Usamos productos orgánicos.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">The treatment takes one hour.</div><div style="font-size:.73rem;color:var(--dim)">El tratamiento toma una hora.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">Do you have sensitive skin?</div><div style="font-size:.73rem;color:var(--dim)">¿Tienes piel sensible?</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">This serum hydrates deeply.</div><div style="font-size:.73rem;color:var(--dim)">Este suero hidrata profundamente.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--blue);font-size:.86rem;font-weight:600;margin-bottom:2px">Does this feel comfortable?</div><div style="font-size:.73rem;color:var(--dim)">¿Esto se siente cómodo?</div></div>
+  </div>
+</section>
+
+<!-- S3 PRESENT CONTINUOUS -->
+<section class="slide" id="s3">
+  <div class="lbl"><span class="dot" style="background:var(--pink)"></span>Gramática · Tense 2</div>
+  <h2 class="st">Present <span class="gp">Continuous</span></h2>
+  <p class="ss">Para acciones que ocurren <strong style="color:var(--white)">ahora mismo</strong>. Fundamental para describir lo que haces mientras trabajas.</p>
+
+  <div class="cg2 c2">
+    <div class="card cp">
+      <div class="tag tp" style="margin-bottom:9px">Estructura</div>
+      <div class="gs" style="border-color:rgba(255,45,155,.26);color:var(--pink);background:rgba(255,45,155,.055)">Subject + <strong>am / is / are</strong> + verb<strong>-ing</strong></div>
+      <div style="margin-top:11px;display:flex;flex-direction:column;gap:7px;font-size:.84rem;">
+        <div><span style="color:var(--pink);font-weight:700;font-family:var(--fm)">I</span> → <span style="color:var(--white)">am</span> + -ing &nbsp;<span style="color:var(--dim);font-size:.74rem">I am cleaning…</span></div>
+        <div><span style="color:var(--pink);font-weight:700;font-family:var(--fm)">He / She / It</span> → <span style="color:var(--white)">is</span> + -ing &nbsp;<span style="color:var(--dim);font-size:.74rem">She is applying…</span></div>
+        <div><span style="color:var(--pink);font-weight:700;font-family:var(--fm)">You / We / They</span> → <span style="color:var(--white)">are</span> + -ing &nbsp;<span style="color:var(--dim);font-size:.74rem">You are lying…</span></div>
+      </div>
+    </div>
+    <div class="card cp">
+      <div class="tag tp" style="margin-bottom:9px">Cuándo usarlo</div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:.84rem;line-height:1.5;">
+        <div>✦ <strong style="color:var(--white)">Acción en progreso ahora:</strong><br><span style="color:var(--dim)">I am cleaning your skin <em>right now</em>.</span></div>
+        <div>✦ <strong style="color:var(--white)">Describir lo que haces:</strong><br><span style="color:var(--dim)">I am applying the serum to your face.</span></div>
+        <div>✦ <strong style="color:var(--white)">Instrucción en proceso:</strong><br><span style="color:var(--dim)">You are lying down comfortably.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+  <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:9px">Lo que dices mientras trabajas</p>
+  <div class="tw">
+    <table class="nt">
+      <thead><tr><th>Present Continuous — en el salón</th><th>Español</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--pink)">I am <strong>cleaning</strong> your skin now.</td><td style="color:var(--dim)">Estoy limpiando tu piel ahora.</td></tr>
+        <tr><td style="color:var(--pink)">I am <strong>applying</strong> the cleanser to your face.</td><td style="color:var(--dim)">Estoy aplicando el limpiador.</td></tr>
+        <tr><td style="color:var(--pink)">You are <strong>lying</strong> down comfortably.</td><td style="color:var(--dim)">Estás acostada cómodamente.</td></tr>
+        <tr><td style="color:var(--pink)">I am <strong>covering</strong> your hair with this headband.</td><td style="color:var(--dim)">Estoy cubriendo tu cabello.</td></tr>
+        <tr><td style="color:var(--pink)">I am <strong>checking</strong> your skin type.</td><td style="color:var(--dim)">Estoy revisando tu tipo de piel.</td></tr>
+        <tr><td style="color:var(--pink)">I am <strong>removing</strong> your makeup gently.</td><td style="color:var(--dim)">Estoy retirando tu maquillaje.</td></tr>
+        <tr><td style="color:var(--pink)">I am <strong>preparing</strong> the products for your treatment.</td><td style="color:var(--dim)">Estoy preparando los productos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- S4 DEMONSTRATIVES -->
+<section class="slide" id="s4">
+  <div class="lbl"><span class="dot" style="background:var(--green)"></span>Gramática · Demonstratives</div>
+  <h2 class="st">Demonstrative <span class="gg">Adjectives</span></h2>
+  <p class="ss">Indican qué tan <strong style="color:var(--white)">cerca o lejos</strong> está algo. Esenciales para dar instrucciones precisas en el salón.</p>
+
+  <div class="cg2 c2" style="margin-bottom:14px">
+    <div class="card cg">
+      <div class="tag tg" style="margin-bottom:9px">THIS / THESE — Cerca (Near)</div>
+      <div class="gs" style="border-color:rgba(0,255,136,.26);color:var(--green);background:rgba(0,255,136,.048)"><strong>this</strong> + singular &nbsp;|&nbsp; <strong>these</strong> + plural</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;font-size:.84rem;">
+        <div><span style="color:var(--green);font-weight:700">This</span> product is for your skin. <span style="color:var(--dim);font-size:.73rem">— Este producto es para tu piel.</span></div>
+        <div><span style="color:var(--green);font-weight:700">This</span> cream is very gentle. <span style="color:var(--dim);font-size:.73rem">— Esta crema es muy suave.</span></div>
+        <div><span style="color:var(--green);font-weight:700">These</span> products are organic. <span style="color:var(--dim);font-size:.73rem">— Estos productos son orgánicos.</span></div>
+        <div><span style="color:var(--green);font-weight:700">These</span> towels are warm. <span style="color:var(--dim);font-size:.73rem">— Estas toallas están calientes.</span></div>
+      </div>
+    </div>
+    <div class="card cy">
+      <div class="tag ty" style="margin-bottom:9px">THAT / THOSE — Lejos (Far)</div>
+      <div class="gs" style="border-color:rgba(255,230,0,.26);color:var(--yellow);background:rgba(255,230,0,.048)"><strong>that</strong> + singular &nbsp;|&nbsp; <strong>those</strong> + plural</div>
+      <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;font-size:.84rem;">
+        <div><span style="color:var(--yellow);font-weight:700">That</span> shelf is for your bag. <span style="color:var(--dim);font-size:.73rem">— Ese estante es para tu bolsa.</span></div>
+        <div><span style="color:var(--yellow);font-weight:700">That</span> room is the cabin. <span style="color:var(--dim);font-size:.73rem">— Ese cuarto es la cabina.</span></div>
+        <div><span style="color:var(--yellow);font-weight:700">Those</span> products are for dry skin. <span style="color:var(--dim);font-size:.73rem">— Esos productos son para piel seca.</span></div>
+        <div><span style="color:var(--yellow);font-weight:700">Those</span> towels are on the table. <span style="color:var(--dim);font-size:.73rem">— Esas toallas están en la mesa.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+  <div class="cg2 c3" style="margin-bottom:12px">
+    <div class="card" style="padding:11px 14px"><div style="color:var(--green);font-weight:700;font-size:.86rem;margin-bottom:2px">This is your headband.</div><div style="font-size:.73rem;color:var(--dim)">Esta es tu banda (cerca).</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--green);font-weight:700;font-size:.86rem;margin-bottom:2px">These are organic oils.</div><div style="font-size:.73rem;color:var(--dim)">Estos son aceites orgánicos.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-weight:700;font-size:.86rem;margin-bottom:2px">That is the treatment room.</div><div style="font-size:.73rem;color:var(--dim)">Esa es la sala de tratamiento (lejos).</div></div>
+  </div>
+  <div class="card" style="padding:11px 16px;background:rgba(0,255,136,.035)">
+    <p style="font-size:.78rem;color:var(--dim)">⚠️ <strong style="color:var(--white)">Recuerda:</strong> <span style="color:var(--green)">this/that</span> = singular · <span style="color:var(--green)">these/those</span> = plural. En inglés <strong style="color:var(--white)">no cambian por género</strong> — <em>this</em> sirve para masculino y femenino.</p>
+  </div>
+</section>
+
+<!-- S5 POSSESSIVE ADJECTIVES -->
+<section class="slide" id="s5">
+  <div class="lbl"><span class="dot" style="background:var(--yellow)"></span>Gramática · Possessive Adjectives</div>
+  <h2 class="st">Possessive <span class="gy">Adjectives</span></h2>
+  <p class="ss">Indican a quién pertenece algo. Siempre van <strong style="color:var(--white)">antes del sustantivo</strong> y no cambian por género ni número.</p>
+
+  <div class="tw" style="margin-bottom:16px">
+    <table class="nt">
+      <thead><tr><th>Pronombre</th><th>Posesivo</th><th>Ejemplo en el salón</th><th>Español</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--dim)">I</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">my</span></td><td>Follow <span style="color:var(--yellow)">my</span> instructions, please.</td><td style="color:var(--dim)">Siga mis instrucciones.</td></tr>
+        <tr><td style="color:var(--dim)">You</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">your</span></td><td>Close <span style="color:var(--yellow)">your</span> eyes, please.</td><td style="color:var(--dim)">Cierra tus ojos.</td></tr>
+        <tr><td style="color:var(--dim)">He</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">his</span></td><td><span style="color:var(--yellow)">His</span> skin is very sensitive.</td><td style="color:var(--dim)">Su piel (de él) es muy sensible.</td></tr>
+        <tr><td style="color:var(--dim)">She</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">her</span></td><td><span style="color:var(--yellow)">Her</span> appointment is at 3 PM.</td><td style="color:var(--dim)">Su cita (de ella) es a las 3 PM.</td></tr>
+        <tr><td style="color:var(--dim)">It</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">its</span></td><td>The product and <span style="color:var(--yellow)">its</span> ingredients are natural.</td><td style="color:var(--dim)">El producto y sus ingredientes son naturales.</td></tr>
+        <tr><td style="color:var(--dim)">We</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">our</span></td><td><span style="color:var(--yellow)">Our</span> spa uses organic products.</td><td style="color:var(--dim)">Nuestro spa usa productos orgánicos.</td></tr>
+        <tr><td style="color:var(--dim)">They</td><td><span style="color:var(--yellow);font-weight:700;font-family:var(--fm)">their</span></td><td><span style="color:var(--yellow)">Their</span> skin types are different.</td><td style="color:var(--dim)">Sus tipos de piel son diferentes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cg2 c3">
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">Turn your head right.</div><div style="font-size:.73rem;color:var(--dim)">Voltea tu cabeza a la derecha.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">Close your eyes and relax.</div><div style="font-size:.73rem;color:var(--dim)">Cierra tus ojos y relájate.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">I am cleaning your face.</div><div style="font-size:.73rem;color:var(--dim)">Estoy limpiando tu cara.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">Your skin looks healthy.</div><div style="font-size:.73rem;color:var(--dim)">Tu piel se ve saludable.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">My name is Sofia.</div><div style="font-size:.73rem;color:var(--dim)">Mi nombre es Sofía.</div></div>
+    <div class="card" style="padding:11px 14px"><div style="color:var(--yellow);font-size:.86rem;font-weight:600;margin-bottom:2px">Our products are gentle.</div><div style="font-size:.73rem;color:var(--dim)">Nuestros productos son suaves.</div></div>
+  </div>
+</section>
+
+<!-- S6 PREPOSITIONS -->
+<section class="slide" id="s6">
+  <div class="lbl"><span class="dot" style="background:var(--blue)"></span>Vocabulario · Prepositions</div>
+  <h2 class="st">Prepositions of <span class="gb">Place & Movement</span></h2>
+  <p class="ss">Indican posición o dirección. Clave para dar instrucciones claras y profesionales.</p>
+
+  <div class="pgrid">
+    <div class="pc cb"><div class="pw" style="color:var(--blue)">IN</div><div class="pu">Dentro de un espacio</div><div class="pex">We are <em>in</em> the cabin.<br>Come <em>in</em>, please.</div></div>
+    <div class="pc cb"><div class="pw" style="color:var(--blue)">ON</div><div class="pu">Sobre una superficie</div><div class="pex">Lie <em>on</em> the bed.<br>Put it <em>on</em> the shelf.</div></div>
+    <div class="pc cb"><div class="pw" style="color:var(--blue)">AT</div><div class="pu">Punto exacto / hora</div><div class="pex">Your appointment is <em>at</em> 2 PM.<br>Meet me <em>at</em> reception.</div></div>
+    <div class="pc cg"><div class="pw" style="color:var(--green)">DOWN</div><div class="pu">Hacia abajo</div><div class="pex">Please lie <em>down</em>.<br>Sit <em>down</em>, please.</div></div>
+    <div class="pc cg"><div class="pw" style="color:var(--green)">UP</div><div class="pu">Hacia arriba</div><div class="pex">Sit <em>up</em> slowly.<br>Look <em>up</em> for a moment.</div></div>
+    <div class="pc cg"><div class="pw" style="color:var(--green)">INTO</div><div class="pu">Movimiento hacia adentro</div><div class="pex">Step <em>into</em> the room.<br>Come <em>into</em> the cabin.</div></div>
+    <div class="pc cp"><div class="pw" style="color:var(--pink)">OVER</div><div class="pu">Por encima / cubriendo</div><div class="pex">I place the towel <em>over</em> your chest.</div></div>
+    <div class="pc cp"><div class="pw" style="color:var(--pink)">UNDER</div><div class="pu">Por debajo</div><div class="pex">Slide <em>under</em> the blanket.<br>Put this <em>under</em> your head.</div></div>
+    <div class="pc cy"><div class="pw" style="color:var(--yellow)">OUT / OUT OF</div><div class="pu">Hacia afuera</div><div class="pex">Take your earrings <em>out</em>.<br>Come <em>out</em> when ready.</div></div>
+  </div>
+
+  <div class="card" style="padding:11px 15px">
+    <p style="font-size:.78rem;color:var(--dim)">💡 <strong style="color:var(--white)">Phrasal verbs:</strong> <span style="color:var(--green)">lie <strong>down</strong></span> · <span style="color:var(--green)">sit <strong>up</strong></span> · <span style="color:var(--green)">come <strong>in</strong></span> · <span style="color:var(--green)">take <strong>off</strong></span> · <span style="color:var(--green)">put <strong>on</strong></span> — verbo + preposición = un solo significado</p>
+  </div>
+</section>
+
+<!-- S7 VERBS 1-15 -->
+<section class="slide" id="s7">
+  <div class="lbl"><span class="dot" style="background:var(--pink)"></span>Vocabulario · Verbos (1–15)</div>
+  <h2 class="st">Core Verbs <span class="gp">Part 1</span></h2>
+  <p class="ss">Los 15 verbos más usados, con Present Simple (imperativo / hábito) y Present Continuous (ahora).</p>
+  <div class="tw">
+    <table class="nt">
+      <thead><tr><th>Verb</th><th>Español</th><th>Present Simple</th><th>Present Continuous</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tp">come</span></td><td style="color:var(--dim)">venir</td><td>Please <em style="color:var(--blue)">come</em> in.</td><td>You are <em style="color:var(--pink)">coming</em> into the room.</td></tr>
+        <tr><td><span class="tag tp">lie</span></td><td style="color:var(--dim)">acostarse</td><td>Please <em style="color:var(--blue)">lie</em> down on the bed.</td><td>You are <em style="color:var(--pink)">lying</em> down.</td></tr>
+        <tr><td><span class="tag tp">sit</span></td><td style="color:var(--dim)">sentarse</td><td>Please <em style="color:var(--blue)">sit</em> here.</td><td>You are <em style="color:var(--pink)">sitting</em> comfortably.</td></tr>
+        <tr><td><span class="tag tp">relax</span></td><td style="color:var(--dim)">relajarse</td><td>Please <em style="color:var(--blue)">relax</em>.</td><td>You are <em style="color:var(--pink)">relaxing</em> now.</td></tr>
+        <tr><td><span class="tag tp">close</span></td><td style="color:var(--dim)">cerrar</td><td>Please <em style="color:var(--blue)">close</em> your eyes.</td><td>You are <em style="color:var(--pink)">closing</em> your eyes.</td></tr>
+        <tr><td><span class="tag tp">open</span></td><td style="color:var(--dim)">abrir</td><td>Please <em style="color:var(--blue)">open</em> your eyes slowly.</td><td>You are <em style="color:var(--pink)">opening</em> your eyes.</td></tr>
+        <tr><td><span class="tag tp">follow</span></td><td style="color:var(--dim)">seguir</td><td>Please <em style="color:var(--blue)">follow</em> me.</td><td>You are <em style="color:var(--pink)">following</em> me now.</td></tr>
+        <tr><td><span class="tag tp">wait</span></td><td style="color:var(--dim)">esperar</td><td>Please <em style="color:var(--blue)">wait</em> here.</td><td>You are <em style="color:var(--pink)">waiting</em> in the lobby.</td></tr>
+        <tr><td><span class="tag tp">hold</span></td><td style="color:var(--dim)">sostener / aguantar</td><td>Please <em style="color:var(--blue)">hold</em> still.</td><td>You are <em style="color:var(--pink)">holding</em> very still.</td></tr>
+        <tr><td><span class="tag tp">turn</span></td><td style="color:var(--dim)">girar / voltear</td><td>Please <em style="color:var(--blue)">turn</em> your head right.</td><td>You are <em style="color:var(--pink)">turning</em> your head.</td></tr>
+        <tr><td><span class="tag tp">breathe</span></td><td style="color:var(--dim)">respirar</td><td>Please <em style="color:var(--blue)">breathe</em> deeply.</td><td>You are <em style="color:var(--pink)">breathing</em> slowly.</td></tr>
+        <tr><td><span class="tag tp">remove</span></td><td style="color:var(--dim)">quitar / retirar</td><td>I <em style="color:var(--blue)">remove</em> makeup gently.</td><td>I am <em style="color:var(--pink)">removing</em> your makeup.</td></tr>
+        <tr><td><span class="tag tp">feel</span></td><td style="color:var(--dim)">sentir</td><td>Does this <em style="color:var(--blue)">feel</em> comfortable?</td><td>You are <em style="color:var(--pink)">feeling</em> relaxed.</td></tr>
+        <tr><td><span class="tag tp">bring</span></td><td style="color:var(--dim)">traer</td><td>I <em style="color:var(--blue)">bring</em> the products now.</td><td>I am <em style="color:var(--pink)">bringing</em> a warm towel.</td></tr>
+        <tr><td><span class="tag tp">stand</span></td><td style="color:var(--dim)">pararse</td><td>Please <em style="color:var(--blue)">stand</em> up slowly.</td><td>You are <em style="color:var(--pink)">standing</em> up.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- S8 VERBS 16-30 -->
+<section class="slide" id="s8">
+  <div class="lbl"><span class="dot" style="background:var(--pink)"></span>Vocabulario · Verbos (16–30)</div>
+  <h2 class="st">Core Verbs <span class="gp">Part 2</span></h2>
+  <p class="ss">15 verbos adicionales — Present Simple (rutina/imperativo) y Present Continuous (en este momento).</p>
+  <div class="tw">
+    <table class="nt">
+      <thead><tr><th>Verb</th><th>Español</th><th>Present Simple</th><th>Present Continuous</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tg">welcome</span></td><td style="color:var(--dim)">dar bienvenida</td><td>I <em style="color:var(--blue)">welcome</em> every client warmly.</td><td>I am <em style="color:var(--pink)">welcoming</em> you now.</td></tr>
+        <tr><td><span class="tag tg">greet</span></td><td style="color:var(--dim)">saludar</td><td>We always <em style="color:var(--blue)">greet</em> clients at the door.</td><td>I am <em style="color:var(--pink)">greeting</em> you.</td></tr>
+        <tr><td><span class="tag tg">show</span></td><td style="color:var(--dim)">mostrar / indicar</td><td>I <em style="color:var(--blue)">show</em> the room to the client.</td><td>I am <em style="color:var(--pink)">showing</em> you the treatment room.</td></tr>
+        <tr><td><span class="tag tg">place</span></td><td style="color:var(--dim)">colocar / poner</td><td>I <em style="color:var(--blue)">place</em> the towel on your face.</td><td>I am <em style="color:var(--pink)">placing</em> the compress on your skin.</td></tr>
+        <tr><td><span class="tag tg">apply</span></td><td style="color:var(--dim)">aplicar</td><td>I <em style="color:var(--blue)">apply</em> this serum every day.</td><td>I am <em style="color:var(--pink)">applying</em> the cleanser to your face.</td></tr>
+        <tr><td><span class="tag tg">clean</span></td><td style="color:var(--dim)">limpiar</td><td>I <em style="color:var(--blue)">clean</em> the skin with this product.</td><td>I am <em style="color:var(--pink)">cleaning</em> your pores now.</td></tr>
+        <tr><td><span class="tag tg">touch</span></td><td style="color:var(--dim)">tocar</td><td>I <em style="color:var(--blue)">touch</em> the skin very gently.</td><td>I am <em style="color:var(--pink)">touching</em> your face lightly.</td></tr>
+        <tr><td><span class="tag tg">prepare</span></td><td style="color:var(--dim)">preparar</td><td>I <em style="color:var(--blue)">prepare</em> products before each session.</td><td>I am <em style="color:var(--pink)">preparing</em> your treatment now.</td></tr>
+        <tr><td><span class="tag tg">check</span></td><td style="color:var(--dim)">revisar / verificar</td><td>I <em style="color:var(--blue)">check</em> the skin type first.</td><td>I am <em style="color:var(--pink)">checking</em> your skin condition.</td></tr>
+        <tr><td><span class="tag tg">ask</span></td><td style="color:var(--dim)">preguntar / pedir</td><td>I <em style="color:var(--blue)">ask</em> about allergies.</td><td>I am <em style="color:var(--pink)">asking</em> you a few questions.</td></tr>
+        <tr><td><span class="tag tg">tell</span></td><td style="color:var(--dim)">decir / indicar</td><td>I <em style="color:var(--blue)">tell</em> the client each step.</td><td>I am <em style="color:var(--pink)">telling</em> you what I am doing.</td></tr>
+        <tr><td><span class="tag tg">help</span></td><td style="color:var(--dim)">ayudar</td><td>I <em style="color:var(--blue)">help</em> my clients relax.</td><td>I am <em style="color:var(--pink)">helping</em> you get comfortable.</td></tr>
+        <tr><td><span class="tag tg">adjust</span></td><td style="color:var(--dim)">ajustar</td><td>I <em style="color:var(--blue)">adjust</em> the headband carefully.</td><td>I am <em style="color:var(--pink)">adjusting</em> your headband now.</td></tr>
+        <tr><td><span class="tag tg">cover</span></td><td style="color:var(--dim)">cubrir / tapar</td><td>I <em style="color:var(--blue)">cover</em> the client's hair.</td><td>I am <em style="color:var(--pink)">covering</em> your shoulders.</td></tr>
+        <tr><td><span class="tag tg">start</span></td><td style="color:var(--dim)">empezar / comenzar</td><td>We <em style="color:var(--blue)">start</em> with cleansing.</td><td>I am <em style="color:var(--pink)">starting</em> the treatment now.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- S9 SCENE: WELCOMING -->
+<section class="slide" id="s9">
+  <div class="lbl"><span class="dot" style="background:var(--pink)"></span>Escenario Real · Bienvenida</div>
+  <h2 class="st">Scene 1: <span class="gp">Welcoming the Client</span></h2>
+  <div class="sbadge">💄 Contexto: La clienta llega al spa</div>
+  <div class="two">
+    <div>
+      <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--dim);margin-bottom:9px;text-transform:uppercase">Diálogo</p>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist (Tú)</div><div class="bubble by">Good afternoon! Welcome to our spa. My name is Sofia and I am your facialist today.<div class="bes">Buenas tardes. Bienvenida a nuestro spa. Soy Sofia y soy tu esteticista hoy.</div></div></div>
+      <div style="margin-bottom:8px;text-align:right"><div class="blbl" style="text-align:right">Client</div><div class="bubble bc">Hello! Nice to meet you, Sofia.<div class="bes">¡Hola! Mucho gusto.</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">Nice to meet you too! Please follow me to the treatment room.<div class="bes">Igualmente. Por favor sígame a la sala.</div></div></div>
+      <div style="margin-bottom:8px;text-align:right"><div class="blbl" style="text-align:right">Client</div><div class="bubble bc">Of course! Lead the way!<div class="bes">¡Claro! Adelante.</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">Come in, please. You can place your bag on that shelf over there.<div class="bes">Pase. Puede poner su bolsa en ese estante (demostrativo: <em>that</em>).</div></div></div>
+    </div>
+    <div>
+      <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--dim);margin-bottom:9px;text-transform:uppercase">Frases Clave + gramática</p>
+      <div class="card cb" style="margin-bottom:8px;padding:11px 13px"><div style="color:var(--blue);font-weight:600;font-size:.88rem;margin-bottom:2px">Good [morning / afternoon / evening]!</div><div style="font-size:.72rem;color:var(--dim)">Present Simple · saludo de rutina</div></div>
+      <div class="card cp" style="margin-bottom:8px;padding:11px 13px"><div style="color:var(--pink);font-weight:600;font-size:.88rem;margin-bottom:2px">Welcome to <strong style="color:var(--yellow)">our</strong> spa.</div><div style="font-size:.72rem;color:var(--dim)">Posesivo <strong style="color:var(--yellow)">our</strong> = nuestro</div></div>
+      <div class="card cg" style="margin-bottom:8px;padding:11px 13px"><div style="color:var(--green);font-weight:600;font-size:.88rem;margin-bottom:2px">I am <strong style="color:var(--pink)">welcoming</strong> you now.</div><div style="font-size:.72rem;color:var(--dim)">Present Continuous — acción en progreso</div></div>
+      <div class="card cy" style="margin-bottom:8px;padding:11px 13px"><div style="color:var(--yellow);font-weight:600;font-size:.88rem;margin-bottom:2px">Put <strong style="color:var(--yellow)">your</strong> bag on <strong style="color:var(--yellow)">that</strong> shelf.</div><div style="font-size:.72rem;color:var(--dim)">Posesivo <em>your</em> + demostrativo <em>that</em> (lejos)</div></div>
+      <div class="card" style="margin-bottom:8px;padding:11px 13px"><div style="color:var(--white);font-weight:600;font-size:.88rem;margin-bottom:2px">Come <strong style="color:var(--green)">in</strong>, please.</div><div style="font-size:.72rem;color:var(--dim)">Phrasal verb · preposición <em>in</em></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- S10 SCENE: INSTRUCTIONS -->
+<section class="slide" id="s10">
+  <div class="lbl"><span class="dot" style="background:var(--green)"></span>Escenario Real · Instrucciones</div>
+  <h2 class="st">Scene 2: <span class="gg">Initial Instructions</span></h2>
+  <div class="sbadge">🛏️ Contexto: Preparando a la clienta para el tratamiento</div>
+  <div class="two">
+    <div>
+      <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--dim);margin-bottom:9px;text-transform:uppercase">Diálogo</p>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">Do you have any skin allergies? <strong style="color:var(--yellow)">This</strong> information is important.<div class="bes">¿Tienes alergias? Esta información es importante. (dem: <em>this</em>)</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">Please lie down on the bed. <strong style="color:var(--yellow)">Your</strong> head goes on <strong style="color:var(--yellow)">this</strong> pillow.<div class="bes">Por favor acuéstate. Tu cabeza va en esta almohada. (pos + dem)</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">I am covering <strong style="color:var(--yellow)">your</strong> hair with <strong style="color:var(--yellow)">this</strong> headband.<div class="bes">Estoy cubriendo tu cabello con esta banda. (PC + pos + dem)</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">Please close <strong style="color:var(--yellow)">your</strong> eyes and breathe deeply.<div class="bes">Por favor cierra tus ojos y respira profundo.</div></div></div>
+      <div style="margin-bottom:8px"><div class="blbl">Facialist</div><div class="bubble by">I am cleaning <strong style="color:var(--yellow)">your</strong> skin now. Tell me if it hurts.<div class="bes">Estoy limpiando tu piel ahora. (Present Continuous)</div></div></div>
+    </div>
+    <div>
+      <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:2px;color:var(--dim);margin-bottom:9px;text-transform:uppercase">Instrucciones esenciales</p>
+      <div class="tw">
+        <table class="nt">
+          <thead><tr><th>Instrucción</th><th>Español</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--blue)">Please lie <em>down</em> on the bed.</td><td style="color:var(--dim)">Por favor acuéstese.</td></tr>
+            <tr><td style="color:var(--blue)">Close <em>your</em> eyes, please.</td><td style="color:var(--dim)">Cierre sus ojos.</td></tr>
+            <tr><td style="color:var(--blue)">Breathe deeply and relax.</td><td style="color:var(--dim)">Respire profundo y relájese.</td></tr>
+            <tr><td style="color:var(--blue)">Turn <em>your</em> head to the right.</td><td style="color:var(--dim)">Voltee su cabeza a la derecha.</td></tr>
+            <tr><td style="color:var(--blue)">Hold still for a moment.</td><td style="color:var(--dim)">Quédese quieta un momento.</td></tr>
+            <tr><td style="color:var(--blue)">Sit <em>up</em> when you are ready.</td><td style="color:var(--dim)">Incorpórese cuando esté lista.</td></tr>
+            <tr><td style="color:var(--blue)">Take <em>off your</em> earrings, please.</td><td style="color:var(--dim)">Quítese los aretes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S11 QUIZ -->
+<section class="slide" id="s11">
+  <div class="lbl"><span class="dot" style="background:var(--blue)"></span>Práctica Interactiva · Quiz</div>
+  <h2 class="st">Practice: <span class="gb">Multiple Choice</span></h2>
+  <p class="ss">Solo los temas vistos: Present Simple, Present Continuous, Demonstratives, Possessive Adjectives y Prepositions.</p>
+  <div class="instr"><strong>Instrucciones:</strong> Elige la opción correcta. Retroalimentación inmediata en cada pregunta.</div>
+  <div class="qscr" id="qscr">Pregunta 1 de 7</div>
+  <div id="qc"></div>
+</section>
+
+<!-- S12 BUILDER -->
+<section class="slide" id="s12">
+  <div class="lbl"><span class="dot" style="background:var(--green)"></span>Práctica Interactiva · Construye la Frase</div>
+  <h2 class="st">Build the <span class="gg">Sentence</span></h2>
+  <p class="ss">Lee en español y construye la frase en inglés tocando las palabras en el orden correcto.</p>
+  <div class="instr"><strong>Instrucciones:</strong> Toca las palabras del banco para agregarlas a tu respuesta. Toca de nuevo para quitarlas.</div>
+  <div id="bc"></div>
+</section>
+
+<!-- S13 FINAL -->
+<section class="slide" id="sfinal">
+  <div class="fring">✨</div>
+  <h2 class="ftitle">Stage 1 <span class="gb">Complete!</span></h2>
+  <p class="fmsg">Has completado el contenido de la primera etapa: bienvenida, recepción e instrucciones iniciales en inglés.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px;">
+    <span class="tag tb">✓ Present Simple</span>
+    <span class="tag tp">✓ Present Continuous</span>
+    <span class="tag tg">✓ Demonstratives</span>
+    <span class="tag ty">✓ Possessive Adjectives</span>
+    <span class="tag tb">✓ Prepositions</span>
+    <span class="tag tp">✓ 30 Core Verbs</span>
+    <span class="tag tg">✓ Real Dialogues</span>
+    <span class="tag ty">✓ Interactive Practice</span>
+  </div>
+  <div class="fnext">
+    <strong>Next Class — Stage 2:</strong><br>
+    This is only Stage 1: welcoming and initial instructions.<br>
+    The rest of the facial treatment continues in the next class:<br>
+    <span style="color:var(--dim);font-size:.84rem">cleansing procedures · steam &amp; extraction · mask application · closing the session</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+// ── SLIDES ──────────────────────────────
+const slides=Array.from(document.querySelectorAll('.slide'));
+let cur=0;
+function go(d){
+  const n=cur+d;if(n<0||n>=slides.length)return;
+  slides[cur].classList.remove('active');slides[cur].classList.add('exit');
+  cur=n;slides[cur].classList.remove('exit');slides[cur].classList.add('active');
+  slides[cur].scrollTop=0;
+  document.getElementById('nctr').textContent=(cur+1)+' / '+slides.length;
+  document.getElementById('prog').style.width=((cur+1)/slides.length*100)+'%';
+  setTimeout(()=>slides.forEach(s=>{if(!s.classList.contains('active'))s.classList.remove('exit');}),480);
+}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(d<0?1:-1);},{passive:true});
+
+// ── FULLSCREEN ──────────────────────────
+function toggleFS(){
+  const btn=document.getElementById('fsbtn');
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+  } else {
+    document.exitFullscreen().catch(()=>{});
+  }
+}
+document.addEventListener('fullscreenchange',()=>{
+  const btn=document.getElementById('fsbtn');
+  btn.textContent=document.fullscreenElement?'✕ Exit':'⛶ Full';
+  btn.title=document.fullscreenElement?'Salir de pantalla completa':'Pantalla completa';
+});
+
+// ── QUIZ ────────────────────────────────
+const QD=[
+  {q:"¿Cuál oración usa Present Continuous correctamente?",
+   opts:["She clean your skin now.","I am cleaning your skin now.","I cleaning your skin now.","She is clean your skin now."],
+   ans:1,ok:"✅ Correcto! <em>I am cleaning</em> = Subject + am + verb-ing. Present Continuous.",
+   err:"❌ Present Continuous = <strong>Subject + am/is/are + verb-ing</strong> → <em>I am cleaning your skin now.</em>"},
+  {q:"Elige el posesivo correcto: «Cierra ___ ojos, por favor.»",
+   opts:["her eyes","my eyes","your eyes","their eyes"],
+   ans:2,ok:"✅ ¡Correcto! <em>your</em> = tu/tus (hablas directo con la clienta).",
+   err:"❌ Cuando le hablas directo a la clienta usas <strong>your</strong>. → <em>Close your eyes.</em>"},
+  {q:"¿Qué demostrativo completa: «___ cream is for your skin type.»? (La crema está cerca de ti)",
+   opts:["That","Those","These","This"],
+   ans:3,ok:"✅ Perfecto! <em>This</em> = cerca + singular. → <em>This cream is for your skin type.</em>",
+   err:"❌ Cerca + singular = <strong>this</strong>. Lejos = that. Plural = these/those."},
+  {q:"«Please lie ___ on the bed.» ¿Qué preposición falta?",
+   opts:["up","in","down","onto"],
+   ans:2,ok:"✅ ¡Exacto! <em>lie down</em> es el phrasal verb para acostarse.",
+   err:"❌ El phrasal verb para acostarse es <strong>lie down</strong>. → <em>Please lie down on the bed.</em>"},
+  {q:"¿Cuál es la forma correcta de Present Simple con «she»?",
+   opts:["She clean the skin.","She is cleaning the skin.","She cleans the skin.","She do clean the skin."],
+   ans:2,ok:"✅ Correcto! Con he/she/it en Present Simple se agrega <strong>-s</strong>. → <em>She cleans.</em>",
+   err:"❌ En Present Simple con he/she/it agrega <strong>-s</strong>. → <em>She cleans the skin.</em>"},
+  {q:"«___ products are organic.» (Productos de nuestro spa)",
+   opts:["My","Your","Their","Our"],
+   ans:3,ok:"✅ ¡Correcto! <em>Our</em> = nuestro/nuestra. → <em>Our products are organic.</em>",
+   err:"❌ Para «nuestro spa» usas <strong>our</strong>. → <em>Our products are organic.</em>"},
+  {q:"¿Cuál combina correctamente Present Continuous + posesivo?",
+   opts:["I am covering you hair.","I am covering your hair.","I covering your hair.","I am cover your hair."],
+   ans:1,ok:"✅ Perfecto! <em>I am covering your hair.</em> — PC correcto + posesivo <em>your</em>.",
+   err:"❌ PC: <strong>I am + verb-ing</strong>. Posesivo: <strong>your</strong> (no <em>you</em>). → <em>I am covering your hair.</em>"}
+];
+let qi=0,qs=0;
+function renderQ(){
+  const c=document.getElementById('qc');if(!c)return;
+  document.getElementById('qscr').textContent='Pregunta '+(qi+1)+' de '+QD.length+' · Correctas: '+qs;
+  if(qi>=QD.length){
+    c.innerHTML=`<div class="card cb" style="padding:24px;text-align:center"><div style="font-size:2.6rem;margin-bottom:11px">${qs>=6?'🏆':qs>=4?'⭐':'💪'}</div><div style="font-family:var(--fd);font-size:1.9rem;font-weight:900;color:var(--blue);margin-bottom:7px">${qs} / 7</div><div style="color:var(--dim);margin-bottom:16px">${qs===7?'¡Perfecto! Dominas todos los temas.':qs>=5?'¡Muy bien! Repasa los que fallaste.':'Sigue practicando, tú puedes.'}</div><button onclick="qi=0;qs=0;renderQ();" style="background:var(--blue);color:var(--black);border:none;border-radius:8px;padding:8px 20px;font-family:var(--fm);font-size:.76rem;font-weight:700;cursor:pointer;touch-action:manipulation">↺ Intentar de nuevo</button></div>`;
+    document.getElementById('qscr').textContent='Puntaje final: '+qs+'/7';return;
+  }
+  const q=QD[qi];
+  c.innerHTML=`<p style="font-size:.95rem;font-weight:500;margin-bottom:12px;line-height:1.5">${q.q}</p><div class="qopts">${q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})" id="qo${i}">${o}</button>`).join('')}</div><div class="qfb" id="qfb"></div><button class="qnxt" id="qnxt" onclick="qi++;renderQ()">Siguiente →</button>`;
+}
+function ansQ(i){
+  const q=QD[qi];
+  document.querySelectorAll('.qopt').forEach(b=>{b.classList.add('answered');b.onclick=null;});
+  const fb=document.getElementById('qfb');
+  if(i===q.ans){document.getElementById('qo'+i).classList.add('correct');fb.className='qfb show ok';fb.innerHTML=q.ok;qs++;}
+  else{document.getElementById('qo'+i).classList.add('wrong');document.getElementById('qo'+q.ans).classList.add('correct');fb.className='qfb show err';fb.innerHTML=q.err;}
+  document.getElementById('qnxt').classList.add('show');
+}
+
+// ── BUILDER ─────────────────────────────
+const BD=[
+  {es:"Por favor acuéstese en la camilla.",hint:"Imperativo + phrasal verb + preposición",words:["Please","lie","down","on","the","bed","sit","up"],ans:"please lie down on the bed"},
+  {es:"Estoy limpiando tu piel ahora.",hint:"Present Continuous + posesivo",words:["I","am","cleaning","your","skin","now","is","my"],ans:"i am cleaning your skin now"},
+  {es:"Esta crema es para tu tipo de piel.",hint:"Demostrativo near + posesivo",words:["This","cream","is","for","your","skin","type","That","our"],ans:"this cream is for your skin type"},
+  {es:"Cierra tus ojos y respira profundo.",hint:"Imperativo + posesivo",words:["Close","your","eyes","and","breathe","deeply","my","his"],ans:"close your eyes and breathe deeply"},
+  {es:"Estoy cubriendo tu cabello con esta banda.",hint:"Present Continuous + posesivo + demostrativo near",words:["I","am","covering","your","hair","with","this","headband","that","my"],ans:"i am covering your hair with this headband"},
+];
+let bi=0,dragW=null;
+function renderB(){
+  const c=document.getElementById('bc');if(!c)return;
+  if(bi>=BD.length){c.innerHTML=`<div class="card cg" style="padding:24px;text-align:center"><div style="font-size:2.6rem;margin-bottom:11px">🎉</div><div style="font-family:var(--fd);font-size:1.65rem;font-weight:900;color:var(--green);margin-bottom:7px">¡Completado!</div><div style="color:var(--dim);margin-bottom:16px">Construiste todas las frases correctamente.</div><button onclick="bi=0;renderB();" style="background:var(--green);color:var(--black);border:none;border-radius:8px;padding:8px 20px;font-family:var(--fm);font-size:.76rem;font-weight:700;cursor:pointer;touch-action:manipulation">↺ Practicar de nuevo</button></div>`;return;}
+  const b=BD[bi];
+  const sh=[...b.words].sort(()=>Math.random()-.5);
+  c.innerHTML=`<div style="font-family:var(--fm);font-size:.64rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px">Frase ${bi+1} de ${BD.length}</div>
+<div class="bprompt"><div class="es">${b.es}</div><div class="hint">💡 ${b.hint}</div></div>
+<p style="font-family:var(--fm);font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Tu respuesta:</p>
+<div class="dz" id="dz"><span class="dzh">Toca las palabras del banco para agregarlas aquí…</span></div>
+<p style="font-family:var(--fm);font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Banco de palabras:</p>
+<div class="wpool">${sh.map((w,i)=>`<button class="wch" id="wc${i}" draggable="true" ondragstart="dragW=this" onclick="wtap(this,'${w.replace(/'/g,"\\'")}',${i})">${w}</button>`).join('')}</div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+<button class="bchk" onclick="chkB('${b.ans}')">✓ Check</button>
+<button class="brst" onclick="rstB()">↺ Reset</button>
+${bi<BD.length-1?`<button class="brst" style="margin-left:auto;border-color:var(--blue);color:var(--blue)" onclick="bi++;renderB()">Saltar →</button>`:''}
+</div>
+<div class="bfb" id="bfb"></div>`;
+  const dz=document.getElementById('dz');
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dov');});
+  dz.addEventListener('dragleave',()=>dz.classList.remove('dov'));
+  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dov');if(dragW&&!dragW.classList.contains('placed'))wtap(dragW,dragW.textContent.trim(),dragW.id.replace('wc',''));dragW=null;});
+}
+function wtap(chip,w,i){
+  const dz=document.getElementById('dz');
+  if(chip.classList.contains('placed')){
+    const p=dz.querySelector('[data-i="'+i+'"]');if(p)p.remove();
+    chip.classList.remove('placed');
+    if(!dz.querySelectorAll('.wch').length){const h=document.createElement('span');h.className='dzh';h.textContent='Toca las palabras del banco para agregarlas aquí…';dz.appendChild(h);}
+  }else{
+    const h=dz.querySelector('.dzh');if(h)h.remove();
+    chip.classList.add('placed');
+    const cl=document.createElement('button');cl.className='wch placed';cl.dataset.i=i;cl.textContent=w;cl.onclick=()=>wtap(chip,w,i);dz.appendChild(cl);
+  }
+}
+function chkB(ans){
+  const chips=Array.from(document.querySelectorAll('#dz .wch'));
+  if(!chips.length){document.getElementById('bfb').className='bfb show err';document.getElementById('bfb').innerHTML='⚠️ Agrega palabras primero.';return;}
+  const built=chips.map(c=>c.textContent.trim()).join(' ').toLowerCase().replace(/[?.!,]/g,'').trim();
+  const fb=document.getElementById('bfb');
+  if(built===ans.replace(/[?.!,]/g,'').trim()){
+    fb.className='bfb show ok';fb.innerHTML='✅ ¡Correcto! <em>'+chips.map(c=>c.textContent).join(' ')+'</em>';
+    setTimeout(()=>{bi++;renderB();},1700);
+  }else{
+    fb.className='bfb show err';fb.innerHTML='❌ Revisa el orden. Tu respuesta: <em>"'+chips.map(c=>c.textContent).join(' ')+'"</em>';
+  }
+}
+function rstB(){
+  const dz=document.getElementById('dz');
+  Array.from(dz.querySelectorAll('.wch')).forEach(c=>{document.getElementById('wc'+c.dataset.i)?.classList.remove('placed');c.remove();});
+  if(!dz.querySelector('.dzh')){const h=document.createElement('span');h.className='dzh';h.textContent='Toca las palabras del banco para agregarlas aquí…';dz.appendChild(h);}
+  document.getElementById('bfb').className='bfb';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderQ();renderB();
+  document.getElementById('prog').style.width=(1/slides.length*100)+'%';
+});
+</script>
+</body>
+</html>

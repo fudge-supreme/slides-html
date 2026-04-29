@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Phrasal Verbs — English for Facialists</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────── */
+:root {
+  --m50:#f0faf6; --m100:#d6f2e7; --m200:#aee4cf; --m300:#7ecdb3;
+  --m400:#4fb898; --m500:#2ea882; --m600:#1d8a68; --m700:#166b51;
+  --g50:#f7f8f7; --g100:#edeeed; --g200:#d6d8d5; --g300:#b2b5b0;
+  --g400:#878a84; --g500:#5e6159; --g700:#343630; --g900:#181a15;
+  --white:#ffffff;
+  --fd:'Cormorant Garamond',serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'DM Mono',monospace;
+  /* glass */
+  --glass-bg: rgba(255,255,255,.62);
+  --glass-bg-strong: rgba(255,255,255,.82);
+  --glass-border: rgba(255,255,255,.75);
+  --glass-shadow: 0 8px 32px rgba(46,168,130,.09), 0 2px 8px rgba(0,0,0,.06);
+  --glass-shadow-hover: 0 20px 60px rgba(46,168,130,.16), 0 4px 16px rgba(0,0,0,.08);
+}
+
+/* ─── RESET ──────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;width:100%;}
+body {
+  font-family:var(--fb);
+  background:#e8f5ef;
+  color:var(--g700);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ─── RICH BACKGROUND ────────────────── */
+.bg {
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 5%,  rgba(174,228,207,.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 90%,  rgba(126,205,179,.45) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 50%,  rgba(240,250,246,.7) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 75% 15%,  rgba(255,255,255,.5) 0%, transparent 50%),
+    linear-gradient(150deg, #d6f2e7 0%, #e8f5ef 35%, #f0faf6 65%, #d0ede2 100%);
+  animation: bgShift 18s ease-in-out infinite alternate;
+}
+@keyframes bgShift {
+  0%   { filter: hue-rotate(0deg) brightness(1); }
+  50%  { filter: hue-rotate(4deg) brightness(1.02); }
+  100% { filter: hue-rotate(-3deg) brightness(.99); }
+}
+/* Orb blobs */
+.orb {
+  position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+  filter:blur(60px);opacity:.35;
+  animation: orbFloat 12s ease-in-out infinite;
+}
+.orb1{width:500px;height:500px;background:rgba(46,168,130,.18);top:-80px;left:-100px;}
+.orb2{width:400px;height:400px;background:rgba(126,205,179,.15);bottom:-60px;right:-80px;animation-delay:-5s;animation-duration:15s;}
+.orb3{width:300px;height:300px;background:rgba(255,255,255,.25);top:40%;left:55%;animation-delay:-8s;animation-duration:10s;}
+@keyframes orbFloat {
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-20px) scale(1.05);}
+  66%{transform:translate(-20px,15px) scale(.97);}
+}
+
+/* ─── PAGE LAYOUT ────────────────────── */
+.page {
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;
+  min-height:100vh;
+  padding:0 32px 80px;
+  max-width:1440px;
+  margin:0 auto;
+}
+
+/* ─── HERO ───────────────────────────── */
+.hero {
+  padding:52px 0 36px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+}
+.hero-left {}
+.hero-eyebrow {
+  font-family:var(--fm);font-size:10px;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--m500);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--m400);}
+.hero-title {
+  font-family:var(--fd);font-size:clamp(3rem,5.5vw,5.5rem);
+  font-weight:300;line-height:1;color:var(--g900);margin-bottom:10px;
+}
+.hero-title em{font-style:italic;color:var(--m500);}
+.hero-sub{font-size:.87rem;color:var(--g400);font-weight:300;line-height:1.7;max-width:380px;}
+.hero-stat {
+  text-align:right;flex-shrink:0;
+}
+.hero-stat .big {
+  font-family:var(--fd);font-size:clamp(4rem,6vw,7rem);font-weight:300;
+  line-height:1;color:transparent;
+  -webkit-text-stroke:1px var(--m300);
+  display:block;
+}
+.hero-stat .lbl {
+  font-family:var(--fm);font-size:10px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--g300);
+}
+
+/* ─── CONTROLS GLASS BAR ─────────────── */
+.controls-bar {
+  position:sticky;top:0;z-index:50;
+  margin:0 -32px;padding:14px 32px;
+  background:rgba(240,250,246,.75);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid rgba(255,255,255,.6);
+  display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+}
+.search-wrap{position:relative;flex:1;min-width:200px;}
+.search-wrap svg{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;stroke:var(--g300);pointer-events:none;
+}
+.search {
+  width:100%;padding:9px 16px 9px 38px;
+  border:1.5px solid rgba(255,255,255,.8);
+  border-radius:40px;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(10px);
+  font-family:var(--fb);font-size:.84rem;color:var(--g700);
+  outline:none;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.search::placeholder{color:var(--g300);}
+.search:focus{
+  border-color:var(--m300);background:rgba(255,255,255,.9);
+  box-shadow:0 0 0 3px rgba(46,168,130,.1);
+}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.flt {
+  padding:7px 16px;
+  border:1.5px solid rgba(255,255,255,.7);
+  border-radius:40px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(8px);
+  font-family:var(--fb);font-size:.78rem;font-weight:400;
+  color:var(--g400);cursor:pointer;
+  transition:all .22s;white-space:nowrap;
+}
+.flt:hover{border-color:var(--m200);color:var(--m600);background:rgba(255,255,255,.8);}
+.flt.active{
+  background:rgba(46,168,130,.88);
+  border-color:rgba(46,168,130,.9);
+  color:var(--white);font-weight:500;
+  box-shadow:0 4px 14px rgba(46,168,130,.35);
+  backdrop-filter:none;
+}
+.count-lbl{
+  font-family:var(--fm);font-size:.68rem;color:var(--g300);
+  letter-spacing:1px;white-space:nowrap;margin-left:auto;
+}
+.count-lbl span{color:var(--m500);}
+
+/* ─── SECTION ────────────────────────── */
+.section-label {
+  display:flex;align-items:center;gap:14px;
+  padding:36px 0 18px;
+}
+.section-label h2{
+  font-family:var(--fd);font-size:1.8rem;font-weight:300;color:var(--g700);
+  white-space:nowrap;
+}
+.section-label h2 em{font-style:italic;color:var(--m500);}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(174,228,207,.6),transparent);}
+.section-ct{font-family:var(--fm);font-size:.62rem;color:var(--g300);letter-spacing:1px;white-space:nowrap;}
+
+/* ─── GRID ───────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:16px;
+  /* hover defocus: grid dims all cards when one is focused */
+}
+.grid.has-focus .card:not(.focused){
+  opacity:.45;
+  filter:blur(1.5px) saturate(.7);
+  transform:scale(.985);
+  transition:opacity .35s ease, filter .35s ease, transform .35s ease;
+}
+
+/* ─── CARD — LIQUID GLASS ────────────── */
+.card {
+  position:relative;
+  background:var(--glass-bg);
+  border:1.5px solid var(--glass-border);
+  border-radius:20px;
+  padding:22px 24px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:
+    transform .35s cubic-bezier(.22,1,.36,1),
+    box-shadow .35s ease,
+    border-color .35s ease,
+    opacity .35s ease,
+    filter .35s ease;
+  box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(16px) saturate(1.3);
+  -webkit-backdrop-filter:blur(16px) saturate(1.3);
+  will-change:transform;
+}
+
+/* inner shimmer layer */
+.card::before {
+  content:'';
+  position:absolute;inset:0;border-radius:20px;
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.55) 0%,
+    rgba(255,255,255,.1) 40%,
+    rgba(174,228,207,.08) 100%
+  );
+  pointer-events:none;
+  transition:opacity .35s ease;
+}
+/* mint accent line top */
+.card::after {
+  content:'';
+  position:absolute;top:0;left:20px;right:20px;height:1.5px;
+  background:linear-gradient(90deg,transparent,rgba(46,168,130,.5),transparent);
+  border-radius:0 0 3px 3px;
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.card.focused {
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:var(--glass-shadow-hover);
+  border-color:rgba(174,228,207,.9);
+  background:var(--glass-bg-strong);
+  z-index:10;
+}
+.card.focused::after{opacity:1;}
+.card.focused::before{opacity:.8;}
+.card.open {
+  border-color:rgba(126,205,179,.7);
+  box-shadow:0 12px 40px rgba(46,168,130,.14), 0 3px 10px rgba(0,0,0,.07);
+}
+.card.hidden{display:none;}
+
+/* ─── CARD INTERNALS ─────────────────── */
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.card-verb{
+  font-family:var(--fd);font-size:1.7rem;font-weight:300;
+  color:var(--g900);line-height:1.1;
+}
+.card-verb em{font-style:italic;color:var(--m500);}
+.cat-pill{
+  flex-shrink:0;font-family:var(--fm);font-size:.58rem;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-top:5px;
+  backdrop-filter:blur(4px);
+}
+.cat-cabin {background:rgba(214,242,231,.7);color:var(--m600);border:1px solid rgba(174,228,207,.8);}
+.cat-work  {background:rgba(237,232,252,.7);color:#6b4faf;border:1px solid rgba(200,185,240,.8);}
+.cat-social{background:rgba(252,235,230,.7);color:#a04f30;border:1px solid rgba(240,195,180,.8);}
+.cat-daily {background:rgba(232,240,254,.7);color:#3050a0;border:1px solid rgba(185,200,245,.8);}
+
+.card-es{
+  font-size:.84rem;color:var(--g400);line-height:1.55;
+  margin-bottom:14px;font-weight:300;
+}
+.card-divider{
+  height:1px;
+  background:linear-gradient(90deg,rgba(174,228,207,.5),transparent);
+  margin-bottom:14px;
+}
+
+/* ─── EXAMPLES ───────────────────────── */
+.card-examples{
+  display:flex;flex-direction:column;gap:0;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height .42s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+}
+.card.open .card-examples{
+  max-height:600px;
+  opacity:1;
+}
+.ex-item{
+  padding:10px 0;
+  border-bottom:1px solid rgba(174,228,207,.25);
+}
+.ex-item:last-child{border-bottom:none;padding-bottom:0;}
+.ex-num{
+  font-family:var(--fm);font-size:.56rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--m400);margin-bottom:4px;
+}
+.ex-en{
+  font-family:var(--fd);font-size:1.02rem;font-weight:300;
+  font-style:italic;color:var(--g700);line-height:1.45;margin-bottom:3px;
+}
+.ex-en strong{color:var(--m600);font-weight:600;font-style:normal;}
+.ex-es{font-size:.76rem;color:var(--g300);font-weight:300;}
+
+/* toggle btn */
+.card-toggle{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--fm);font-size:.62rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--m400);
+  border:none;background:none;cursor:pointer;padding:0;
+  transition:color .2s;
+}
+.card-toggle:hover{color:var(--m600);}
+.card-toggle svg{
+  width:13px;height:13px;stroke:currentColor;
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+}
+.card.open .card-toggle svg{transform:rotate(180deg);}
+
+/* ─── TOPBAR ─────────────────────────── */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:4px 0 0;
+}
+.expand-all{
+  font-family:var(--fm);font-size:.64rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--g300);
+  background:none;border:none;cursor:pointer;
+  transition:color .2s;
+}
+.expand-all:hover{color:var(--m500);}
+
+/* ─── EMPTY ──────────────────────────── */
+.empty{display:none;text-align:center;padding:80px 0;}
+.empty.show{display:block;}
+.empty-glyph{
+  font-family:var(--fd);font-size:5rem;font-weight:300;
+  color:var(--m100);line-height:1;margin-bottom:16px;
+}
+.empty p{font-size:.88rem;color:var(--g300);}
+
+/* ─── SCROLLBAR ──────────────────────── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(126,205,179,.4);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--m300);}
+
+/* ─── MOBILE ─────────────────────────── */
+@media(max-width:640px){
+  .page{padding:0 16px 60px;}
+  .controls-bar{margin:0 -16px;padding:12px 16px;}
+  .hero{padding:36px 0 24px;}
+  .hero-stat .big{font-size:3.5rem;}
+  .grid{grid-template-columns:1fr;gap:10px;}
+  .hero-title{font-size:2.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">English for Facialists</div>
+      <h1 class="hero-title">Phrasal<br><em>Verbs</em></h1>
+      <p class="hero-sub">Los verbos más útiles para la cabina, el trabajo, la vida social y el día a día. Tres ejemplos por cada uno.</p>
+    </div>
+    <div class="hero-stat">
+      <span class="big" id="total-n">45</span>
+      <span class="lbl">phrasal verbs</span>
+    </div>
+  </header>
+
+  <!-- STICKY CONTROLS -->
+  <div class="controls-bar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search" id="search" placeholder="Buscar phrasal verb o traducción…" autocomplete="off" spellcheck="false" inputmode="text">
+    </div>
+    <div class="filter-btns">
+      <button class="flt active" data-cat="all">Todos</button>
+      <button class="flt" data-cat="cabin">🌿 Cabina</button>
+      <button class="flt" data-cat="work">💼 Trabajo</button>
+      <button class="flt" data-cat="social">🤝 Social</button>
+      <button class="flt" data-cat="daily">☀️ Diario</button>
+    </div>
+    <span class="count-lbl"><span id="count-n">45</span> verbos</span>
+  </div>
+
+  <div class="topbar">
+    <div></div>
+    <button class="expand-all" id="expand-all-btn" onclick="toggleAll()">Expandir todos</button>
+  </div>
+
+  <div class="empty" id="empty">
+    <div class="empty-glyph">∅</div>
+    <p>No hay resultados para esa búsqueda.</p>
+  </div>
+
+  <div id="content"></div>
+
+</div>
+
+<script>
+const DATA = [
+/* ── CABIN ── */
+{v:"lie down", vP:["lie","down"], cat:"cabin",
+ es:"Acostarse, recostarse (boca arriba o boca abajo)",
+ exs:[
+  {en:"Please <strong>lie down</strong> on the treatment bed and make yourself comfortable.", es:"Por favor recuéstese en la camilla y póngase cómoda."},
+  {en:"I need you to <strong>lie down</strong> flat so I can work on your full face.", es:"Necesito que se acueste plana para trabajar en toda su cara."},
+  {en:"You can <strong>lie down</strong> now — I am ready to start the treatment.", es:"Ya puede acostarse, estoy lista para comenzar."},
+ ]},
+{v:"sit up", vP:["sit","up"], cat:"cabin",
+ es:"Incorporarse, sentarse derecho desde posición acostada",
+ exs:[
+  {en:"You can <strong>sit up</strong> slowly now — take your time.", es:"Puede incorporarse despacio, no hay prisa."},
+  {en:"Please <strong>sit up</strong> so I can check your skin in this light.", es:"Por favor siéntese para revisar su piel con esta luz."},
+  {en:"I need you to <strong>sit up</strong> for a moment while I adjust the headband.", es:"Necesito que se siente un momento mientras ajusto la banda."},
+ ]},
+{v:"come in", vP:["come","in"], cat:"cabin",
+ es:"Entrar, pasar a un lugar",
+ exs:[
+  {en:"Please <strong>come in</strong> — the treatment room is ready for you.", es:"Por favor pase, la sala de tratamiento está lista."},
+  {en:"<strong>Come in</strong> and hang your coat on the hook by the door.", es:"Pase y cuelgue su abrigo en el gancho de la puerta."},
+  {en:"You can <strong>come in</strong> now. I just finished setting everything up.", es:"Ya puede pasar, acabo de terminar de preparar todo."},
+ ]},
+{v:"take off", vP:["take","off"], cat:"cabin",
+ es:"Quitarse (ropa, accesorios, joyería)",
+ exs:[
+  {en:"Please <strong>take off</strong> your earrings before we begin.", es:"Por favor quítese los aretes antes de comenzar."},
+  {en:"Could you <strong>take off</strong> your necklace? It gets in the way during the facial.", es:"¿Podría quitarse el collar? Estorba durante el facial."},
+  {en:"Please <strong>take off</strong> your glasses and put them on the tray.", es:"Por favor quítese los lentes y póngalos en la charola."},
+ ]},
+{v:"put on", vP:["put","on"], cat:"cabin",
+ es:"Ponerse, colocarse algo encima",
+ exs:[
+  {en:"Please <strong>put on</strong> this disposable robe before lying down.", es:"Por favor póngase esta bata desechable antes de acostarse."},
+  {en:"I am going to <strong>put on</strong> a warm compress on your face now.", es:"Voy a colocar una compresa caliente en su cara ahora."},
+  {en:"<strong>Put on</strong> the headband and I will start the cleansing.", es:"Póngase la banda y comenzaré la limpieza."},
+ ]},
+{v:"turn over", vP:["turn","over"], cat:"cabin",
+ es:"Darse vuelta, voltear el cuerpo de un lado a otro",
+ exs:[
+  {en:"Now please <strong>turn over</strong> onto your stomach for the next step.", es:"Ahora por favor voltéese boca abajo para el siguiente paso."},
+  {en:"Could you <strong>turn over</strong> to your right side for a moment?", es:"¿Podría voltear hacia su lado derecho un momento?"},
+  {en:"I need you to <strong>turn over</strong> slowly — the bed can be slippery.", es:"Necesito que se voltee despacio, la camilla puede estar resbalosa."},
+ ]},
+{v:"hold still", vP:["hold","still"], cat:"cabin",
+ es:"Quedarse completamente quieto, sin moverse",
+ exs:[
+  {en:"Please <strong>hold still</strong> — I am working around your eyes.", es:"Por favor quédese quieta, estoy trabajando alrededor de sus ojos."},
+  {en:"Try to <strong>hold still</strong> for just thirty seconds while this sets.", es:"Intente quedarse quieta treinta segundos mientras esto asienta."},
+  {en:"<strong>Hold still</strong> — I don't want to smudge the mask.", es:"No se mueva, no quiero manchar la mascarilla."},
+ ]},
+{v:"close up", vP:["close","up"], cat:"cabin",
+ es:"Acercarse, aproximarse hacia alguien",
+ exs:[
+  {en:"Could you <strong>close up</strong> a little? I need to examine your pores.", es:"¿Puede acercarse un poco? Necesito examinar sus poros."},
+  {en:"Please <strong>close up</strong> to the lamp so I can see your skin better.", es:"Por favor acérquese a la lámpara para ver mejor su piel."},
+  {en:"<strong>Close up</strong> and look straight ahead — perfect, thank you.", es:"Acérquese y mire al frente — perfecto, gracias."},
+ ]},
+{v:"look up", vP:["look","up"], cat:"cabin",
+ es:"Mirar hacia arriba con la vista",
+ exs:[
+  {en:"Please <strong>look up</strong> so I can check the skin under your eyes.", es:"Por favor mire hacia arriba para revisar bajo sus ojos."},
+  {en:"<strong>Look up</strong> slowly and keep your eyes relaxed.", es:"Mire hacia arriba despacio y mantenga los ojos relajados."},
+  {en:"<strong>Look up</strong> for a moment — I am almost done with this area.", es:"Mire hacia arriba un momento, casi termino esta zona."},
+ ]},
+{v:"look down", vP:["look","down"], cat:"cabin",
+ es:"Mirar hacia abajo con los ojos",
+ exs:[
+  {en:"Now <strong>look down</strong> so I can treat the area above your brows.", es:"Ahora mire hacia abajo para tratar el área sobre sus cejas."},
+  {en:"<strong>Look down</strong> gently — don't close your eyes completely.", es:"Baje la mirada suavemente, no cierre los ojos del todo."},
+  {en:"Can you <strong>look down</strong> while I apply this serum?", es:"¿Puede mirar hacia abajo mientras aplico este suero?"},
+ ]},
+{v:"tilt back", vP:["tilt","back"], cat:"cabin",
+ es:"Inclinar la cabeza hacia atrás",
+ exs:[
+  {en:"Please <strong>tilt</strong> your head <strong>back</strong> so I can work on your chin.", es:"Por favor incline la cabeza hacia atrás para trabajar en su barbilla."},
+  {en:"<strong>Tilt back</strong> a little — not too far, just a comfortable angle.", es:"Inclínese hacia atrás un poco, no demasiado, solo un ángulo cómodo."},
+  {en:"I need you to <strong>tilt</strong> your head <strong>back</strong> while the mask dries.", es:"Necesito que incline la cabeza hacia atrás mientras se seca la mascarilla."},
+ ]},
+{v:"lean forward", vP:["lean","forward"], cat:"cabin",
+ es:"Inclinarse hacia adelante con el cuerpo",
+ exs:[
+  {en:"<strong>Lean forward</strong> slightly so I can treat the back of your neck.", es:"Inclínese un poco hacia adelante para tratar la nuca."},
+  {en:"Please <strong>lean forward</strong> and rest your chin here.", es:"Por favor inclínese hacia adelante y apoye su barbilla aquí."},
+  {en:"Can you <strong>lean forward</strong>? I need to check behind your ears.", es:"¿Puede inclinarse? Necesito revisar detrás de sus orejas."},
+ ]},
+{v:"rest on", vP:["rest","on"], cat:"cabin",
+ es:"Apoyar, reposar sobre algo",
+ exs:[
+  {en:"<strong>Rest</strong> your head <strong>on</strong> the pillow and close your eyes.", es:"Apoye su cabeza en la almohada y cierre los ojos."},
+  {en:"Let your arms <strong>rest on</strong> the sides of the bed — completely relaxed.", es:"Deje que sus brazos reposen a los lados de la camilla, completamente relajados."},
+  {en:"<strong>Rest</strong> your chin <strong>on</strong> the support while I work on your forehead.", es:"Apoye su barbilla en el soporte mientras trabajo en su frente."},
+ ]},
+{v:"breathe in", vP:["breathe","in"], cat:"cabin",
+ es:"Inhalar, respirar hacia adentro profundamente",
+ exs:[
+  {en:"<strong>Breathe in</strong> deeply through your nose and hold for three seconds.", es:"Inhale profundo por la nariz y sostenga tres segundos."},
+  {en:"<strong>Breathe in</strong> the scent of this essential oil — it helps you relax.", es:"Inhale el aroma de este aceite esencial, ayuda a relajarse."},
+  {en:"Now <strong>breathe in</strong> slowly while I apply the warm compress.", es:"Ahora inhale despacio mientras aplico la compresa caliente."},
+ ]},
+{v:"breathe out", vP:["breathe","out"], cat:"cabin",
+ es:"Exhalar, soltar el aire lentamente",
+ exs:[
+  {en:"Now <strong>breathe out</strong> slowly through your mouth.", es:"Ahora exhale despacio por la boca."},
+  {en:"<strong>Breathe out</strong> and let your whole body relax into the bed.", es:"Exhale y deje que todo su cuerpo se relaje en la camilla."},
+  {en:"<strong>Breathe out</strong> — this next step may feel a bit cool.", es:"Exhale, el siguiente paso puede sentirse un poco frío."},
+ ]},
+{v:"rinse off", vP:["rinse","off"], cat:"cabin",
+ es:"Enjuagar, quitar con agua un producto",
+ exs:[
+  {en:"I am <strong>rinsing off</strong> the exfoliant with warm water now.", es:"Estoy enjuagando el exfoliante con agua tibia ahora."},
+  {en:"Let me <strong>rinse off</strong> this mask before applying the serum.", es:"Déjeme enjuagar esta mascarilla antes de aplicar el suero."},
+  {en:"I will <strong>rinse off</strong> the cleanser with a warm damp cloth.", es:"Retiraré el limpiador con un paño húmedo tibio."},
+ ]},
+{v:"wipe off", vP:["wipe","off"], cat:"cabin",
+ es:"Limpiar o retirar algo con frotamiento suave",
+ exs:[
+  {en:"I am <strong>wiping off</strong> the toner with a soft cotton pad.", es:"Estoy retirando el tónico con un algodón suave."},
+  {en:"Let me <strong>wipe off</strong> the excess product from your forehead.", es:"Déjeme retirar el exceso de producto de su frente."},
+  {en:"I will gently <strong>wipe off</strong> your makeup before starting.", es:"Voy a retirar su maquillaje suavemente antes de comenzar."},
+ ]},
+{v:"pat dry", vP:["pat","dry"], cat:"cabin",
+ es:"Secar dando toquecitos, sin friccionar la piel",
+ exs:[
+  {en:"I am <strong>patting</strong> your skin <strong>dry</strong> — never rub, always pat.", es:"Estoy secando su piel con toquecitos, nunca frote, siempre toque."},
+  {en:"Please <strong>pat dry</strong> your face after washing — it protects your skin.", es:"Por favor seque su cara con toquecitos después de lavar, protege su piel."},
+  {en:"I will <strong>pat dry</strong> the area gently before applying the serum.", es:"Secaré la zona con toquecitos antes de aplicar el suero."},
+ ]},
+{v:"move over", vP:["move","over"], cat:"cabin",
+ es:"Correrse, desplazarse hacia un lado",
+ exs:[
+  {en:"Please <strong>move over</strong> a little to the right on the bed.", es:"Por favor córrase un poco a la derecha en la camilla."},
+  {en:"Could you <strong>move over</strong> so your head is on the pillow?", es:"¿Podría correrse para que su cabeza quede en la almohada?"},
+  {en:"<strong>Move over</strong> slightly — I need more space to work on your left cheek.", es:"Córrase un poco, necesito más espacio para trabajar en su mejilla izquierda."},
+ ]},
+{v:"step in", vP:["step","in"], cat:"cabin",
+ es:"Entrar, dar un paso hacia adentro de un lugar",
+ exs:[
+  {en:"Please <strong>step in</strong> and make yourself comfortable.", es:"Por favor entre y póngase cómoda."},
+  {en:"<strong>Step in</strong> and place your bag on the shelf to your left.", es:"Entre y coloque su bolsa en el estante a su izquierda."},
+  {en:"<strong>Step in</strong> carefully — the floor is a little wet.", es:"Entre con cuidado, el piso está un poco mojado."},
+ ]},
+/* ── WORK ── */
+{v:"check in", vP:["check","in"], cat:"work",
+ es:"Registrarse, confirmar la llegada a un lugar",
+ exs:[
+  {en:"Please <strong>check in</strong> at the front desk when you arrive.", es:"Por favor regístrese en recepción cuando llegue."},
+  {en:"Did you <strong>check in</strong> already? I don't see your name on the list.", es:"¿Ya se registró? No veo su nombre en la lista."},
+  {en:"You can <strong>check in</strong> online the day before your appointment.", es:"Puede registrarse en línea el día antes de su cita."},
+ ]},
+{v:"check out", vP:["check","out"], cat:"work",
+ es:"Registrar salida, pagar y retirarse",
+ exs:[
+  {en:"You can <strong>check out</strong> at the front desk when you're ready.", es:"Puede hacer su check-out en la recepción cuando esté lista."},
+  {en:"Please <strong>check out</strong> with Ana — she handles all payments.", es:"Por favor haga su check-out con Ana, ella maneja todos los pagos."},
+  {en:"Don't forget to <strong>check out</strong> and pick up your aftercare sheet.", es:"No olvide registrar su salida y llevarse su hoja de cuidados."},
+ ]},
+{v:"fill out", vP:["fill","out"], cat:"work",
+ es:"Llenar, completar un formulario o cuestionario",
+ exs:[
+  {en:"Please <strong>fill out</strong> this skin questionnaire before we begin.", es:"Por favor llene este cuestionario de piel antes de comenzar."},
+  {en:"Could you <strong>fill out</strong> the allergy form on the tablet?", es:"¿Podría llenar el formulario de alergias en la tableta?"},
+  {en:"I need you to <strong>fill out</strong> your contact details on this card.", es:"Necesito que llene sus datos de contacto en esta tarjeta."},
+ ]},
+{v:"set up", vP:["set","up"], cat:"work",
+ es:"Preparar, montar o configurar un espacio o sistema",
+ exs:[
+  {en:"I am <strong>setting up</strong> the treatment room for your session.", es:"Estoy preparando la sala de tratamiento para su sesión."},
+  {en:"Let me <strong>set up</strong> the steam machine before you lie down.", es:"Déjeme encender el vaporizador antes de que se acueste."},
+  {en:"We <strong>set up</strong> each cabin fresh before every client arrives.", es:"Preparamos cada cabina de nuevo antes de que llegue cada cliente."},
+ ]},
+{v:"write down", vP:["write","down"], cat:"work",
+ es:"Anotar, escribir algo para recordarlo",
+ exs:[
+  {en:"Let me <strong>write down</strong> your skin concerns so I don't forget.", es:"Déjeme anotar sus preocupaciones de piel para no olvidar."},
+  {en:"I will <strong>write down</strong> the products I recommend for your skin type.", es:"Anotaré los productos que recomiendo para su tipo de piel."},
+  {en:"Please <strong>write down</strong> any reactions you notice at home.", es:"Por favor anote cualquier reacción que note en casa."},
+ ]},
+{v:"call back", vP:["call","back"], cat:"work",
+ es:"Devolver una llamada telefónica",
+ exs:[
+  {en:"I will <strong>call you back</strong> this afternoon to confirm your appointment.", es:"La llamaré esta tarde para confirmar su cita."},
+  {en:"She is in a session right now — can she <strong>call back</strong> in an hour?", es:"Está en sesión ahora, ¿puede llamarle en una hora?"},
+  {en:"Please leave a message and I will <strong>call back</strong> as soon as possible.", es:"Por favor deje un mensaje y llamaré lo antes posible."},
+ ]},
+{v:"book in", vP:["book","in"], cat:"work",
+ es:"Agendar, apartar una cita o reservación",
+ exs:[
+  {en:"Let me <strong>book you in</strong> for next Tuesday at 3 PM.", es:"La voy a agendar para el próximo martes a las 3 PM."},
+  {en:"I am <strong>booking you in</strong> for a deep cleansing facial.", es:"La estoy agendando para un facial de limpieza profunda."},
+  {en:"We are fully <strong>booked in</strong> this week — can you come next Monday?", es:"Esta semana estamos llenos, ¿puede venir el próximo lunes?"},
+ ]},
+{v:"follow up", vP:["follow","up"], cat:"work",
+ es:"Dar seguimiento a un cliente o asunto después",
+ exs:[
+  {en:"I always <strong>follow up</strong> with my clients 48 hours after treatment.", es:"Siempre doy seguimiento a mis clientes 48 horas después del tratamiento."},
+  {en:"I will <strong>follow up</strong> with you by message to check on your skin.", es:"Le haré seguimiento por mensaje para saber cómo está su piel."},
+  {en:"Let's <strong>follow up</strong> on that redness at your next appointment.", es:"Revisaremos esa rojez en su próxima cita."},
+ ]},
+{v:"carry on", vP:["carry","on"], cat:"work",
+ es:"Continuar, seguir haciendo algo sin parar",
+ exs:[
+  {en:"Please <strong>carry on</strong> relaxing — I am just getting the next product.", es:"Por favor siga relajándose, solo voy por el siguiente producto."},
+  {en:"<strong>Carry on</strong> breathing deeply — we still have twenty minutes.", es:"Siga respirando profundo, aún tenemos veinte minutos."},
+  {en:"You can <strong>carry on</strong> talking if you like — it doesn't bother me.", es:"Puede seguir hablando si gusta, no me molesta."},
+ ]},
+{v:"go over", vP:["go","over"], cat:"work",
+ es:"Repasar o revisar información con detalle",
+ exs:[
+  {en:"Let me <strong>go over</strong> your skin analysis results with you.", es:"Déjeme repasar los resultados del análisis de su piel con usted."},
+  {en:"I am going to <strong>go over</strong> the aftercare routine step by step.", es:"Voy a repasar la rutina de cuidados paso a paso."},
+  {en:"Can we <strong>go over</strong> the products you are currently using at home?", es:"¿Podemos repasar los productos que está usando actualmente en casa?"},
+ ]},
+/* ── SOCIAL ── */
+{v:"catch up", vP:["catch","up"], cat:"social",
+ es:"Ponerse al día con alguien después de un tiempo",
+ exs:[
+  {en:"We always <strong>catch up</strong> during her appointments — she tells me everything!", es:"Siempre nos ponemos al día durante sus citas, ¡me cuenta todo!"},
+  {en:"Let us <strong>catch up</strong> over coffee after your session.", es:"Pongámonos al día tomando café después de su sesión."},
+  {en:"I love when clients come back — we <strong>catch up</strong> on all the news.", es:"Me encanta cuando los clientes regresan, nos ponemos al día con todas las noticias."},
+ ]},
+{v:"drop by", vP:["drop","by"], cat:"social",
+ es:"Pasar a visitar sin cita previa o de improviso",
+ exs:[
+  {en:"Feel free to <strong>drop by</strong> any time — we always have a slot for you.", es:"Siéntase libre de pasar cuando quiera, siempre tenemos un espacio para usted."},
+  {en:"She just <strong>dropped by</strong> to buy some products — no appointment.", es:"Solo pasó a comprar productos, sin cita."},
+  {en:"<strong>Drop by</strong> the front desk before you leave — I have a gift for you.", es:"Pase por recepción antes de irse, tengo un regalo para usted."},
+ ]},
+{v:"get along", vP:["get","along"], cat:"social",
+ es:"Llevarse bien, tener buena relación con alguien",
+ exs:[
+  {en:"I really <strong>get along</strong> with all my regular clients.", es:"Me llevo muy bien con todos mis clientes regulares."},
+  {en:"She and I <strong>get along</strong> so well — she has been coming for five years.", es:"Ella y yo nos llevamos muy bien, lleva cinco años viniendo."},
+  {en:"It is important to <strong>get along</strong> with your clients to build trust.", es:"Es importante llevarse bien con los clientes para generar confianza."},
+ ]},
+{v:"come back", vP:["come","back"], cat:"social",
+ es:"Regresar, volver a un lugar o persona",
+ exs:[
+  {en:"Please <strong>come back</strong> in two weeks for a follow-up facial.", es:"Por favor regrese en dos semanas para un facial de seguimiento."},
+  {en:"I hope you <strong>come back</strong> soon — your skin is responding really well.", es:"Espero que regrese pronto, su piel está respondiendo muy bien."},
+  {en:"<strong>Come back</strong> if you notice any reaction to the new serum.", es:"Regrese si nota alguna reacción al nuevo suero."},
+ ]},
+{v:"ask around", vP:["ask","around"], cat:"social",
+ es:"Preguntar a varias personas para obtener información",
+ exs:[
+  {en:"<strong>Ask around</strong> among your friends — many of them use this product.", es:"Pregúntele a sus amigos, muchos de ellos usan este producto."},
+  {en:"I <strong>asked around</strong> at the supplier and found a better moisturizer.", es:"Pregunté con el proveedor y encontré una mejor crema hidratante."},
+  {en:"If you're not sure which clinic to choose, <strong>ask around</strong> for recommendations.", es:"Si no está segura de qué clínica elegir, pregúntele a varias personas."},
+ ]},
+/* ── DAILY ── */
+{v:"wake up", vP:["wake","up"], cat:"daily",
+ es:"Despertarse, salir del sueño",
+ exs:[
+  {en:"I <strong>wake up</strong> at 6 AM to prepare the spa before opening.", es:"Me despierto a las 6 AM para preparar el spa antes de abrir."},
+  {en:"She <strong>wakes up</strong> early on treatment days to wash her face first.", es:"Se despierta temprano los días de tratamiento para lavarse la cara primero."},
+  {en:"<strong>Wake up</strong> slowly after the facial — your body is very relaxed.", es:"Despierte despacio después del facial, su cuerpo está muy relajado."},
+ ]},
+{v:"get up", vP:["get","up"], cat:"daily",
+ es:"Levantarse de la cama o de donde se está acostado",
+ exs:[
+  {en:"Take your time — there is no rush to <strong>get up</strong> after your treatment.", es:"Tómese su tiempo, no hay prisa para levantarse después del tratamiento."},
+  {en:"I <strong>get up</strong> and drink a glass of water every morning.", es:"Me levanto y bebo un vaso de agua todas las mañanas."},
+  {en:"<strong>Get up</strong> slowly from the bed — some clients feel light-headed.", es:"Levántese despacio de la camilla, algunos clientes se sienten mareados."},
+ ]},
+{v:"clean up", vP:["clean","up"], cat:"daily",
+ es:"Limpiar y ordenar un espacio completamente",
+ exs:[
+  {en:"I always <strong>clean up</strong> the cabin between every client.", es:"Siempre limpio la cabina entre cada cliente."},
+  {en:"We <strong>clean up</strong> the whole salon every evening before closing.", es:"Limpiamos todo el salón cada tarde antes de cerrar."},
+  {en:"Please <strong>clean up</strong> your skin every night before sleeping.", es:"Por favor limpie su piel cada noche antes de dormir."},
+ ]},
+{v:"pick up", vP:["pick","up"], cat:"daily",
+ es:"Recoger, levantar algo del suelo o de un lugar",
+ exs:[
+  {en:"Can you <strong>pick up</strong> your bag from the floor before I sweep?", es:"¿Puede recoger su bolsa del piso antes de que barra?"},
+  {en:"I will <strong>pick up</strong> the products from the supplier tomorrow.", es:"Recogeré los productos del proveedor mañana."},
+  {en:"Please <strong>pick up</strong> your complimentary sample at the front desk.", es:"Por favor recoja su muestra gratuita en recepción."},
+ ]},
+{v:"drop off", vP:["drop","off"], cat:"daily",
+ es:"Dejar a alguien o algo en un lugar y seguir de paso",
+ exs:[
+  {en:"I will <strong>drop off</strong> your skincare order at the salon tomorrow.", es:"Dejaré su pedido de cuidado de piel en el salón mañana."},
+  {en:"She <strong>dropped off</strong> the products on her way to work.", es:"Dejó los productos de camino al trabajo."},
+  {en:"Can you <strong>drop off</strong> the consent forms before your appointment?", es:"¿Puede dejar los formularios de consentimiento antes de su cita?"},
+ ]},
+{v:"run out of", vP:["run out","of"], cat:"daily",
+ es:"Quedarse sin algo, agotar una existencia",
+ exs:[
+  {en:"We are <strong>running out of</strong> the rose hip serum — I need to order more.", es:"Nos estamos quedando sin el suero de rosa mosqueta, necesito pedir más."},
+  {en:"I <strong>ran out of</strong> cotton pads and had to use a soft cloth.", es:"Se me acabaron los algodones y tuve que usar un paño suave."},
+  {en:"Don't let yourself <strong>run out of</strong> moisturizer — your skin needs it daily.", es:"No se quede sin hidratante, su piel lo necesita diariamente."},
+ ]},
+{v:"look for", vP:["look","for"], cat:"daily",
+ es:"Buscar algo o a alguien con intención",
+ exs:[
+  {en:"I am <strong>looking for</strong> a gentle cleanser for sensitive skin.", es:"Estoy buscando un limpiador suave para piel sensible."},
+  {en:"Are you <strong>looking for</strong> a product to reduce dark spots?", es:"¿Está buscando un producto para reducir las manchas oscuras?"},
+  {en:"She was <strong>looking for</strong> a good facialist for months before finding us.", es:"Estuvo buscando una buena esteticista por meses antes de encontrarnos."},
+ ]},
+{v:"turn off", vP:["turn","off"], cat:"daily",
+ es:"Apagar un aparato, dispositivo o luz",
+ exs:[
+  {en:"Please <strong>turn off</strong> your phone during the treatment session.", es:"Por favor apague su teléfono durante la sesión de tratamiento."},
+  {en:"I will <strong>turn off</strong> the bright light and use the softer lamp.", es:"Apagaré la luz brillante y usaré la lámpara más suave."},
+  {en:"Remember to <strong>turn off</strong> the steamer when you leave the cabin.", es:"Recuerda apagar el vaporizador cuando salgas de la cabina."},
+ ]},
+{v:"turn on", vP:["turn","on"], cat:"daily",
+ es:"Encender, activar un aparato o dispositivo",
+ exs:[
+  {en:"I am <strong>turning on</strong> the steam machine — it needs five minutes to warm up.", es:"Estoy encendiendo el vaporizador, necesita cinco minutos para calentarse."},
+  {en:"Let me <strong>turn on</strong> some relaxing music for your session.", es:"Déjeme poner música relajante para su sesión."},
+  {en:"<strong>Turn on</strong> the magnifying lamp so I can see your pores better.", es:"Enciende la lámpara de aumento para ver mejor sus poros."},
+ ]},
+{v:"hang up", vP:["hang","up"], cat:"daily",
+ es:"Colgar ropa en un gancho, o colgar una llamada",
+ exs:[
+  {en:"You can <strong>hang up</strong> your coat on the hook right by the door.", es:"Puede colgar su abrigo en el gancho junto a la puerta."},
+  {en:"I will <strong>hang up</strong> your robe while you rest after the treatment.", es:"Colgaré su bata mientras descansa después del tratamiento."},
+  {en:"Sorry, I need to <strong>hang up</strong> — my next client has just arrived.", es:"Disculpe, tengo que colgar, mi siguiente cliente acaba de llegar."},
+ ]},
+];
+
+const CATS = {
+  all:   {label:"Todos",  emoji:""},
+  cabin: {label:"Cabina", emoji:"🌿", cls:"cat-cabin"},
+  work:  {label:"Trabajo",emoji:"💼", cls:"cat-work"},
+  social:{label:"Social", emoji:"🤝", cls:"cat-social"},
+  daily: {label:"Diario", emoji:"☀️", cls:"cat-daily"},
+};
+
+let currentCat = "all";
+let allExpanded = false;
+
+/* ── VERB HTML ── */
+function vHtml(d){
+  const [main,part] = d.vP;
+  return `${main} <em>${part}</em>`;
+}
+
+/* ── BUILD ── */
+function buildContent(){
+  const cont = document.getElementById("content");
+  cont.innerHTML = "";
+  const order = ["cabin","work","social","daily"];
+
+  order.forEach(cat => {
+    const items = DATA.filter(d=>d.cat===cat);
+    const sec = document.createElement("div");
+    sec.className = "cat-section"; sec.dataset.cat = cat;
+
+    sec.innerHTML = `<div class="section-label">
+      <h2>${CATS[cat].emoji} <em>${CATS[cat].label}</em></h2>
+      <div class="section-line"></div>
+      <span class="section-ct">${items.length} verbos</span>
+    </div>`;
+
+    const grid = document.createElement("div");
+    grid.className = "grid"; grid.id = "g-"+cat;
+
+    items.forEach((d, i) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.id = "c-"+d.v.replace(/ /g,"_");
+      card.dataset.cat = d.cat;
+      card.dataset.v = d.v.toLowerCase();
+      card.dataset.es = d.es.toLowerCase();
+      card.style.animationDelay = (i*0.035)+"s";
+      card.style.animation = "cardIn .45s ease both";
+
+      const exHtml = d.exs.map((e,n)=>`
+        <div class="ex-item">
+          <div class="ex-num">Ejemplo ${n+1}</div>
+          <div class="ex-en">${e.en}</div>
+          <div class="ex-es">${e.es}</div>
+        </div>`).join("");
+
+      card.innerHTML = `
+        <div class="card-head">
+          <div class="card-verb">${vHtml(d)}</div>
+          <span class="cat-pill ${CATS[d.cat].cls}">${CATS[d.cat].label}</span>
+        </div>
+        <div class="card-es">${d.es}</div>
+        <button class="card-toggle" onclick="event.stopPropagation();toggleCard(this)">
+          Ver ejemplos
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="card-examples">${exHtml}</div>`;
+
+      /* focus/blur hover */
+      card.addEventListener("mouseenter", ()=>focusCard(card));
+      card.addEventListener("mouseleave", ()=>blurCard(card));
+      card.addEventListener("click", ()=>toggleCard(card.querySelector(".card-toggle")));
+      card.addEventListener("touchstart",()=>focusCard(card),{passive:true});
+      card.addEventListener("touchend",  ()=>blurCard(card), {passive:true});
+
+      grid.appendChild(card);
+    });
+
+    sec.appendChild(grid);
+    cont.appendChild(sec);
+  });
+
+  addCardAnim();
+}
+
+/* ── FOCUS / BLUR ── */
+function focusCard(card){
+  const grid = card.closest(".grid");
+  if(!grid) return;
+  grid.classList.add("has-focus");
+  card.classList.add("focused");
+}
+function blurCard(card){
+  const grid = card.closest(".grid");
+  if(!grid) return;
+  grid.classList.remove("has-focus");
+  card.classList.remove("focused");
+}
+
+/* ── TOGGLE ── */
+function toggleCard(btn){
+  const card = btn.closest ? btn.closest(".card") : btn;
+  const toggle = card.querySelector(".card-toggle");
+  card.classList.toggle("open");
+  toggle.childNodes[0].textContent = card.classList.contains("open") ? "Cerrar " : "Ver ejemplos ";
+}
+
+/* ── FILTER ── */
+function doFilter(){
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  let vis = 0;
+  document.querySelectorAll(".card").forEach(c=>{
+    const mc = currentCat==="all" || c.dataset.cat===currentCat;
+    const mq = !q || c.dataset.v.includes(q) || c.dataset.es.includes(q);
+    const show = mc && mq;
+    c.classList.toggle("hidden",!show);
+    if(show) vis++;
+  });
+  document.querySelectorAll(".cat-section").forEach(s=>{
+    const cm = currentCat==="all"||currentCat===s.dataset.cat;
+    const hv = s.querySelectorAll(".card:not(.hidden)").length>0;
+    s.style.display = (!cm||!hv)?"none":"";
+  });
+  document.getElementById("count-n").textContent = vis;
+  document.getElementById("total-n").textContent = vis;
+  document.getElementById("empty").classList.toggle("show", vis===0);
+}
+
+function setCat(cat){
+  currentCat=cat;
+  document.querySelectorAll(".flt").forEach(b=>b.classList.toggle("active",b.dataset.cat===cat));
+  doFilter();
+}
+
+/* ── EXPAND ALL ── */
+function toggleAll(){
+  allExpanded=!allExpanded;
+  document.querySelectorAll(".card:not(.hidden)").forEach(c=>{
+    const t=c.querySelector(".card-toggle");
+    if(allExpanded){c.classList.add("open");t.childNodes[0].textContent="Cerrar ";}
+    else{c.classList.remove("open");t.childNodes[0].textContent="Ver ejemplos ";}
+  });
+  document.getElementById("expand-all-btn").textContent=allExpanded?"Colapsar todos":"Expandir todos";
+}
+
+/* ── CARD ANIMATION ── */
+function addCardAnim(){
+  const style = document.createElement("style");
+  style.textContent=`@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}`;
+  document.head.appendChild(style);
+}
+
+/* ── INIT ── */
+buildContent();
+document.getElementById("search").addEventListener("input", doFilter);
+document.querySelectorAll(".flt").forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat)));
+</script>
+</body>
+</html>
