@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spa & Facial Protocols - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-bg: #0a1428;
+            --card-bg: rgba(15, 25, 45, 0.95);
+            --accent-green: #3da87f;
+            --accent-gold: #d4a574;
+            --accent-rust: #d95555;
+            --text-light: #f0e6d8;
+            --text-muted: #b8a89c;
+            --success: #6ba68f;
+            --warning: #d97d7d;
+            --subtle-border: rgba(212, 165, 116, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2f45 50%, #0a1428 100%);
+            color: var(--text-light);
+            line-height: 1.8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-bottom: 3px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            background: rgba(10, 20, 40, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+            text-shadow: 0 2px 10px rgba(212, 165, 116, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 1rem 2.5rem;
+            background: rgba(61, 168, 127, 0.2);
+            border: 2px solid var(--accent-green);
+            color: var(--text-light);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(61, 168, 127, 0.4);
+        }
+
+        .nav-btn.active {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+            box-shadow: 0 8px 20px rgba(61, 168, 127, 0.4);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeInScale 0.6s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-green);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* DIALOGUES SECTION */
+        .dialogue-card {
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+            border: 2px solid var(--subtle-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        .dialogue-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateX(10px);
+            box-shadow: 0 12px 40px rgba(212, 165, 116, 0.15);
+        }
+
+        .dialogue-number {
+            font-size: 1rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: inline-block;
+            background: rgba(212, 165, 116, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+
+        .dialogue-scenario {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(212, 165, 116, 0.08);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 6px;
+        }
+
+        .speaker {
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .speaker.client {
+            color: var(--accent-rust);
+        }
+
+        .dialogue-text {
+            color: var(--text-light);
+            margin-left: 2rem;
+            padding: 0.8rem 0;
+            font-size: 1.25rem;
+            line-height: 1.9;
+            border-left: 3px solid rgba(212, 165, 116, 0.3);
+            padding-left: 1.5rem;
+        }
+
+        /* PROTOCOLS SECTION */
+        .protocol-header {
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.3) 0%, rgba(212, 165, 116, 0.15) 100%);
+            padding: 2rem;
+            border-left: 6px solid var(--accent-green);
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(61, 168, 127, 0.1);
+        }
+
+        .protocol-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 0.8rem;
+        }
+
+        .protocol-duration {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 2.5rem;
+            padding-left: 4rem;
+            position: relative;
+            animation: slideInLeft 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .steps li:nth-child(1) { animation-delay: 0.1s; }
+        .steps li:nth-child(2) { animation-delay: 0.2s; }
+        .steps li:nth-child(3) { animation-delay: 0.3s; }
+        .steps li:nth-child(4) { animation-delay: 0.4s; }
+        .steps li:nth-child(5) { animation-delay: 0.5s; }
+        .steps li:nth-child(6) { animation-delay: 0.6s; }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-rust));
+            color: var(--dark-bg);
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .step-action {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .step-dialogue {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(212, 165, 116, 0.05) 100%);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            font-style: italic;
+            color: var(--text-light);
+            border-left: 4px solid var(--accent-gold);
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        .client-response {
+            background: linear-gradient(135deg, rgba(217, 85, 85, 0.15) 0%, rgba(217, 85, 85, 0.05) 100%);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            font-style: italic;
+            color: var(--text-light);
+            border-left: 4px solid var(--accent-rust);
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        /* QUIZ SECTION */
+        .quiz-container {
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.1) 0%, rgba(212, 165, 116, 0.05) 100%);
+            border: 2px solid var(--subtle-border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInScale 0.6s ease-in;
+        }
+
+        .quiz-scenario {
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.2) 0%, rgba(61, 168, 127, 0.08) 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border-left: 6px solid var(--accent-green);
+            font-size: 1.35rem;
+            line-height: 2;
+            box-shadow: 0 8px 24px rgba(61, 168, 127, 0.1);
+        }
+
+        .quiz-question {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.9;
+            font-weight: 600;
+        }
+
+        .options {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .option {
+            padding: 1.5rem;
+            background: rgba(212, 165, 116, 0.08);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: rgba(212, 165, 116, 0.2);
+            border-color: var(--accent-gold);
+            transform: translateX(15px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.2);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 1.5rem;
+            width: 24px;
+            height: 24px;
+            accent-color: var(--accent-gold);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .feedback {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: none;
+            font-size: 1.25rem;
+            line-height: 1.9;
+            animation: slideInLeft 0.4s ease-out;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(107, 166, 143, 0.25);
+            border-left: 5px solid var(--success);
+            color: #a8d5c4;
+        }
+
+        .feedback.incorrect {
+            background: rgba(217, 125, 125, 0.25);
+            border-left: 5px solid var(--warning);
+            color: #d7a5a5;
+        }
+
+        .quiz-button {
+            background: linear-gradient(135deg, var(--accent-green), #2d8f6f);
+            color: var(--dark-bg);
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(61, 168, 127, 0.3);
+        }
+
+        .quiz-button:hover {
+            background: linear-gradient(135deg, #2d8f6f, var(--accent-green));
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(61, 168, 127, 0.5);
+        }
+
+        .progress {
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.2), rgba(212, 165, 116, 0.1));
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 2px solid var(--subtle-border);
+            box-shadow: 0 8px 24px rgba(61, 168, 127, 0.1);
+        }
+
+        .progress-text {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(212, 165, 116, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-gold), var(--accent-rust));
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.5);
+        }
+
+        .score-summary {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(61, 168, 127, 0.15), rgba(212, 165, 116, 0.08));
+            border: 2px solid var(--subtle-border);
+            border-radius: 12px;
+            display: none;
+            animation: slideInScale 0.6s ease-in;
+        }
+
+        .score-summary.show {
+            display: block;
+        }
+
+        .final-score {
+            font-size: 4.5rem;
+            font-weight: 300;
+            color: var(--accent-gold);
+            margin: 1.5rem 0;
+            text-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .score-message {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.9;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, var(--accent-gold), #c49436);
+            color: var(--dark-bg);
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(212, 165, 116, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            border-top: 2px solid var(--subtle-border);
+            margin-top: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .section-intro {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(61, 168, 127, 0.1));
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border-left: 6px solid var(--accent-gold);
+            font-size: 1.3rem;
+            line-height: 1.9;
+        }
+
+        .dialogue-count {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--dark-bg);
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .nav-btn { padding: 0.8rem 1.5rem; font-size: 1rem; }
+            .container { padding: 1.5rem; }
+            .dialogue-card { padding: 1.5rem; }
+            .quiz-container { padding: 1.5rem; }
+            .speaker { font-size: 1.1rem; }
+            .dialogue-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✨ SPA & FACIAL PROTOCOLS ✨</h1>
+        <p class="subtitle">Interactive English Learning for Estheticians | Professional Level B1</p>
+        <nav>
+            <button class="nav-btn active" onclick="showSection('dialogues')">💬 Dialogues</button>
+            <button class="nav-btn" onclick="showSection('protocols')">📋 Protocols</button>
+            <button class="nav-btn" onclick="showSection('quiz')">🎯 Quiz</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- DIALOGUES SECTION -->
+        <section id="dialogues" class="section active">
+            <h2>Common Cabin Dialogues</h2>
+            <div class="section-intro">
+                <strong>Learn 15 authentic conversations</strong> that happen in a spa cabin during facial and massage treatments. 
+                Each dialogue teaches you how to communicate professionally in English about comfort, skin concerns, products, and aftercare.
+                <div class="dialogue-count">15 Complete Dialogues</div>
+            </div>
+
+            <!-- Dialogue 1 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 1 – Booking & Arrival</div>
+                <div class="dialogue-scenario">Client calls to book a facial appointment</div>
+                <div class="speaker">Receptionist</div>
+                <div class="dialogue-text">"Good morning! Thank you for calling our spa. How can I help you today?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Hi, I'd like to book a facial. Do you have any available times this week?"</div>
+                <div class="speaker">Receptionist</div>
+                <div class="dialogue-text">"Of course! We have several slots available. What day would you prefer? We're open Tuesday through Saturday."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"I've been working long hours lately, so I really need some relaxation. How long does a basic facial take?"</div>
+                <div class="speaker">Receptionist</div>
+                <div class="dialogue-text">"Our signature facial is 60 minutes, and it will definitely help you unwind. Shall I put you down for this Saturday at 2 PM?"</div>
+            </div>
+
+            <!-- Dialogue 2 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 2 – Skin Concerns</div>
+                <div class="dialogue-scenario">Esthetician discusses skin type during consultation</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm going to analyze your skin now. Have you noticed any changes recently? Is it feeling dry, oily, or sensitive?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Lately, I've been getting some breakouts on my chin. I'm not sure if it's hormonal or the products I'm using."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"That's quite common. I can see some congestion in that area. Don't worry—we'll address that today. Have you used any new products recently?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Yes, I started using a new moisturizer about two weeks ago. Could that have caused it?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"It's possible. Sometimes our skin needs time to adjust. Let's focus on balancing your skin today, and I'll recommend a gentler routine for you."</div>
+            </div>
+
+            <!-- Dialogue 3 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 3 – Temperature & Comfort</div>
+                <div class="dialogue-scenario">Checking client comfort with water temperature</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm about to cleanse your face with warm water. Let me know if the temperature is okay for you."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Oh, that's a bit too hot. Could you make it a little cooler?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Absolutely! I'll adjust it right away. How's this temperature? Better?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Yes, that's perfect. Much better. Thank you!"</div>
+            </div>
+
+            <!-- Dialogue 4 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 4 – Discomfort During Treatment</div>
+                <div class="dialogue-scenario">Client experiences tenderness during extraction</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm going to start with gentle extractions now. This area has some congestion, but I'll be very careful."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Ouch! That one hurt. Is this normal?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Some sensitivity is normal, especially in congested areas. I've finished with that spot. Tell me if you'd like me to slow down or use a lighter touch."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Okay, maybe just a bit lighter would be better."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"No problem at all. I'm adjusting my pressure now. Let's move to the next area at a slower pace."</div>
+            </div>
+
+            <!-- Dialogue 5 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 5 – Mask Application</div>
+                <div class="dialogue-scenario">Introducing the facial mask treatment</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Now I'm going to apply a hydrating mask. It's going to feel cool and refreshing on your skin."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"What's in the mask? Will it cause any irritation?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"This is a gentle seaweed-based mask with chamomile and aloe. It's soothing and won't irritate your skin. I've already tested your patch, and it's safe."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Okay, I trust you. It does feel nice and cool!"</div>
+            </div>
+
+            <!-- Dialogue 6 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 6 – Steam & Heat Warning</div>
+                <div class="dialogue-scenario">Warning client about upcoming steam treatment</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm about to use the facial steamer. The steam will open your pores and help the products penetrate deeper. It's going to be warm, so let me know if it's too much."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"How long will you use it for?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Just about 5 minutes. I'll keep it at a comfortable distance. If you feel too hot, I'll move it further away. Ready?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Yes, I'm ready. This is so relaxing!"</div>
+            </div>
+
+            <!-- Dialogue 7 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 7 – Allergies & Sensitivities</div>
+                <div class="dialogue-scenario">Discussing allergies before treatment</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Before we proceed, I need to ask: Do you have any allergies or sensitivities to skincare products? Any fragrances or ingredients you want to avoid?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"I'm allergic to nuts, and I've had bad reactions to products with salicylic acid before."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Thank you for letting me know. I've made a note of this. All the products I'll use today are nut-free and don't contain any salicylic acid. You'll be completely safe."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Great, I appreciate that. I feel confident now."</div>
+            </div>
+
+            <!-- Dialogue 8 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 8 – Pressure Preference</div>
+                <div class="dialogue-scenario">Client adjusts massage pressure</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm starting with a relaxing facial massage now. Let me know if you'd like me to apply more pressure or if this is perfect."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Could you go a bit firmer? I carry a lot of tension in my face."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Absolutely. I'm increasing the pressure now. Just relax and breathe deeply. You're doing great!"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Mmm, yes, that's much better. I can already feel the tension melting away."</div>
+            </div>
+
+            <!-- Dialogue 9 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 9 – Product Questions</div>
+                <div class="dialogue-scenario">Client asks about product benefits</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I'm applying our premium eye contour serum now. This product has been formulated to reduce fine lines and dark circles."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"How often should I use it at home? Every day?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Yes, you should apply it twice daily—morning and evening. Use just a tiny amount and pat gently around the eye area. It will last you about two months."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Perfect! I'll definitely buy it before I leave today."</div>
+            </div>
+
+            <!-- Dialogue 10 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 10 – Relaxation Encouragement</div>
+                <div class="dialogue-scenario">Esthetician encourages client to relax</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"While the mask is setting, just relax. If you'd like, you can take a nap—some clients do, and it's perfectly fine."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Really? I could use the rest. Is it okay if I fall asleep?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Of course! That's actually wonderful for your relaxation. I'll gently wake you when it's time to remove the mask. Just enjoy this moment of peace."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Thank you. This is exactly what I needed."</div>
+            </div>
+
+            <!-- Dialogue 11 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 11 – Sun Protection Advice</div>
+                <div class="dialogue-scenario">Discussing post-facial care</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Before you go, I need to remind you that your skin will be more sensitive today. You must wear SPF 30 or higher every day for the next week."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Do I really need sunscreen every day? It's been cloudy lately."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Yes, definitely. UV rays penetrate clouds, and your skin has just been treated, so it's more vulnerable. Trust me—it's essential for protecting your new skin."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Okay, I understand. I'll be diligent about it. Thank you for the advice!"</div>
+            </div>
+
+            <!-- Dialogue 12 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 12 – Redness & Aftercare</div>
+                <div class="dialogue-scenario">Explaining post-treatment redness</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"You may notice some slight redness today—this is completely normal and will fade within a few hours. Don't be concerned."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"How long will the redness last? I have an important meeting tomorrow."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Most clients see it disappear by evening. By tomorrow morning, your skin will have calmed down completely. You'll look refreshed, not red!"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Oh, that's perfect! I'm so glad I came."</div>
+            </div>
+
+            <!-- Dialogue 13 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 13 – Product Recommendations</div>
+                <div class="dialogue-scenario">Suggesting a skincare routine</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Based on your skin analysis today, I've put together a customized routine for you. You'll need a gentle cleanser, a hydrating toner, and a moisturizer with SPF."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"That's a lot of steps. Do I really need all of them?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Your skin is dehydrated and congested, so yes, each product serves a purpose. The routine will take just 5 minutes morning and night. I promise it'll transform your skin in 4 weeks."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Okay, I'm convinced. Let me start with these three products."</div>
+            </div>
+
+            <!-- Dialogue 14 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 14 – Follow-up Scheduling</div>
+                <div class="dialogue-scenario">Client wants to book next appointment</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"I recommend coming back in four weeks to maintain these results. Shall I schedule your next appointment?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Yes, absolutely! Can I get the same time slot?"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Of course! I've put you down for Saturday at 2 PM again in four weeks. You'll receive a reminder via email and text."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Perfect! I've already experienced such a difference. I can't wait to come back."</div>
+            </div>
+
+            <!-- Dialogue 15 -->
+            <div class="dialogue-card">
+                <div class="dialogue-number">Dialogue 15 – Checkout & Gratitude</div>
+                <div class="dialogue-scenario">Client prepares to leave</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Your skin looks absolutely radiant! How are you feeling?"</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"I feel amazing! This was so much better than I expected. You've really made a difference."</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"That means everything to me! Remember to follow the skincare routine we discussed and stay hydrated. I've given you all the product recommendations, and our receptionist will process your purchases."</div>
+                <div class="speaker client">Client</div>
+                <div class="dialogue-text">"Thank you so much! I'm definitely coming back, and I'll be recommending you to all my friends!"</div>
+                <div class="speaker">Esthetician</div>
+                <div class="dialogue-text">"Thank you! We'd love to see you again. Have a wonderful day, and enjoy your glowing skin!"</div>
+            </div>
+        </section>
+
+        <!-- PROTOCOLS SECTION -->
+        <section id="protocols" class="section">
+            <h2>Complete Facial Protocols</h2>
+            <div class="section-intro">
+                <strong>Detailed step-by-step protocols</strong> for 15 different facial treatments. 
+                Each protocol includes esthetician dialogue, client responses, and specific instructions for each phase.
+                <div class="dialogue-count">15 Professional Protocols</div>
+            </div>
+
+            <!-- Protocol 1 -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">1. Classic European Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 👤 Suitable for: All skin types</div>
+                </div>
+                <ul class="steps">
+                    <li>
+                        <div class="step-action">💬 Greet client & conduct skin analysis</div>
+                        <div class="step-dialogue">"Welcome! Before we start, I'm going to analyze your skin to determine the best products for your treatment today."</div>
+                        <div class="client-response">"Thank you. I've been having some issues with dryness lately."</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧴 Double cleanse with oil and water-based cleanser</div>
+                        <div class="step-dialogue">"I'm using a gentle oil cleanser first to remove makeup and impurities. This will open your pores naturally."</div>
+                        <div class="client-response">"I like how gentle that feels on my skin."</div>
+                    </li>
+                    <li>
+                        <div class="step-action">✨ Apply exfoliating product (mechanical or chemical)</div>
+                        <div class="step-dialogue">"Now I'm applying a light exfoliant. This will remove dead skin cells and leave your skin glowing. You'll feel a slight tingling sensation."</div>
+                        <div class="client-response">"Oh yes, I can feel that working!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💆 Massage face, neck, and décolletage</div>
+                        <div class="step-dialogue">"This massage will increase blood circulation and help your skin absorb the products better. Just relax and enjoy this moment."</div>
+                        <div class="client-response">"This is so soothing. I'm already feeling less tense."</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🎭 Apply treatment mask suitable for skin type</div>
+                        <div class="step-dialogue">"I'm applying a hydrating mask now. While it sets for 15 minutes, you can rest. I'll come back and remove it gently."</div>
+                        <div class="client-response">"Perfect timing—I needed to unwind!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🌟 Apply serums, moisturizer, and SPF</div>
+                        <div class="step-dialogue">"These serums have been layered to address your dryness and provide antioxidant protection. Always use SPF during the day."</div>
+                        <div class="client-response">"I can already feel the hydration sinking in."</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Protocol 2: Deep Cleansing -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">2. Deep Cleansing Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 👤 Suitable for: Oily, acne-prone, congested skin</div>
+                </div>
+                <ul class="steps">
+                    <li>
+                        <div class="step-action">💬 Assess congestion and skin condition</div>
+                        <div class="step-dialogue">"I can see you have some congestion in your T-zone. We're going to focus on deep cleansing today to clear those pores."</div>
+                        <div class="client-response">"Yes, I've been having trouble with blackheads. Is it going to hurt?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧴 Gentle cleanse</div>
+                        <div class="step-dialogue">"I'm using a foaming cleanser that's pH-balanced for oily skin. It won't strip your skin of natural oils."</div>
+                        <div class="client-response">"That feels refreshing!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧪 Apply chemical exfoliant (BHA/salicylic acid)</div>
+                        <div class="step-dialogue">"This BHA will penetrate your pores and dissolve the sebum buildup. Leave it on for 5-10 minutes."</div>
+                        <div class="client-response">"I'm feeling a slight tingle. Is that normal?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">⚙️ Perform gentle extractions</div>
+                        <div class="step-dialogue">"I'm going to extract the congestion now. I'll be very gentle, but you may feel slight pressure. Tell me if it's uncomfortable."</div>
+                        <div class="client-response">"Okay, I'm ready. I trust you."</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🎭 Apply calming, antibacterial mask</div>
+                        <div class="step-dialogue">"This clay mask will draw out remaining impurities and soothe any inflammation. You may feel a slight tightening."</div>
+                        <div class="client-response">"How long will you leave this on?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🌟 Finish with oil-free moisturizer</div>
+                        <div class="step-dialogue">"I'm applying a lightweight, non-comedogenic moisturizer. Your skin should remain clear now."</div>
+                        <div class="client-response">"I already see a huge difference! Thank you!"</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Protocol 3: Hydrating -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">3. Hydrating Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 👤 Suitable for: Dry, dehydrated, sensitive skin</div>
+                </div>
+                <ul class="steps">
+                    <li>
+                        <div class="step-action">💬 Evaluate dehydration and skin barrier</div>
+                        <div class="step-dialogue">"Your skin is showing signs of dehydration. This facial will restore moisture and strengthen your skin barrier."</div>
+                        <div class="client-response">"How can I prevent this in the future?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧴 Gentle, hydrating cleanser</div>
+                        <div class="step-dialogue">"I'm using a creamy cleanser that won't dry out your skin. It contains hyaluronic acid to retain moisture."</div>
+                        <div class="client-response">"It's so soft. I love this already!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💧 Apply hydrating toner with essence</div>
+                        <div class="step-dialogue">"This toner will prep your skin to absorb the serums. It's like giving your skin a drink of water."</div>
+                        <div class="client-response">"I can feel the hydration immediately!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💆 Gentle massage with hydrating oil</div>
+                        <div class="step-dialogue">"This massage will boost circulation and help hydration penetrate deeper. Just breathe and relax."</div>
+                        <div class="client-response">"This is wonderful. I'm already feeling so much better."</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🎭 Apply rich hydrating mask</div>
+                        <div class="step-dialogue">"I'm applying a rich hydrating mask. This will infuse your skin with moisture and antioxidants."</div>
+                        <div class="client-response">"How often should I do this at home?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🌟 Layer serums, moisturizer, and facial oil</div>
+                        <div class="step-dialogue">"Use these same products at home twice daily for maximum hydration."</div>
+                        <div class="client-response">"I'll follow this routine. My skin has never felt better!"</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Protocol 4: Anti-Aging -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">4. Anti-Aging Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 75 minutes | 👤 Suitable for: Mature skin, fine lines, loss of elasticity</div>
+                </div>
+                <ul class="steps">
+                    <li>
+                        <div class="step-action">💬 Detailed skin assessment</div>
+                        <div class="step-dialogue">"I can see fine lines around your eyes and some loss of firmness. This anti-aging treatment has been clinically proven to boost collagen production."</div>
+                        <div class="client-response">"Is it safe for sensitive skin?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧴 Antioxidant cleanser</div>
+                        <div class="step-dialogue">"This cleanser contains vitamin C, which will start protecting your skin from free radical damage immediately."</div>
+                        <div class="client-response">"That sounds wonderful!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🧪 Apply vitamin C serum</div>
+                        <div class="step-dialogue">"Vitamin C has been proven to reduce fine lines and brighten skin. You'll see results within two weeks of consistent use."</div>
+                        <div class="client-response">"Does it make your skin sensitive?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💆 Facial massage</div>
+                        <div class="step-dialogue">"This massage technique will lift and firm the skin. I'm focusing on areas prone to sagging."</div>
+                        <div class="client-response">"I'm already feeling lifted!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🎭 Peptide-rich mask</div>
+                        <div class="step-dialogue">"Peptides signal your skin to produce more collagen. This mask will have your skin looking plump and firm."</div>
+                        <div class="client-response">"How long until I see results?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🌟 Retinol serum and moisturizer</div>
+                        <div class="step-dialogue">"Use this retinol three times per week at night. Start slowly and build up. You may experience slight peeling, which is normal."</div>
+                        <div class="client-response">"I'll be patient with the retinol!"</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Protocol 5: Brightening -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">5. Brightening Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 👤 Suitable for: Dull skin, dark spots, uneven tone</div>
+                </div>
+                <ul class="steps">
+                    <li>
+                        <div class="step-action">💬 Assess dullness and pigmentation</div>
+                        <div class="step-dialogue">"Your skin has some dark spots and overall dullness. We'll use brightening ingredients to even out your tone."</div>
+                        <div class="client-response">"Will this help fade my melasma?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">✨ Enzyme or AHA exfoliant</div>
+                        <div class="step-dialogue">"This gentle enzyme will remove the dull, dead skin layer. You'll immediately see brighter skin underneath."</div>
+                        <div class="client-response">"I can already see the glow!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💧 Niacinamide treatment</div>
+                        <div class="step-dialogue">"Niacinamide reduces pore size and brightens your complexion. It also evens out skin tone over time."</div>
+                        <div class="client-response">"How long have I been using this?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">💆 Lymphatic massage</div>
+                        <div class="step-dialogue">"This massage will improve circulation, bringing more oxygen to your skin. This naturally enhances your glow."</div>
+                        <div class="client-response">"My skin is already looking brighter!"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🎭 Brightening mask</div>
+                        <div class="step-dialogue">"This brightening mask targets dark spots while hydrating. Dark spots will continue to fade with regular treatments."</div>
+                        <div class="client-response">"How many treatments will I need?"</div>
+                    </li>
+                    <li>
+                        <div class="step-action">🌟 Brightening serum and strong SPF</div>
+                        <div class="step-dialogue">"SPF is non-negotiable! Use SPF 50 daily without fail."</div>
+                        <div class="client-response">"I understand completely. I'm committed!"</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Remaining 10 Protocols (Abbreviated) -->
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">6. Microdermabrasion Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 🎯 Use: Crystal-free resurfacing</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">🧴 Cleanse and prep skin</div></li>
+                    <li><div class="step-action">⚙️ Apply microdermabrasion</div><div class="step-dialogue">"You may feel a slight suction sensation—this is normal."</div></li>
+                    <li><div class="step-action">🎯 Focus on problem areas (acne scars, texture)</div></li>
+                    <li><div class="step-action">🌟 Apply soothing serum and moisturizer</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">7. Hydra Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 45 minutes | 🎯 Use: Vortex fusion technology</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">💧 Analyze skin and select serums</div></li>
+                    <li><div class="step-action">⚙️ Use Hydra device</div><div class="step-dialogue">"The Hydra Facial will extract impurities while infusing hydrating serums."</div></li>
+                    <li><div class="step-action">💡 Apply LED light therapy</div></li>
+                    <li><div class="step-action">🌟 Apply hydrating moisturizer and SPF</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">8. Chemical Peel Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 45 minutes | 🎯 Use: Mild to medium peels</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">🧴 Cleanse thoroughly</div></li>
+                    <li><div class="step-action">🧪 Apply chemical peel</div><div class="step-dialogue">"You'll feel slight tingling. I'll monitor your skin closely."</div></li>
+                    <li><div class="step-action">⏱️ Time peel (5-15 minutes)</div></li>
+                    <li><div class="step-action">🧴 Neutralize peel and apply calming serum</div></li>
+                    <li><div class="step-action">🌟 Apply moisturizer and high SPF</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">9. Oxygen Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 30-45 minutes | 🎯 Use: Celebrity favorite for instant glow</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">🧴 Cleanse and exfoliate gently</div></li>
+                    <li><div class="step-action">💫 Apply serums and infuse oxygen</div><div class="step-dialogue">"Your skin will immediately look radiant."</div></li>
+                    <li><div class="step-action">💆 Gentle massage during infusion</div></li>
+                    <li><div class="step-action">🌟 Apply hydrating and protective serums</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">10. Microneedling Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 🎯 Use: Collagen induction therapy</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">🧴 Apply numbing cream (20 min)</div><div class="step-dialogue">"You may feel slight pressure, but no sharp pain."</div></li>
+                    <li><div class="step-action">⚙️ Perform microneedling</div></li>
+                    <li><div class="step-action">💧 Apply calming serum and LED therapy</div></li>
+                    <li><div class="step-action">🌟 Apply peptide mask and moisturizer</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">11. Gentleman's Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 50 minutes | 👨 Tailored for men's skin</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">💬 Assess shaving irritation and ingrown hairs</div></li>
+                    <li><div class="step-action">🧴 Strong cleansing and exfoliation</div></li>
+                    <li><div class="step-action">⚙️ Perform extraction of congested pores</div></li>
+                    <li><div class="step-action">🌟 Apply oil-control mask and lightweight moisturizer</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">12. Sensitive Skin Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 50 minutes | 🎯 Ultra-gentle for reactive skin</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">💬 Patch test all products 24 hours before</div></li>
+                    <li><div class="step-action">🧴 Fragrance-free, hypoallergenic products only</div></li>
+                    <li><div class="step-action">✨ Skip exfoliation; focus on calming</div></li>
+                    <li><div class="step-action">🌟 Apply barrier-strengthening serum and moisturizer</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">13. Acne & Rosacea Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 60 minutes | 🎯 For inflammatory conditions</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">💬 Assess severity and active breakouts</div></li>
+                    <li><div class="step-action">🧴 Antibacterial cleansing</div></li>
+                    <li><div class="step-action">⚙️ Gentle extractions only to ready pustules</div></li>
+                    <li><div class="step-action">🎭 Use calming, anti-inflammatory mask</div></li>
+                    <li><div class="step-action">🌟 Apply spot treatment and antibacterial moisturizer</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">14. Post-Procedure Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 45 minutes | 🎯 Recovery after procedures</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">⏱️ Wait appropriate time post-procedure</div></li>
+                    <li><div class="step-action">🧴 Only pre-approved gentle products</div></li>
+                    <li><div class="step-action">💧 Cooling, soothing treatments</div></li>
+                    <li><div class="step-action">🛡️ Focus on barrier repair and hydration</div></li>
+                    <li><div class="step-action">☀️ Apply strongest SPF available</div></li>
+                </ul>
+            </div>
+
+            <div class="dialogue-card">
+                <div class="protocol-header">
+                    <div class="protocol-title">15. Express Facial</div>
+                    <div class="protocol-duration">⏱️ Duration: 30 minutes | 🎯 Lunch break treatment</div>
+                </div>
+                <ul class="steps">
+                    <li><div class="step-action">🧴 Quick cleanse and assess</div></li>
+                    <li><div class="step-action">✨ 2-minute exfoliation or gentle extraction</div></li>
+                    <li><div class="step-action">💆 5-minute massage</div></li>
+                    <li><div class="step-action">🎭 Mask while client relaxes</div></li>
+                    <li><div class="step-action">🌟 Quick serum and moisturizer application</div></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- QUIZ SECTION -->
+        <section id="quiz" class="section">
+            <h2>Interactive Scenario Quiz</h2>
+            <div class="section-intro">
+                <strong>Test your professional communication skills</strong> with 10 realistic scenarios from spa cabins. 
+                Choose the best response and receive instant feedback on your professional judgment.
+                <div class="dialogue-count">10 Interactive Scenarios</div>
+            </div>
+
+            <div class="progress">
+                <div class="progress-text">📊 Progress: <span id="progress-count">0</span> of 10 scenarios completed</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div id="quiz-content"></div>
+            <div id="score-summary" class="score-summary"></div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>✨ <strong>Spa & Facial Protocols</strong> © 2024 ✨</p>
+        <p>Professional English Learning for Estheticians | Level B1</p>
+        <p>Created for excellence in beauty and wellness education</p>
+    </footer>
+
+    <script>
+        const quizzes = [
+            {
+                scenario: "A client arrives for their appointment and says: 'I've been so stressed at work. My skin has been acting up—breakouts everywhere, and I can feel tension in my face.'",
+                question: "How should you respond?",
+                options: [
+                    {
+                        text: "\"Don't worry, facial treatments have been proven to reduce stress. While you're here, I'll assess your skin and recommend products that will help prevent future breakouts.\"",
+                        correct: true,
+                        explanation: "This acknowledges their concern, provides reassurance, explains your process, and gives them hope."
+                    },
+                    {
+                        text: "\"Stress causes breakouts. You need to relax more. Let's start the facial and hopefully that will help.\"",
+                        correct: false,
+                        explanation: "Dismissive tone. While true about stress, it sounds judgmental and lacks professional guidance."
+                    },
+                    {
+                        text: "\"That's very common. Many clients have the same issue. Let's see what we can do.\"",
+                        correct: false,
+                        explanation: "Vague and doesn't provide specific information about what you'll actually do to help them."
+                    }
+                ]
+            },
+            {
+                scenario: "During consultation, the client mentions they have a nut allergy. After you've applied serum, they ask: 'Does that contain any nuts?'",
+                question: "What should you do immediately?",
+                options: [
+                    {
+                        text: "\"Let me remove this immediately and I apologize. Let me check the label and find a completely nut-free alternative serum for you.\"",
+                        correct: true,
+                        explanation: "Shows safety-first mentality, accountability, and immediate corrective action. Always verify with allergies."
+                    },
+                    {
+                        text: "\"Don't worry, it's fine. Most products are nut-free. Let's continue.\"",
+                        correct: false,
+                        explanation: "This is unsafe and dismissive of a genuine medical concern."
+                    },
+                    {
+                        text: "\"This product has never caused problems with anyone else.\"",
+                        correct: false,
+                        explanation: "Still dismissive and shows you're not taking their allergy seriously."
+                    }
+                ]
+            },
+            {
+                scenario: "You've applied the facial steamer. After 30 seconds, the client says: 'Oh, that's too hot! I can't handle this temperature.'",
+                question: "What's your best response?",
+                options: [
+                    {
+                        text: "\"I'll move it further away right now. Your comfort is my priority. Is this distance better?\"",
+                        correct: true,
+                        explanation: "Immediate action plus confirmation. Shows professionalism and prioritizes client comfort."
+                    },
+                    {
+                        text: "\"The steamer needs to be at this temperature to work effectively. You'll adjust in a minute.\"",
+                        correct: false,
+                        explanation: "Inflexible and dismissive. A good esthetician always adjusts for client comfort."
+                    },
+                    {
+                        text: "\"Most people find this temperature relaxing. Are you sure?\"",
+                        correct: false,
+                        explanation: "Questions their experience and fails to take corrective action immediately."
+                    }
+                ]
+            },
+            {
+                scenario: "While performing extractions, the client winces and says: 'Ouch! That hurt. Can you be gentler?'",
+                question: "How should you respond?",
+                options: [
+                    {
+                        text: "\"I completely understand. I'm adjusting my pressure right now. Tell me if this feels better. I can also skip this area if it's too uncomfortable.\"",
+                        correct: true,
+                        explanation: "Shows empathy, flexibility, and gives client agency. Professional estheticians adjust technique."
+                    },
+                    {
+                        text: "\"Extractions have to hurt a bit. This area is congested, so some discomfort is unavoidable.\"",
+                        correct: false,
+                        explanation: "Dismisses their pain. While some discomfort is normal, you can always adjust technique."
+                    },
+                    {
+                        text: "\"I've already finished with that spot. We're moving on now.\"",
+                        correct: false,
+                        explanation: "Ignores feedback and doesn't address their concern for future areas."
+                    }
+                ]
+            },
+            {
+                scenario: "You're applying the mask when the client says: 'Is this going to make my skin break out? I have very sensitive skin.'",
+                question: "What's your best response?",
+                options: [
+                    {
+                        text: "\"Don't worry, I chose this mask specifically for sensitive skin. I've already patch-tested it for you, and it's completely safe.\"",
+                        correct: true,
+                        explanation: "Reassures through explanation of your professional process and precautions taken."
+                    },
+                    {
+                        text: "\"This mask is natural, so it won't cause problems. Just relax and enjoy it.\"",
+                        correct: false,
+                        explanation: "Natural doesn't guarantee safety for everyone, and this dismisses their valid concern."
+                    },
+                    {
+                        text: "\"If you're worried, I can remove it right now. We don't have to use it.\"",
+                        correct: false,
+                        explanation: "While respecting choice is good, you're not providing reassuring professional guidance."
+                    }
+                ]
+            },
+            {
+                scenario: "You notice the client's skin has become more red than expected during treatment. They haven't complained.",
+                question: "What should you do?",
+                options: [
+                    {
+                        text: "\"I've noticed your skin is a bit more sensitive today. This is normal and will fade, but let me adjust my approach to be extra gentle.\"",
+                        correct: true,
+                        explanation: "Proactively addresses it, explains what's happening, and adjusts. Prevents further issues."
+                    },
+                    {
+                        text: "Say nothing and continue with the treatment as planned.",
+                        correct: false,
+                        explanation: "Not addressing observable changes is unprofessional and could cause further discomfort."
+                    },
+                    {
+                        text: "\"Your skin is very red. This is concerning. Should we stop?\"",
+                        correct: false,
+                        explanation: "Making the client anxious without context is poor communication."
+                    }
+                ]
+            },
+            {
+                scenario: "During product recommendations, the client says: 'This is a lot of products! Do I really need all of them? They're expensive.' They seem hesitant.",
+                question: "How should you respond?",
+                options: [
+                    {
+                        text: "\"You can start with the essentials—cleanser, serum, and moisturizer—and add others as your budget allows. I recommend starting with these three.\"",
+                        correct: true,
+                        explanation: "Respects budget while providing guidance. Offering a phased approach is customer-focused."
+                    },
+                    {
+                        text: "\"Yes, you need all of them. I've analyzed your skin, and each product targets a specific problem.\"",
+                        correct: false,
+                        explanation: "Pushy and doesn't respect client's budget or autonomy."
+                    },
+                    {
+                        text: "\"Everyone says that at first. Once you see results, you'll understand why they're worth it.\"",
+                        correct: false,
+                        explanation: "Dismissive. This sounds like a sales pitch rather than professional advice."
+                    }
+                ]
+            },
+            {
+                scenario: "The client asks: 'When should I schedule my next appointment? How often should I come?' They've only had one facial before, months ago.",
+                question: "What should you say?",
+                options: [
+                    {
+                        text: "\"For your skin concerns, I recommend monthly facials to maintain results. Would monthly work for you?\"",
+                        correct: true,
+                        explanation: "Provides professional recommendation based on skin needs and respects their schedule."
+                    },
+                    {
+                        text: "\"You haven't been coming regularly at all! You need to come at least every two weeks if you want real results.\"",
+                        correct: false,
+                        explanation: "Judgmental and doesn't account for client's circumstances or budget."
+                    },
+                    {
+                        text: "\"Come whenever you feel like it. It's completely up to you.\"",
+                        correct: false,
+                        explanation: "You're not providing professional guidance on what would benefit their skin."
+                    }
+                ]
+            },
+            {
+                scenario: "You've finished the facial. The client's skin looks great, but they notice slight redness. They say: 'I have an important presentation tomorrow. Will this be gone by then?'",
+                question: "What should you say?",
+                options: [
+                    {
+                        text: "\"Most clients see redness fade within a few hours. It should be mostly gone by tomorrow morning. If it persists, you can use a green-tinted concealer to neutralize it.\"",
+                        correct: true,
+                        explanation: "Gives realistic expectations while providing a solution. Professional and reassuring."
+                    },
+                    {
+                        text: "\"Yes, the redness will be completely gone by tonight. Your skin will look amazing tomorrow.\"",
+                        correct: false,
+                        explanation: "You can't guarantee this. Over-promising damages trust if redness persists."
+                    },
+                    {
+                        text: "\"Redness can last several days. I hope your presentation goes well!\"",
+                        correct: false,
+                        explanation: "Honest but delivered without reassurance or practical solutions."
+                    }
+                ]
+            },
+            {
+                scenario: "At checkout, the client says: 'Thank you so much! This was amazing. My skin has never felt better. Can I refer my friend Sarah?'",
+                question: "What's your best response?",
+                options: [
+                    {
+                        text: "\"Absolutely! We love referrals. I can give you a referral card with a discount code Sarah can use on her first visit.\"",
+                        correct: true,
+                        explanation: "Celebrates their satisfaction, encourages referrals, provides practical means to refer."
+                    },
+                    {
+                        text: "\"That's great! We appreciate your business.\"",
+                        correct: false,
+                        explanation: "Accepts compliment but doesn't capitalize on referral opportunity or make it easy."
+                    },
+                    {
+                        text: "\"Yes, referrals help us a lot. Tell Sarah to call and book.\"",
+                        correct: false,
+                        explanation: "Transactional and doesn't provide incentive or ease that would motivate action."
+                    }
+                ]
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (sectionId === 'quiz') {
+                initQuiz();
+            }
+        }
+
+        function initQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            displayQuiz(0);
+        }
+
+        function displayQuiz(index) {
+            if (index >= quizzes.length) {
+                showFinalScore();
+                return;
+            }
+
+            const quiz = quizzes[index];
+            const quizContent = document.getElementById('quiz-content');
+            
+            let html = `
+                <div class="quiz-container">
+                    <div style="font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 1.5rem; font-weight: 600;">
+                        📌 Scenario ${index + 1} of ${quizzes.length}
+                    </div>
+                    <div class="quiz-scenario">
+                        <strong>💬 Situation:</strong><br><br>
+                        "${quiz.scenario}"
+                    </div>
+                    <div class="quiz-question"><strong>❓ ${quiz.question}</strong></div>
+                    <ul class="options" id="options-list">
+            `;
+
+            quiz.options.forEach((option, i) => {
+                html += `
+                    <li class="option">
+                        <label>
+                            <input type="radio" name="answer" value="${i}">
+                            ${option.text}
+                        </label>
+                    </li>
+                `;
+            });
+
+            html += `
+                    </ul>
+                    <div id="feedback" class="feedback"></div>
+                    <button class="quiz-button" onclick="submitAnswer(${index})">Submit Answer →</button>
+                </div>
+            `;
+
+            quizContent.innerHTML = html;
+            updateProgress();
+        }
+
+        function submitAnswer(index) {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('Please select an answer!');
+                return;
+            }
+
+            const answerIndex = parseInt(selected.value);
+            const quiz = quizzes[index];
+            const isCorrect = quiz.options[answerIndex].correct;
+            const feedback = document.getElementById('feedback');
+
+            if (isCorrect) {
+                score++;
+                feedback.className = 'feedback show correct';
+                feedback.innerHTML = `<strong>✅ Excellent!</strong><br>${quiz.options[answerIndex].explanation}`;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.innerHTML = `<strong>⚠️ Not quite right.</strong><br>${quiz.options[answerIndex].explanation}<br><br><strong>💡 Better approach:</strong> "${quiz.options.find(o => o.correct).text}"`;
+            }
+
+            setTimeout(() => {
+                currentQuizIndex++;
+                displayQuiz(currentQuizIndex);
+            }, 4000);
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuizIndex) / quizzes.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-count').textContent = currentQuizIndex;
+        }
+
+        function showFinalScore() {
+            const percentage = Math.round((score / quizzes.length) * 100);
+            const scoreSummary = document.getElementById('score-summary');
+            
+            let emoji = '';
+            let message = '';
+            if (percentage === 100) {
+                emoji = '🌟';
+                message = 'Perfect! You\'re ready to provide exceptional esthetic services! You have mastered professional communication!';
+            } else if (percentage >= 80) {
+                emoji = '💚';
+                message = 'Excellent! You have strong professional communication skills. Keep practicing real scenarios!';
+            } else if (percentage >= 60) {
+                emoji = '📚';
+                message = 'Good foundation! Review the dialogues you missed to strengthen your communication skills.';
+            } else {
+                emoji = '💪';
+                message = 'Keep learning! Review all the protocols and dialogues for better professional understanding.';
+            }
+
+            scoreSummary.className = 'score-summary show';
+            scoreSummary.innerHTML = `
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; border: none;">Quiz Complete! ${emoji}</h2>
+                <div class="final-score">${score}/${quizzes.length}</div>
+                <div style="font-size: 1.5rem; color: var(--accent-gold); margin-bottom: 1.5rem; font-weight: 600;">${percentage}%</div>
+                <div class="score-message">${message}</div>
+                <button class="restart-btn" onclick="restartQuiz()">Retake Quiz Again</button>
+            `;
+
+            document.getElementById('quiz-content').style.display = 'none';
+            document.querySelector('.progress').style.display = 'none';
+        }
+
+        function restartQuiz() {
+            document.getElementById('quiz-content').style.display = 'block';
+            document.querySelector('.progress').style.display = 'block';
+            document.getElementById('score-summary').className = 'score-summary';
+            initQuiz();
+        }
+    </script>
+</body>
+</html>
