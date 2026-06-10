@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English for Esthetics – Facial Cabin Module</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean-deep: #0A1628;
+  --ocean-mid: #0D2D5E;
+  --ocean-blue: #1A5276;
+  --sky-blue: #2E86C1;
+  --light-blue: #5DADE2;
+  --pale-blue: #AED6F1;
+  --horizon: #F4D03F;
+  --sunset: #F39C12;
+  --warm-amber: #FAD7A0;
+  --white: #F8FBFF;
+  --soft-white: rgba(248,251,255,0.92);
+  --muted: rgba(174,214,241,0.65);
+  --correct: #27AE60;
+  --wrong: #E74C3C;
+  --hint: #F39C12;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--ocean-deep);
+  color:var(--white);
+  font-size:17px;
+}
+
+/* OCEAN BACKGROUND */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(244,208,63,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(93,173,226,0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(13,45,94,0.9) 0%, transparent 60%),
+    linear-gradient(180deg, #0A1628 0%, #0D2D5E 40%, #1A5276 70%, #2E86C1 100%);
+  z-index:0;pointer-events:none;
+}
+
+/* WAVE ANIMATION */
+body::after{
+  content:'';
+  position:fixed;bottom:0;left:0;right:0;height:120px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='rgba(10,22,40,0.7)' d='M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L0,120Z'/%3E%3C/svg%3E") repeat-x bottom;
+  background-size:1440px 120px;
+  animation:wave 8s linear infinite;
+  z-index:0;pointer-events:none;opacity:0.5;
+}
+@keyframes wave{from{background-position:0 bottom}to{background-position:1440px bottom}}
+
+/* PROGRESS */
+#progress-bar{
+  position:fixed;top:0;left:0;height:5px;
+  background:linear-gradient(90deg,var(--horizon),var(--sunset));
+  transition:width .4s ease;z-index:999;
+  box-shadow:0 0 12px rgba(244,208,63,0.6);
+}
+
+/* NAV */
+#nav{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 32px;
+  background:rgba(10,22,40,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(93,173,226,0.2);
+  z-index:200;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;color:var(--horizon);
+  letter-spacing:.05em;
+}
+#slide-counter{
+  font-size:.85rem;color:var(--muted);
+  letter-spacing:.15em;text-transform:uppercase;
+  font-weight:600;
+}
+.stance-badge{
+  font-size:.72rem;padding:4px 14px;border-radius:40px;
+  background:rgba(93,173,226,0.15);
+  border:1px solid rgba(93,173,226,0.3);
+  color:var(--light-blue);font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+#nav-btns{display:flex;gap:10px;}
+.nav-btn{
+  background:rgba(93,173,226,0.15);
+  border:1.5px solid rgba(93,173,226,0.35);
+  color:var(--white);padding:8px 22px;border-radius:40px;
+  cursor:pointer;font-family:'Nunito',sans-serif;
+  font-size:.85rem;font-weight:700;
+  transition:all .2s;
+}
+.nav-btn:hover{background:var(--sky-blue);border-color:var(--sky-blue);}
+
+/* SLIDES */
+#slides{height:100vh;padding-top:62px;overflow:hidden;position:relative;}
+.slide{
+  position:absolute;inset:62px 0 0 0;
+  padding:32px 56px;overflow-y:auto;
+  opacity:0;pointer-events:none;
+  transform:translateX(50px);
+  transition:opacity .45s ease,transform .45s ease;
+  z-index:1;
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.slide::-webkit-scrollbar{width:6px;}
+.slide::-webkit-scrollbar-thumb{background:rgba(93,173,226,0.3);border-radius:10px;}
+
+/* TYPOGRAPHY */
+.slide-tag{
+  display:inline-block;font-size:.75rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--horizon);
+  border:1px solid rgba(244,208,63,0.4);
+  padding:5px 14px;border-radius:40px;margin-bottom:16px;
+  font-weight:700;
+}
+.slide-tag.blue{color:var(--pale-blue);border-color:rgba(174,214,241,0.4);}
+.slide-tag.amber{color:var(--warm-amber);border-color:rgba(250,215,160,0.4);}
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  line-height:1.1;color:var(--white);margin-bottom:12px;
+}
+h1 em{color:var(--horizon);font-style:italic;}
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  color:var(--white);margin-bottom:14px;line-height:1.2;
+}
+h2 em{color:var(--light-blue);}
+h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;color:var(--horizon);margin-bottom:10px;
+}
+p{color:var(--muted);line-height:1.75;font-size:1rem;}
+p.lead{color:rgba(248,251,255,0.85);font-size:1.05rem;}
+
+/* CARDS */
+.card-grid{display:grid;gap:14px;margin-top:18px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+
+.card{
+  background:rgba(13,45,94,0.55);
+  border:1px solid rgba(93,173,226,0.2);
+  border-radius:16px;padding:20px;
+  transition:all .2s;
+  backdrop-filter:blur(8px);
+}
+.card:hover{border-color:rgba(93,173,226,0.5);background:rgba(30,86,160,0.4);}
+.card .ico{font-size:2rem;margin-bottom:8px;}
+.card .lbl{font-size:.72rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+.card .word{font-size:1.05rem;font-weight:700;color:var(--white);}
+.card .sp{font-size:.85rem;color:var(--muted);margin-top:2px;}
+.card .example{font-size:.88rem;color:var(--pale-blue);margin-top:6px;font-style:italic;}
+
+/* FORMULA BOX */
+.fbox{
+  background:linear-gradient(135deg,rgba(46,134,193,0.2),rgba(244,208,63,0.1));
+  border:1.5px solid rgba(244,208,63,0.35);
+  border-radius:16px;padding:22px 28px;margin:16px 0;
+}
+.fbox .flabel{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--horizon);margin-bottom:8px;font-weight:700;}
+.fbox .ftext{font-size:1.3rem;font-weight:800;color:var(--white);letter-spacing:.03em;line-height:1.5;}
+.fbox .fsub{font-size:.9rem;color:var(--pale-blue);margin-top:8px;line-height:1.6;}
+
+/* HIGHLIGHTS */
+.hy{color:var(--horizon);font-weight:800;}
+.hb{color:var(--light-blue);font-weight:800;}
+.hw{color:var(--white);font-weight:800;}
+.ha{color:var(--warm-amber);font-weight:800;}
+.hg{color:#5DBBAD;font-weight:800;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem;}
+th{background:rgba(46,134,193,0.3);color:var(--pale-blue);
+  font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;
+  padding:11px 16px;text-align:left;font-weight:700;}
+td{padding:10px 16px;border-bottom:1px solid rgba(93,173,226,0.1);
+  color:rgba(248,251,255,0.85);}
+tr:hover td{background:rgba(93,173,226,0.06);}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+
+/* WORD BANK */
+.word-bank{
+  background:rgba(10,22,40,0.7);
+  border:1.5px solid rgba(244,208,63,0.3);
+  border-radius:14px;padding:16px 20px;margin:14px 0;
+}
+.word-bank .wb-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--horizon);margin-bottom:10px;font-weight:700;}
+.wb-words{display:flex;flex-wrap:wrap;gap:8px;}
+.wb-word{
+  background:rgba(46,134,193,0.2);
+  border:1px solid rgba(93,173,226,0.35);
+  color:var(--pale-blue);padding:6px 14px;
+  border-radius:40px;font-size:.9rem;font-weight:600;
+  cursor:default;transition:all .2s;
+}
+.wb-word:hover{background:rgba(46,134,193,0.4);border-color:var(--light-blue);color:var(--white);}
+
+/* EXERCISE WRAPPER */
+.ex-wrap{
+  background:rgba(10,22,40,0.6);
+  border:1px solid rgba(93,173,226,0.18);
+  border-radius:18px;padding:24px 28px;margin:14px 0;
+  backdrop-filter:blur(8px);
+}
+.ex-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--light-blue);margin-bottom:16px;font-weight:700;}
+.ex-q{font-size:1.05rem;color:var(--white);margin-bottom:12px;line-height:1.65;font-weight:600;}
+.ex-q em{color:var(--horizon);}
+
+/* INPUTS */
+.w-input{
+  background:rgba(13,45,94,0.6);
+  border:2px solid rgba(93,173,226,0.3);
+  border-radius:12px;color:var(--white);
+  font-family:'Nunito',sans-serif;font-size:1rem;
+  padding:12px 18px;width:100%;outline:none;
+  transition:border-color .2s;margin-top:8px;
+}
+.w-input:focus{border-color:var(--light-blue);}
+.w-input.ok{border-color:var(--correct);}
+.w-input.err{border-color:var(--wrong);}
+.w-input::placeholder{color:rgba(174,214,241,0.4);}
+
+/* BUTTONS ROW */
+.btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.btn{
+  padding:10px 22px;border-radius:40px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;
+  border:none;transition:all .2s;
+}
+.btn-check{background:var(--sky-blue);color:#fff;}
+.btn-check:hover{background:var(--light-blue);}
+.btn-hint{background:rgba(243,156,18,0.2);color:var(--warm-amber);border:1.5px solid rgba(243,156,18,0.4);}
+.btn-hint:hover{background:rgba(243,156,18,0.35);}
+.btn-ans{background:rgba(93,173,226,0.15);color:var(--pale-blue);border:1.5px solid rgba(93,173,226,0.3);}
+.btn-ans:hover{background:rgba(93,173,226,0.3);}
+
+/* FEEDBACK */
+.feedback{
+  margin-top:12px;font-size:.92rem;padding:10px 16px;
+  border-radius:10px;display:none;font-weight:600;line-height:1.5;
+}
+.feedback.show{display:block;}
+.feedback.ok{background:rgba(39,174,96,0.2);color:#6FCF97;border:1px solid rgba(39,174,96,0.35);}
+.feedback.err{background:rgba(231,76,60,0.2);color:#F08080;border:1px solid rgba(231,76,60,0.3);}
+.feedback.hint{background:rgba(243,156,18,0.15);color:var(--warm-amber);border:1px solid rgba(243,156,18,0.3);}
+.feedback.ans{background:rgba(93,173,226,0.15);color:var(--pale-blue);border:1px solid rgba(93,173,226,0.3);}
+
+/* MC OPTIONS */
+.mc-opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+.mc-opt{
+  padding:10px 22px;border-radius:40px;
+  border:2px solid rgba(93,173,226,0.25);
+  background:rgba(13,45,94,0.5);
+  cursor:pointer;font-size:.95rem;font-weight:600;
+  color:var(--pale-blue);transition:all .2s;
+}
+.mc-opt:hover{border-color:var(--sky-blue);background:rgba(46,134,193,0.2);}
+.mc-opt.correct{border-color:var(--correct);background:rgba(39,174,96,0.2);color:#6FCF97;}
+.mc-opt.wrong{border-color:var(--wrong);background:rgba(231,76,60,0.2);color:#F08080;}
+
+/* MATCH */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.match-col{display:flex;flex-direction:column;gap:8px;}
+.match-item{
+  padding:12px 16px;border-radius:12px;
+  border:2px solid rgba(93,173,226,0.2);
+  background:rgba(13,45,94,0.5);
+  cursor:pointer;font-size:.92rem;font-weight:600;
+  color:var(--pale-blue);transition:all .2s;line-height:1.4;
+}
+.match-item:hover{border-color:var(--sky-blue);}
+.match-item.selected{border-color:var(--horizon);background:rgba(244,208,63,0.15);color:var(--horizon);}
+.match-item.matched-ok{border-color:var(--correct);background:rgba(39,174,96,0.15);color:#6FCF97;pointer-events:none;}
+.match-item.matched-err{border-color:var(--wrong);background:rgba(231,76,60,0.15);}
+
+/* SCENE BOX */
+.scene-box{
+  background:rgba(10,22,40,0.5);
+  border:1px solid rgba(93,173,226,0.2);
+  border-radius:18px;overflow:hidden;
+  margin:14px 0;
+}
+
+/* HERO */
+#s0{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  background:none;
+}
+#s0 .big{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;}
+#s0 .tagline{font-size:1.1rem;color:var(--muted);margin-top:14px;max-width:580px;line-height:1.7;}
+#s0 .pills{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+#s0 .pill{background:rgba(13,45,94,0.7);border:1px solid rgba(93,173,226,0.25);
+  padding:7px 18px;border-radius:40px;font-size:.82rem;color:var(--muted);font-weight:600;}
+
+/* STANCE COVER */
+.stance-cover{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;min-height:80vh;
+}
+.stance-number{
+  font-family:'Playfair Display',serif;
+  font-size:8rem;font-weight:900;line-height:1;
+  color:transparent;
+  -webkit-text-stroke:2px rgba(93,173,226,0.3);
+  margin-bottom:-20px;
+}
+.stance-cover h2{font-size:2.5rem;}
+.stance-cover p{font-size:1.05rem;max-width:500px;margin-top:12px;}
+
+/* PREPOSITION DIAGRAM */
+.prep-card{
+  background:rgba(13,45,94,0.55);
+  border:1px solid rgba(93,173,226,0.2);
+  border-radius:16px;padding:16px;text-align:center;
+  transition:all .2s;
+}
+.prep-card:hover{border-color:rgba(93,173,226,0.5);}
+.prep-card svg{width:100%;height:80px;}
+.prep-word{font-size:1.15rem;font-weight:800;color:var(--horizon);margin-top:8px;}
+.prep-es{font-size:.8rem;color:var(--muted);margin-top:2px;}
+.prep-ex{font-size:.82rem;color:var(--pale-blue);margin-top:4px;font-style:italic;}
+
+/* SCORE */
+#score-badge{
+  position:fixed;bottom:20px;right:24px;
+  background:rgba(10,22,40,0.92);
+  border:1.5px solid rgba(244,208,63,0.4);
+  border-radius:40px;padding:8px 20px;
+  font-size:.88rem;color:var(--horizon);
+  z-index:300;display:none;font-weight:700;
+  box-shadow:0 0 20px rgba(244,208,63,0.15);
+}
+
+/* PERSON SVG cards */
+.people-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;}
+.person-card{
+  flex:1;min-width:130px;
+  background:rgba(13,45,94,0.55);
+  border:1px solid rgba(93,173,226,0.2);
+  border-radius:16px;padding:16px;text-align:center;
+}
+.person-card svg{width:70px;height:100px;}
+.pname{font-weight:800;font-size:1rem;margin-top:8px;color:var(--white);}
+.prole{font-size:.8rem;color:var(--muted);}
+.pex{font-size:.82rem;color:var(--pale-blue);margin-top:4px;font-style:italic;}
+
+/* SECTION HEADER BAR */
+.sec-bar{
+  background:linear-gradient(135deg,rgba(46,134,193,0.25),rgba(244,208,63,0.12));
+  border:1px solid rgba(93,173,226,0.25);
+  border-radius:14px;padding:16px 22px;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:20px;
+}
+.sec-bar .sico{font-size:2rem;}
+.sec-bar h2{margin-bottom:2px;font-size:1.7rem;}
+.sec-bar p{font-size:.88rem;}
+
+@media(max-width:720px){
+  .slide{padding:18px 16px;}
+  .g3,.g4{grid-template-columns:repeat(2,1fr);}
+  .two-col,.three-col{grid-template-columns:1fr;}
+  .match-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav id="nav">
+  <span class="nav-logo">🌊 English · Facial Esthetics</span>
+  <span id="slide-counter">1 / 27</span>
+  <span class="stance-badge" id="stance-label">Intro</span>
+  <div id="nav-btns">
+    <button class="nav-btn" onclick="go(-1)">← Prev</button>
+    <button class="nav-btn" onclick="go(1)">Next →</button>
+    <button class="nav-btn" id="fs-btn" onclick="toggleFS()" title="Fullscreen">⛶ Fullscreen</button>
+  </div>
+</nav>
+<div id="slides">
+
+<!-- ═══════════════════════════════ SLIDE 0 — HERO ═══════════════════════════════ -->
+<div class="slide active" id="s0">
+  <div class="big">English for<br><em style="color:var(--horizon)">Facial Esthetics</em></div>
+  <p class="tagline">A 2-hour interactive module for cosmetology diploma students — designed around the facial cabin context.</p>
+  <div class="pills">
+    <span class="pill">⏱ 2 Hours</span>
+    <span class="pill">💆 Facial Cabin Context</span>
+    <span class="pill">📘 Present Simple · Prepositions · Present Continuous</span>
+    <span class="pill">🎮 3 Interactive Stances</span>
+  </div>
+  <p style="margin-top:28px;font-size:.85rem;color:var(--muted);">Use ← → arrows or keyboard to navigate &nbsp;·&nbsp; All exercises are interactive</p>
+
+  <!-- Ocean SVG decoration -->
+  <svg viewBox="0 0 400 120" style="width:340px;margin-top:28px;opacity:.5" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="200" cy="90" rx="200" ry="30" fill="rgba(46,134,193,0.2)"/>
+    <path d="M10,70 Q60,50 110,70 Q160,90 210,70 Q260,50 310,70 Q360,90 390,70" stroke="rgba(93,173,226,0.5)" stroke-width="2.5" fill="none"/>
+    <path d="M0,85 Q50,65 100,85 Q150,105 200,85 Q250,65 300,85 Q350,105 400,85" stroke="rgba(174,214,241,0.3)" stroke-width="2" fill="none"/>
+    <circle cx="200" cy="30" r="22" fill="rgba(244,208,63,0.35)" />
+    <circle cx="200" cy="30" r="16" fill="rgba(244,208,63,0.5)" />
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 1 — STANCE 1 COVER ═══════════════════════════════ -->
+<div class="slide" id="s1">
+  <div class="stance-cover">
+    <div class="stance-number">1</div>
+    <span class="slide-tag">Stance One</span>
+    <h2>Present <em>Simple</em> Review</h2>
+    <p class="lead">We review how to use <strong>she, he, it</strong> in present simple — describing what people do in the facial cabin and in daily life.</p>
+    <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">📋 4 Explanation Slides</div>
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">✏️ 4 Exercise Slides</div>
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">🏋️ Warm-Up Included</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 2 — PRESENT SIMPLE: CONCEPT ═══════════════════════════════ -->
+<div class="slide" id="s2">
+  <span class="slide-tag">Stance 1 · Slide 1 of 4</span>
+  <h2>Present Simple — <em>What is it?</em></h2>
+  <p class="lead">We use the Present Simple to describe <strong>habits, routines, and facts</strong> — things that happen regularly or are always true.</p>
+
+  <div class="fbox" style="margin-top:16px;">
+    <div class="flabel">📌 When do we use it?</div>
+    <div class="ftext" style="font-size:1.05rem;">
+      ✅ Daily routines &nbsp;·&nbsp; ✅ Jobs and duties &nbsp;·&nbsp; ✅ Facts about people or things
+    </div>
+    <div class="fsub">
+      "She <span class="hy">cleans</span> the facial bed every morning." &nbsp;(routine)<br>
+      "He <span class="hy">works</span> at a beauty clinic." &nbsp;(job/fact)<br>
+      "The cream <span class="hy">smells</span> like lavender." &nbsp;(fact about a thing)
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:18px;">
+    <div>
+      <h3>✅ Affirmative</h3>
+      <table>
+        <tr><th>Subject</th><th>Verb form</th><th>Example</th></tr>
+        <tr><td><span class="hy">I / You / We / They</span></td><td>base verb</td><td>I <span class="hy">clean</span> the room.</td></tr>
+        <tr><td><span class="hb">He / She / It</span></td><td>verb <span class="hy">+ s/es</span></td><td>She <span class="hb">cleans</span> the room.</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>⚠️ The –s/es Rule</h3>
+      <table>
+        <tr><th>Rule</th><th>Example</th></tr>
+        <tr><td>Most verbs → +<span class="hy">s</span></td><td>clean → clean<span class="hy">s</span></td></tr>
+        <tr><td>-ch,-sh,-x,-o → +<span class="hy">es</span></td><td>wash → wash<span class="hy">es</span></td></tr>
+        <tr><td>consonant+y → <span class="hy">ies</span></td><td>apply → appl<span class="hy">ies</span></td></tr>
+        <tr><td>have → <span class="hy">has</span></td><td>She <span class="hy">has</span> a client.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 3 — PRESENT SIMPLE: NEGATIVES & QUESTIONS ═══════════════════════════════ -->
+<div class="slide" id="s3">
+  <span class="slide-tag">Stance 1 · Slide 2 of 4</span>
+  <h2>Negatives &amp; <em>Questions</em></h2>
+
+  <div class="two-col">
+    <div>
+      <div class="fbox">
+        <div class="flabel">❌ Negative</div>
+        <div class="ftext" style="font-size:1.05rem;">Subject + <span class="hy">does not (doesn't)</span> + verb</div>
+        <div class="fsub">
+          "She <span class="hy">doesn't</span> use harsh products."<br>
+          "He <span class="hy">doesn't</span> work on Sundays."<br>
+          "It <span class="hy">doesn't</span> take long."
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="fbox">
+        <div class="flabel">❓ Question</div>
+        <div class="ftext" style="font-size:1.05rem;"><span class="hb">Does</span> + he/she/it + verb?</div>
+        <div class="fsub">
+          "<span class="hb">Does</span> she apply toner?" — "Yes, she does."<br>
+          "<span class="hb">Does</span> he clean the cabin?" — "No, he doesn't."<br>
+          "What <span class="hb">does</span> she use?"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px;">📋 Full Pattern Summary</h3>
+  <table>
+    <tr><th>Type</th><th>Structure</th><th>Example (she)</th></tr>
+    <tr><td>✅ Affirmative</td><td>She + verb<span class="hy">s</span></td><td>She <span class="hy">applies</span> the mask.</td></tr>
+    <tr><td>❌ Negative</td><td>She + <span class="hy">doesn't</span> + verb</td><td>She <span class="hy">doesn't apply</span> the mask.</td></tr>
+    <tr><td>❓ Question</td><td><span class="hb">Does</span> she + verb?</td><td><span class="hb">Does</span> she apply the mask?</td></tr>
+    <tr><td>💬 Short answer</td><td>Yes/No + pronoun + does/doesn't</td><td>Yes, she <span class="hy">does</span>. / No, she <span class="hy">doesn't</span>.</td></tr>
+  </table>
+
+  <div class="word-bank" style="margin-top:16px;">
+    <div class="wb-label">💼 Useful Verbs in the Facial Cabin</div>
+    <div class="wb-words">
+      <span class="wb-word">apply</span><span class="wb-word">clean</span><span class="wb-word">wash</span>
+      <span class="wb-word">prepare</span><span class="wb-word">use</span><span class="wb-word">mix</span>
+      <span class="wb-word">massage</span><span class="wb-word">rinse</span><span class="wb-word">dry</span>
+      <span class="wb-word">check</span><span class="wb-word">wear</span><span class="wb-word">recommend</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 4 — HE SHE IT FOCUS + EXAMPLES ═══════════════════════════════ -->
+<div class="slide" id="s4">
+  <span class="slide-tag">Stance 1 · Slide 3 of 4</span>
+  <h2>Focus: <em>He · She · It</em> in Context</h2>
+  <p class="lead">These three pronouns change the verb. Let's see real sentences from the facial cabin and daily life.</p>
+
+  <div class="card-grid g3" style="margin-top:16px;">
+    <div class="card" style="border-color:rgba(244,208,63,0.3);">
+      <div class="ico">👩‍⚕️</div><div class="lbl">SHE — Esthetician</div>
+      <div class="word" style="color:var(--horizon);">she apply<span class="hy">ies</span></div>
+      <div class="example">"She applies the serum on the client's face."</div>
+      <div class="example">"She wash<span class="hy">es</span> her hands before treatment."</div>
+    </div>
+    <div class="card" style="border-color:rgba(93,173,226,0.3);">
+      <div class="ico">👨‍🔬</div><div class="lbl">HE — Instructor</div>
+      <div class="word" style="color:var(--light-blue);">he teach<span class="hb">es</span></div>
+      <div class="example">"He teaches the techniques every week."</div>
+      <div class="example">"He check<span class="hb">s</span> the student's work."</div>
+    </div>
+    <div class="card" style="border-color:rgba(90,187,170,0.3);">
+      <div class="ico">🧴</div><div class="lbl">IT — Product / Object</div>
+      <div class="word" style="color:#5DBBAD;">it smell<span class="hg">s</span></div>
+      <div class="example">"It smells like roses."</div>
+      <div class="example">"It help<span class="hg">s</span> the skin hydrate."</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:22px;">🌅 Daily Life Examples (Outside the Cabin)</h3>
+  <div class="card-grid g2">
+    <div class="card">
+      <div class="lbl">Morning Routine</div>
+      <div class="example" style="font-size:.95rem;">"She <span class="hy">wakes up</span> at 7am and <span class="hy">drinks</span> coffee."</div>
+      <div class="example" style="font-size:.95rem;">"He <span class="hb">takes</span> the bus to the clinic."</div>
+    </div>
+    <div class="card">
+      <div class="lbl">At Work</div>
+      <div class="example" style="font-size:.95rem;">"She <span class="hy">prepares</span> the cabin before each client."</div>
+      <div class="example" style="font-size:.95rem;">"He <span class="hb">recommends</span> products after the facial."</div>
+    </div>
+    <div class="card">
+      <div class="lbl">After Work</div>
+      <div class="example" style="font-size:.95rem;">"She <span class="hy">studies</span> her diploma notes at night."</div>
+      <div class="example" style="font-size:.95rem;">"He <span class="hb">eats</span> dinner with his family."</div>
+    </div>
+    <div class="card">
+      <div class="lbl">About Products</div>
+      <div class="example" style="font-size:.95rem;">"It <span class="hg">contains</span> vitamin C and hyaluronic acid."</div>
+      <div class="example" style="font-size:.95rem;">"It <span class="hg">works</span> best on oily skin."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 5 — PEOPLE VOCAB ═══════════════════════════════ -->
+<div class="slide" id="s5">
+  <span class="slide-tag">Stance 1 · Slide 4 of 4 — Vocabulary</span>
+  <h2>People &amp; <em>Actions</em> in the Facial Cabin</h2>
+
+  <div class="people-row">
+    <!-- Esthetician SVG -->
+    <div class="person-card">
+      <svg viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="35" cy="20" r="14" fill="#F4D03F" opacity=".9"/>
+        <path d="M35 6 Q28 0 22 6 Q28 4 35 6 Q42 4 48 6 Q42 0 35 6Z" fill="rgba(244,208,63,.4)"/>
+        <path d="M15 85 C15 60 55 60 55 85 L55 100 L15 100Z" fill="#2E86C1" opacity=".85"/>
+        <rect x="28" y="38" width="14" height="18" rx="4" fill="rgba(255,255,255,.3)"/>
+        <line x1="50" y1="52" x2="62" y2="62" stroke="rgba(255,255,255,.6)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="62" cy="63" r="3" fill="rgba(255,255,255,.5)"/>
+      </svg>
+      <div class="pname">Esthetician</div>
+      <div class="prole">la esteticista</div>
+      <div class="pex">"She applies cream."</div>
+    </div>
+    <!-- Client -->
+    <div class="person-card">
+      <svg viewBox="0 0 70 100" fill="none">
+        <circle cx="35" cy="20" r="14" fill="#5DADE2" opacity=".9"/>
+        <path d="M15 85 C15 60 55 60 55 85 L55 100 L15 100Z" fill="#1A5276" opacity=".8"/>
+        <path d="M24 22 Q35 12 46 22" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none"/>
+        <line x1="20" y1="55" x2="15" y2="75" stroke="rgba(93,173,226,.5)" stroke-width="3" stroke-linecap="round"/>
+        <line x1="50" y1="55" x2="55" y2="75" stroke="rgba(93,173,226,.5)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="pname">Client</div>
+      <div class="prole">la cliente</div>
+      <div class="pex">"She relaxes."</div>
+    </div>
+    <!-- Instructor -->
+    <div class="person-card">
+      <svg viewBox="0 0 70 100" fill="none">
+        <circle cx="35" cy="20" r="14" fill="#F39C12" opacity=".9"/>
+        <path d="M15 85 C15 60 55 60 55 85 L55 100 L15 100Z" fill="#D4657A" opacity=".8"/>
+        <line x1="18" y1="55" x2="10" y2="72" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/>
+        <rect x="4" y="68" width="14" height="9" rx="2" fill="rgba(255,255,255,.25)"/>
+        <line x1="6" y1="72" x2="16" y2="72" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+      </svg>
+      <div class="pname">Instructor</div>
+      <div class="prole">el/la instructor/a</div>
+      <div class="pex">"He teaches."</div>
+    </div>
+    <!-- Student -->
+    <div class="person-card">
+      <svg viewBox="0 0 70 100" fill="none">
+        <circle cx="35" cy="20" r="14" fill="#8CC49A" opacity=".9"/>
+        <path d="M15 85 C15 60 55 60 55 85 L55 100 L15 100Z" fill="#2E86C1" opacity=".75"/>
+        <rect x="24" y="48" width="22" height="16" rx="2" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" stroke-width="1.2"/>
+        <line x1="28" y1="53" x2="42" y2="53" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <line x1="28" y1="57" x2="38" y2="57" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+      </svg>
+      <div class="pname">Student</div>
+      <div class="prole">la/el estudiante</div>
+      <div class="pex">"She studies."</div>
+    </div>
+  </div>
+
+  <div class="word-bank" style="margin-top:18px;">
+    <div class="wb-label">🔤 Word Bank — Objects in the Facial Cabin</div>
+    <div class="wb-words">
+      <span class="wb-word">📦 cream</span><span class="wb-word">🧴 serum</span>
+      <span class="wb-word">🪞 mirror</span><span class="wb-word">🛏 facial bed</span>
+      <span class="wb-word">💡 lamp</span><span class="wb-word">🧤 gloves</span>
+      <span class="wb-word">🧺 towel</span><span class="wb-word">💧 toner</span>
+      <span class="wb-word">🪣 basin</span><span class="wb-word">🧽 sponge</span>
+      <span class="wb-word">⚗️ mask</span><span class="wb-word">💆 client</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 6 — EXERCISE: MC + FILL ═══════════════════════════════ -->
+<div class="slide" id="s6">
+  <span class="slide-tag">Stance 1 · Exercise A</span>
+  <h2>Practice: <em>He / She / It</em> — Choose &amp; Complete</h2>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank — Verbs</div>
+    <div class="wb-words">
+      <span class="wb-word">applies</span><span class="wb-word">washes</span><span class="wb-word">prepares</span>
+      <span class="wb-word">cleans</span><span class="wb-word">uses</span><span class="wb-word">smells</span>
+      <span class="wb-word">recommends</span><span class="wb-word">works</span><span class="wb-word">teaches</span>
+    </div>
+  </div>
+
+  <div id="mc-s6"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 7 — EXERCISE: WRITE SENTENCES ═══════════════════════════════ -->
+<div class="slide" id="s7">
+  <span class="slide-tag">Stance 1 · Exercise B</span>
+  <h2>Write the <em>Full Sentence</em></h2>
+  <p class="lead">Use the word bank and subject provided to write a correct present simple sentence.</p>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">she</span><span class="wb-word">he</span><span class="wb-word">it</span>
+      <span class="wb-word">applies</span><span class="wb-word">cleans</span><span class="wb-word">washes</span>
+      <span class="wb-word">massages</span><span class="wb-word">uses</span><span class="wb-word">smells</span>
+      <span class="wb-word">prepares</span><span class="wb-word">the cream</span><span class="wb-word">her face</span>
+      <span class="wb-word">the mask</span><span class="wb-word">the tools</span><span class="wb-word">good</span>
+    </div>
+  </div>
+
+  <div id="fill-s7"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 8 — EXERCISE: SCENE DESCRIPTION ═══════════════════════════════ -->
+<div class="slide" id="s8">
+  <span class="slide-tag">Stance 1 · Exercise C — Scene</span>
+  <h2>Look at the <em>Scene</em> — Describe it</h2>
+  <p class="lead">Study the facial cabin scene. Answer the questions below using present simple.</p>
+
+  <!-- SVG Scene: Facial Cabin -->
+  <div class="scene-box">
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Room BG -->
+      <rect width="700" height="300" fill="#0A1628"/>
+      <rect x="0" y="0" width="700" height="240" fill="rgba(13,45,94,0.6)"/>
+      <!-- Floor -->
+      <rect x="0" y="240" width="700" height="60" fill="rgba(10,40,80,0.8)"/>
+      <!-- Wall shelf -->
+      <rect x="20" y="30" width="130" height="10" rx="3" fill="rgba(93,173,226,0.4)" stroke="#5DADE2" stroke-width="1.5"/>
+      <!-- Products on shelf -->
+      <rect x="28" y="15" width="16" height="18" rx="3" fill="rgba(93,173,226,0.5)" stroke="rgba(93,173,226,.7)" stroke-width="1"/>
+      <rect x="50" y="18" width="14" height="14" rx="3" fill="rgba(244,208,63,0.5)" stroke="rgba(244,208,63,.7)" stroke-width="1"/>
+      <rect x="70" y="16" width="18" height="16" rx="3" fill="rgba(90,187,170,0.5)" stroke="rgba(90,187,170,.7)" stroke-width="1"/>
+      <text x="85" y="52" text-anchor="middle" font-size="9" fill="rgba(174,214,241,.6)" font-family="Nunito">shelf with products</text>
+
+      <!-- Mirror -->
+      <rect x="290" y="20" width="80" height="110" rx="8" fill="rgba(93,173,226,0.12)" stroke="#5DADE2" stroke-width="2"/>
+      <ellipse cx="330" cy="75" rx="30" ry="42" fill="rgba(93,173,226,0.08)" stroke="rgba(93,173,226,.3)" stroke-width="1"/>
+      <text x="330" y="148" text-anchor="middle" font-size="9" fill="rgba(174,214,241,.6)" font-family="Nunito">mirror</text>
+
+      <!-- Facial bed -->
+      <rect x="130" y="175" width="200" height="55" rx="10" fill="rgba(46,134,193,0.35)" stroke="rgba(93,173,226,.4)" stroke-width="2"/>
+      <rect x="130" y="155" width="60" height="24" rx="6" fill="rgba(46,134,193,0.25)" stroke="rgba(93,173,226,.3)" stroke-width="1.5"/>
+      <text x="230" y="268" text-anchor="middle" font-size="9" fill="rgba(174,214,241,.6)" font-family="Nunito">facial bed</text>
+
+      <!-- Client lying -->
+      <ellipse cx="175" cy="165" rx="22" ry="17" fill="#5DADE2" opacity=".8"/>
+      <rect x="160" y="178" width="120" height="45" rx="8" fill="#1A5276" opacity=".7"/>
+      <text x="180" y="155" text-anchor="middle" font-size="9" fill="rgba(174,214,241,.8)" font-family="Nunito">client</text>
+
+      <!-- Esthetician standing beside -->
+      <circle cx="380" cy="145" r="18" fill="#F4D03F" opacity=".9"/>
+      <path d="M358 175 Q380 165 402 175 L405 240 L355 240Z" fill="#2E86C1" opacity=".85"/>
+      <!-- Esthetician hand with tool -->
+      <line x1="358" y1="190" x2="310" y2="175" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="307" cy="174" r="5" fill="rgba(244,208,63,.7)"/>
+      <text x="380" y="135" text-anchor="middle" font-size="9" fill="rgba(244,208,63,.9)" font-family="Nunito">esthetician</text>
+
+      <!-- Tray next to bed -->
+      <rect x="430" y="200" width="55" height="8" rx="3" fill="rgba(93,173,226,.4)" stroke="rgba(93,173,226,.6)" stroke-width="1.5"/>
+      <circle cx="444" cy="196" r="5" fill="rgba(93,173,226,.5)"/>
+      <circle cx="460" cy="194" r="5" fill="rgba(244,208,63,.5)"/>
+      <circle cx="476" cy="196" r="5" fill="rgba(90,187,170,.5)"/>
+      <line x1="430" y1="208" x2="430" y2="240" stroke="rgba(93,173,226,.3)" stroke-width="1.5"/>
+      <line x1="485" y1="208" x2="485" y2="240" stroke="rgba(93,173,226,.3)" stroke-width="1.5"/>
+      <text x="457" y="260" text-anchor="middle" font-size="9" fill="rgba(174,214,241,.6)" font-family="Nunito">tray with tools</text>
+
+      <!-- Lamp above client -->
+      <circle cx="230" cy="40" r="18" fill="rgba(244,208,63,0.25)" stroke="rgba(244,208,63,.4)" stroke-width="2"/>
+      <line x1="230" y1="58" x2="230" y2="80" stroke="rgba(244,208,63,.3)" stroke-width="2"/>
+      <text x="230" y="90" text-anchor="middle" font-size="9" fill="rgba(244,208,63,.6)" font-family="Nunito">lamp</text>
+
+      <!-- Student observing far right -->
+      <circle cx="620" cy="155" r="15" fill="#8CC49A" opacity=".9"/>
+      <path d="M602 178 Q620 170 638 178 L640 240 L600 240Z" fill="#1A5276" opacity=".7"/>
+      <rect x="635" y="180" width="20" height="15" rx="2" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+      <text x="620" y="146" text-anchor="middle" font-size="9" fill="rgba(140,196,154,.9)" font-family="Nunito">student</text>
+
+      <!-- Legend -->
+      <rect x="8" y="270" width="684" height="24" fill="rgba(0,0,0,.4)" rx="5"/>
+      <text x="16" y="286" font-size="9" fill="rgba(244,208,63,.9)" font-family="Nunito">🟡 Esthetician (near)</text>
+      <text x="150" y="286" font-size="9" fill="rgba(93,173,226,.9)" font-family="Nunito">🔵 Client (on the bed)</text>
+      <text x="310" y="286" font-size="9" fill="rgba(140,196,154,.9)" font-family="Nunito">🟢 Student (far, observing)</text>
+      <text x="490" y="286" font-size="9" fill="rgba(174,214,241,.8)" font-family="Nunito">💛 Lamp above</text>
+    </svg>
+  </div>
+
+  <div id="scene-s8"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 9 — EXERCISE: NEGATIVES & QUESTIONS ═══════════════════════════════ -->
+<div class="slide" id="s9">
+  <span class="slide-tag">Stance 1 · Exercise D</span>
+  <h2>Negatives &amp; <em>Questions</em> Practice</h2>
+  <p class="lead">Transform the sentences below. Use the word bank!</p>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">doesn't</span><span class="wb-word">does</span><span class="wb-word">she</span>
+      <span class="wb-word">he</span><span class="wb-word">apply</span><span class="wb-word">clean</span>
+      <span class="wb-word">prepare</span><span class="wb-word">recommend</span><span class="wb-word">use</span>
+    </div>
+  </div>
+
+  <div id="neg-s9"></div>
+</div>
+
+
+<!-- ═══════════════════════════════ SLIDE 10 — STANCE 2 COVER ═══════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="stance-cover">
+    <div class="stance-number">2</div>
+    <span class="slide-tag amber">Stance Two</span>
+    <h2>Prepositions &amp; <em>Demonstratives</em></h2>
+    <p class="lead">We learn to describe <strong>where</strong> things are and <strong>which</strong> things we are talking about — in the facial cabin and beyond.</p>
+    <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(244,208,63,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--warm-amber);">📍 Prepositions: in, on, under, at, in front of, behind, next to, between</div>
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(244,208,63,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--warm-amber);">👉 This · That · These · Those · Here · There</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 11 — PREPOSITIONS: CONCEPT ═══════════════════════════════ -->
+<div class="slide" id="s11">
+  <span class="slide-tag amber">Stance 2 · Slide 1 of 4</span>
+  <h2>Prepositions of Place — <em>Where is it?</em></h2>
+  <p class="lead">Prepositions tell us the <strong>location</strong> of a person or object. Look at the diagrams below.</p>
+
+  <div class="card-grid g4" style="margin-top:16px;">
+    <!-- IN -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="25" width="60" height="38" rx="5" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="45" cy="44" r="10" fill="#F4D03F" opacity=".85"/>
+      </svg>
+      <div class="prep-word">IN</div>
+      <div class="prep-es">dentro de</div>
+      <div class="prep-ex">"The cream is <strong>in</strong> the jar."</div>
+    </div>
+    <!-- ON -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="10" y="46" width="70" height="16" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="45" cy="34" r="10" fill="#F4D03F" opacity=".85"/>
+      </svg>
+      <div class="prep-word">ON</div>
+      <div class="prep-es">sobre / encima</div>
+      <div class="prep-ex">"The towel is <strong>on</strong> the bed."</div>
+    </div>
+    <!-- UNDER -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="10" y="20" width="70" height="16" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="45" cy="52" r="10" fill="#F4D03F" opacity=".85"/>
+      </svg>
+      <div class="prep-word">UNDER</div>
+      <div class="prep-es">debajo de</div>
+      <div class="prep-ex">"The bag is <strong>under</strong> the chair."</div>
+    </div>
+    <!-- AT -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <line x1="45" y1="5" x2="45" y2="65" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="28" cy="35" r="10" fill="#F4D03F" opacity=".85"/>
+        <text x="52" y="38" font-size="11" fill="rgba(174,214,241,.6)" font-family="Nunito">desk</text>
+      </svg>
+      <div class="prep-word">AT</div>
+      <div class="prep-es">en (un lugar/punto)</div>
+      <div class="prep-ex">"She is <strong>at</strong> the mirror."</div>
+    </div>
+    <!-- IN FRONT OF -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="48" y="18" width="30" height="36" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="28" cy="36" r="10" fill="#F4D03F" opacity=".85"/>
+        <text x="63" y="62" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.5)" font-family="Nunito">mirror</text>
+      </svg>
+      <div class="prep-word">IN FRONT OF</div>
+      <div class="prep-es">en frente de</div>
+      <div class="prep-ex">"She stands <strong>in front of</strong> the mirror."</div>
+    </div>
+    <!-- BEHIND -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="12" y="18" width="30" height="36" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="62" cy="36" r="10" fill="#F4D03F" opacity=".85"/>
+        <text x="27" y="62" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.5)" font-family="Nunito">screen</text>
+      </svg>
+      <div class="prep-word">BEHIND</div>
+      <div class="prep-es">detrás de</div>
+      <div class="prep-ex">"The shelf is <strong>behind</strong> the door."</div>
+    </div>
+    <!-- NEXT TO -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="8" y="24" width="26" height="26" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="56" cy="37" r="10" fill="#F4D03F" opacity=".85"/>
+        <text x="21" y="60" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.5)" font-family="Nunito">table</text>
+      </svg>
+      <div class="prep-word">NEXT TO</div>
+      <div class="prep-es">junto a / al lado de</div>
+      <div class="prep-ex">"The tray is <strong>next to</strong> the bed."</div>
+    </div>
+    <!-- BETWEEN -->
+    <div class="prep-card">
+      <svg viewBox="0 0 90 70" fill="none">
+        <rect x="5" y="24" width="22" height="26" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <rect x="63" y="24" width="22" height="26" rx="4" fill="rgba(46,134,193,.2)" stroke="#5DADE2" stroke-width="2"/>
+        <circle cx="45" cy="37" r="10" fill="#F4D03F" opacity=".85"/>
+      </svg>
+      <div class="prep-word">BETWEEN</div>
+      <div class="prep-es">entre (dos cosas)</div>
+      <div class="prep-ex">"The lamp is <strong>between</strong> the chairs."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 12 — DEMONSTRATIVES ═══════════════════════════════ -->
+<div class="slide" id="s12">
+  <span class="slide-tag amber">Stance 2 · Slide 2 of 4</span>
+  <h2>This · That · These · Those + <em>Here · There</em></h2>
+  <p class="lead">We use demonstratives to point to objects. The choice depends on <strong>distance</strong> (near or far) and <strong>number</strong> (one or many).</p>
+
+  <div class="fbox">
+    <div class="flabel">⚡ Quick Rule</div>
+    <div class="ftext" style="font-size:1rem;">
+      <span class="hy">THIS</span> = near + 1 thing &nbsp;|&nbsp;
+      <span class="ha">THESE</span> = near + many things<br>
+      <span class="hb">THAT</span> = far + 1 thing &nbsp;|&nbsp;
+      <span class="hg">THOSE</span> = far + many things
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:14px;">
+    <div>
+      <h3>📍 Near (close to you)</h3>
+      <table>
+        <tr><th>Word</th><th>Example</th></tr>
+        <tr><td><span class="hy">This</span> (singular)</td><td><span class="hy">This</span> cream is for dry skin.</td></tr>
+        <tr><td><span class="ha">These</span> (plural)</td><td><span class="ha">These</span> tools are mine.</td></tr>
+        <tr><td>+ <span class="hy">HERE</span></td><td>Put the toner <span class="hy">here</span>.</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>🔭 Far (away from you)</h3>
+      <table>
+        <tr><th>Word</th><th>Example</th></tr>
+        <tr><td><span class="hb">That</span> (singular)</td><td><span class="hb">That</span> client is waiting.</td></tr>
+        <tr><td><span class="hg">Those</span> (plural)</td><td><span class="hg">Those</span> products are expensive.</td></tr>
+        <tr><td>+ <span class="hb">THERE</span></td><td>The mask is over <span class="hb">there</span>.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-grid g4" style="margin-top:16px;">
+    <div class="card" style="text-align:center;border-color:rgba(244,208,63,0.3);">
+      <div style="font-size:2.5rem;">👋➡️🧴</div>
+      <div class="word" style="color:var(--horizon);">THIS cream</div>
+      <div class="sp">Near · Singular</div>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(250,215,160,0.3);">
+      <div style="font-size:2.5rem;">👋➡️🧴🧴🧴</div>
+      <div class="word" style="color:var(--warm-amber);">THESE creams</div>
+      <div class="sp">Near · Plural</div>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(93,173,226,0.3);">
+      <div style="font-size:2.5rem;">👆〰️🧴</div>
+      <div class="word" style="color:var(--light-blue);">THAT jar</div>
+      <div class="sp">Far · Singular</div>
+    </div>
+    <div class="card" style="text-align:center;border-color:rgba(90,187,170,0.3);">
+      <div style="font-size:2.5rem;">👆〰️🧴🧴🧴</div>
+      <div class="word" style="color:#5DBBAD;">THOSE jars</div>
+      <div class="sp">Far · Plural</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 13 — PREPOSITIONS + DEMO COMBINED ═══════════════════════════════ -->
+<div class="slide" id="s13">
+  <span class="slide-tag amber">Stance 2 · Slide 3 of 4</span>
+  <h2>Combining Prepositions &amp; <em>Demonstratives</em></h2>
+  <p class="lead">In real conversations, we often use them together to describe scenes in the cabin.</p>
+
+  <div class="fbox">
+    <div class="flabel">🔗 Combined Pattern</div>
+    <div class="ftext" style="font-size:1.05rem;">
+      <span class="hy">THIS/THAT/THESE/THOSE</span> + noun + verb + <span class="hb">preposition</span> + place
+    </div>
+    <div class="fsub">
+      "<span class="hy">This</span> cream is <span class="hb">on</span> the shelf." &nbsp;|&nbsp; "<span class="hg">Those</span> gloves are <span class="hb">under</span> the table."<br>
+      "<span class="ha">These</span> tools are <span class="hb">next to</span> the bed." &nbsp;|&nbsp; "<span class="hb">That</span> lamp is <span class="hb">in front of</span> the mirror."
+    </div>
+  </div>
+
+  <!-- Scene with labels -->
+  <div class="scene-box" style="margin-top:12px;">
+    <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="260" fill="#0A1628"/>
+      <rect x="0" y="0" width="700" height="210" fill="rgba(13,45,94,0.5)"/>
+      <rect x="0" y="210" width="700" height="50" fill="rgba(10,40,80,0.7)"/>
+      <!-- Shelf -->
+      <rect x="30" y="30" width="120" height="10" rx="3" fill="rgba(93,173,226,0.4)" stroke="#5DADE2" stroke-width="1.5"/>
+      <rect x="40" y="15" width="14" height="18" rx="2" fill="rgba(244,208,63,.5)"/>
+      <rect x="60" y="17" width="14" height="15" rx="2" fill="rgba(93,173,226,.5)"/>
+      <rect x="80" y="14" width="16" height="18" rx="2" fill="rgba(90,187,170,.5)"/>
+      <!-- Annotation: THOSE products -->
+      <line x1="90" y1="14" x2="90" y2="-2" stroke="rgba(244,208,63,.5)" stroke-width="1"/>
+      <text x="88" y="80" font-size="8.5" fill="rgba(244,208,63,.8)" font-family="Nunito" font-weight="700">THOSE products</text>
+      <text x="88" y="92" font-size="8" fill="rgba(174,214,241,.5)" font-family="Nunito">are on the shelf (far)</text>
+
+      <!-- Facial bed -->
+      <rect x="180" y="155" width="180" height="45" rx="8" fill="rgba(46,134,193,.3)" stroke="rgba(93,173,226,.4)" stroke-width="1.5"/>
+      <!-- Client -->
+      <ellipse cx="220" cy="148" rx="18" ry="15" fill="#5DADE2" opacity=".85"/>
+      <rect x="210" y="160" width="100" height="36" rx="5" fill="#1A5276" opacity=".8"/>
+      <text x="270" y="218" text-anchor="middle" font-size="8.5" fill="rgba(174,214,241,.6)" font-family="Nunito">facial bed</text>
+
+      <!-- Tray next to bed -->
+      <rect x="370" y="175" width="50" height="8" rx="3" fill="rgba(93,173,226,.35)" stroke="rgba(93,173,226,.5)" stroke-width="1.2"/>
+      <circle cx="382" cy="170" r="5" fill="rgba(244,208,63,.5)"/>
+      <circle cx="396" cy="170" r="5" fill="rgba(93,173,226,.5)"/>
+      <line x1="370" y1="183" x2="370" y2="210" stroke="rgba(93,173,226,.25)" stroke-width="1.2"/>
+      <line x1="420" y1="183" x2="420" y2="210" stroke="rgba(93,173,226,.25)" stroke-width="1.2"/>
+      <text x="395" y="218" text-anchor="middle" font-size="8.5" fill="rgba(93,173,226,.6)" font-family="Nunito">THIS tray is next to the bed</text>
+
+      <!-- Mirror far -->
+      <rect x="560" y="30" width="65" height="95" rx="7" fill="rgba(93,173,226,.1)" stroke="#5DADE2" stroke-width="1.5"/>
+      <text x="592" y="140" text-anchor="middle" font-size="8.5" fill="rgba(174,214,241,.6)" font-family="Nunito">THAT mirror (far)</text>
+      <text x="592" y="152" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.4)" font-family="Nunito">is behind the chair</text>
+
+      <!-- Esthetician -->
+      <circle cx="480" cy="130" r="15" fill="#F4D03F" opacity=".9"/>
+      <path d="M462 155 Q480 145 498 155 L500 210 L460 210Z" fill="#2E86C1" opacity=".85"/>
+      <text x="480" y="120" text-anchor="middle" font-size="8.5" fill="rgba(244,208,63,.9)" font-family="Nunito">esthetician</text>
+      <text x="480" y="228" text-anchor="middle" font-size="8" fill="rgba(244,208,63,.6)" font-family="Nunito">in front of the mirror</text>
+
+      <!-- Basin under shelf -->
+      <ellipse cx="530" cy="195" rx="28" ry="12" fill="rgba(93,173,226,.2)" stroke="rgba(93,173,226,.4)" stroke-width="1.2"/>
+      <text x="530" y="220" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.5)" font-family="Nunito">basin under the shelf</text>
+    </svg>
+  </div>
+
+  <div class="word-bank" style="margin-top:12px;">
+    <div class="wb-label">🔤 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">this</span><span class="wb-word">that</span><span class="wb-word">these</span><span class="wb-word">those</span>
+      <span class="wb-word">in</span><span class="wb-word">on</span><span class="wb-word">under</span><span class="wb-word">next to</span>
+      <span class="wb-word">behind</span><span class="wb-word">in front of</span><span class="wb-word">between</span><span class="wb-word">here</span><span class="wb-word">there</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 14 — MORE EXAMPLES + PATTERNS ═══════════════════════════════ -->
+<div class="slide" id="s14">
+  <span class="slide-tag amber">Stance 2 · Slide 4 of 4</span>
+  <h2>Patterns in <em>Action</em></h2>
+  <p class="lead">Let's see how we use all these words together. Study the examples from the facial cabin.</p>
+
+  <table style="margin-top:14px;">
+    <tr><th>Demonstrative</th><th>+Noun</th><th>+Verb</th><th>+Preposition</th><th>+Place</th></tr>
+    <tr><td><span class="hy">This</span></td><td>towel</td><td>is</td><td><span class="hb">on</span></td><td>the bed.</td></tr>
+    <tr><td><span class="hb">That</span></td><td>mirror</td><td>is</td><td><span class="hb">in front of</span></td><td>the chair.</td></tr>
+    <tr><td><span class="ha">These</span></td><td>creams</td><td>are</td><td><span class="hb">next to</span></td><td>the tray.</td></tr>
+    <tr><td><span class="hg">Those</span></td><td>gloves</td><td>are</td><td><span class="hb">under</span></td><td>the table.</td></tr>
+    <tr><td><span class="hy">This</span></td><td>product</td><td>is</td><td><span class="hb">between</span></td><td>the bottles.</td></tr>
+    <tr><td><span class="hb">That</span></td><td>basin</td><td>is</td><td><span class="hb">behind</span></td><td>the door.</td></tr>
+  </table>
+
+  <div class="two-col" style="margin-top:18px;">
+    <div class="fbox">
+      <div class="flabel">📍 HERE — near the speaker</div>
+      <div class="ftext" style="font-size:1rem;">"Come <span class="hy">here</span>, please."<br>"Put the cream <span class="hy">here</span>."<br>"The tools are right <span class="hy">here</span>."</div>
+    </div>
+    <div class="fbox">
+      <div class="flabel">🔭 THERE — away from the speaker</div>
+      <div class="ftext" style="font-size:1rem;">"The products are over <span class="hb">there</span>."<br>"Sit <span class="hb">there</span>, please."<br>"That lamp is <span class="hb">there</span>."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 15 — EXERCISE: PREPOSITIONS MC ═══════════════════════════════ -->
+<div class="slide" id="s15">
+  <span class="slide-tag amber">Stance 2 · Exercise A</span>
+  <h2>Practice: <em>Choose the Preposition</em></h2>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank — Prepositions</div>
+    <div class="wb-words">
+      <span class="wb-word">in</span><span class="wb-word">on</span><span class="wb-word">under</span><span class="wb-word">at</span>
+      <span class="wb-word">in front of</span><span class="wb-word">behind</span><span class="wb-word">next to</span><span class="wb-word">between</span>
+    </div>
+  </div>
+
+  <div id="mc-s15"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 16 — EXERCISE: DEMONSTRATIVES MATCH ═══════════════════════════════ -->
+<div class="slide" id="s16">
+  <span class="slide-tag amber">Stance 2 · Exercise B</span>
+  <h2>Match the <em>Demonstrative</em></h2>
+  <p class="lead">Click a sentence on the left, then click the matching rule on the right.</p>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">this</span><span class="wb-word">that</span><span class="wb-word">these</span>
+      <span class="wb-word">those</span><span class="wb-word">here</span><span class="wb-word">there</span>
+    </div>
+  </div>
+
+  <div class="ex-wrap" style="margin-top:14px;">
+    <div class="ex-title">Click left → then click right to match</div>
+    <div id="match-s16"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 17 — EXERCISE: WRITE LOCATION ═══════════════════════════════ -->
+<div class="slide" id="s17">
+  <span class="slide-tag amber">Stance 2 · Exercise C</span>
+  <h2>Write: <em>Where is it?</em></h2>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">this</span><span class="wb-word">that</span><span class="wb-word">these</span><span class="wb-word">those</span>
+      <span class="wb-word">in</span><span class="wb-word">on</span><span class="wb-word">under</span><span class="wb-word">next to</span>
+      <span class="wb-word">behind</span><span class="wb-word">in front of</span><span class="wb-word">here</span><span class="wb-word">there</span>
+      <span class="wb-word">is</span><span class="wb-word">are</span><span class="wb-word">the bed</span><span class="wb-word">the tray</span><span class="wb-word">the shelf</span>
+    </div>
+  </div>
+
+  <div id="write-s17"></div>
+</div>
+
+
+<!-- ═══════════════════════════════ SLIDE 18 — STANCE 3 COVER ═══════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="stance-cover">
+    <div class="stance-number">3</div>
+    <span class="slide-tag blue">Stance Three</span>
+    <h2>Present <em>Continuous</em></h2>
+    <p class="lead">We describe actions happening <strong>right now</strong> — in the facial cabin, in class, and in daily life.</p>
+    <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">🔄 am / is / are + verb-ing</div>
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">📸 Describe scenes & pictures</div>
+      <div style="background:rgba(13,45,94,0.6);border:1px solid rgba(93,173,226,0.2);border-radius:12px;padding:12px 20px;font-size:.9rem;color:var(--pale-blue);">🎮 Final Game Slide</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 19 — PRESENT CONTINUOUS: CONCEPT ═══════════════════════════════ -->
+<div class="slide" id="s19">
+  <span class="slide-tag blue">Stance 3 · Slide 1 of 4</span>
+  <h2>Present Continuous — <em>Right Now!</em></h2>
+  <p class="lead">We use the Present Continuous for actions happening <strong>at this moment</strong>. Different from Present Simple (habits), this is about <strong>NOW</strong>.</p>
+
+  <div class="two-col" style="margin-top:14px;">
+    <div class="fbox">
+      <div class="flabel">✅ Affirmative Formula</div>
+      <div class="ftext"><span class="hy">Subject</span> + <span class="hb">am / is / are</span> + <span class="ha">verb–ing</span></div>
+      <div class="fsub">
+        "She <span class="hb">is</span> apply<span class="ha">ing</span> the cream." <br>
+        "He <span class="hb">is</span> wash<span class="ha">ing</span> his hands." <br>
+        "They <span class="hb">are</span> study<span class="ha">ing</span> together."
+      </div>
+    </div>
+    <div>
+      <table>
+        <tr><th>Subject</th><th>Be verb</th></tr>
+        <tr><td><span class="hy">I</span></td><td><span class="hy">am</span></td></tr>
+        <tr><td><span class="hb">He / She / It</span></td><td><span class="hb">is</span></td></tr>
+        <tr><td><span class="ha">You / We / They</span></td><td><span class="ha">are</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fbox" style="margin-top:14px;">
+    <div class="flabel">❌ Negative</div>
+    <div class="ftext" style="font-size:1.05rem;">Subject + <span class="hy">is not (isn't)</span> / <span class="hb">are not (aren't)</span> + verb–ing</div>
+    <div class="fsub">"She <span class="hy">isn't</span> applying the mask." &nbsp;|&nbsp; "They <span class="hb">aren't</span> cleaning the room."</div>
+  </div>
+
+  <div class="fbox">
+    <div class="flabel">❓ Question</div>
+    <div class="ftext" style="font-size:1.05rem;"><span class="hb">Is / Are</span> + subject + verb–ing?</div>
+    <div class="fsub">
+      "<span class="hb">Is</span> she mixing the mask?" — "Yes, she <span class="hb">is</span>." / "No, she <span class="hy">isn't</span>."<br>
+      "What <span class="hb">is</span> he doing?" — "He <span class="hb">is</span> preparing the cabin."
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 20 — –ING RULES ═══════════════════════════════ -->
+<div class="slide" id="s20">
+  <span class="slide-tag blue">Stance 3 · Slide 2 of 4</span>
+  <h2>How to Make the <em>–ing Form</em></h2>
+  <p class="lead">Most verbs just add <strong>–ing</strong>, but some have special rules. Let's practice with cabin vocabulary!</p>
+
+  <table style="margin-top:16px;">
+    <tr><th>Rule</th><th>When?</th><th>Example</th><th>Result</th></tr>
+    <tr><td>Just add <span class="hy">–ing</span></td><td>Most verbs</td><td>clean · apply · rinse</td><td>clean<span class="hy">ing</span> · apply<span class="hy">ing</span> · rins<span class="hy">ing</span></td></tr>
+    <tr><td>Drop silent <em>–e</em></td><td>Verb ends in silent –e</td><td>massage · use · prepare</td><td>massag<span class="hy">ing</span> · us<span class="hy">ing</span> · prepar<span class="hy">ing</span></td></tr>
+    <tr><td>Double consonant</td><td>Short verb, CVC pattern</td><td>rub · pat · sit</td><td>rub<span class="hy">bing</span> · pat<span class="hy">ting</span> · sit<span class="hy">ting</span></td></tr>
+    <tr><td>ie → y</td><td>Verb ends in –ie</td><td>lie · tie · die</td><td>ly<span class="hy">ing</span> · ty<span class="hy">ing</span> · dy<span class="hy">ing</span></td></tr>
+  </table>
+
+  <div class="card-grid g3" style="margin-top:18px;">
+    <div class="card">
+      <div class="ico">🧴</div>
+      <div class="word">apply → apply<span class="hy">ing</span></div>
+      <div class="example">"She is applying serum."</div>
+    </div>
+    <div class="card">
+      <div class="ico">🤲</div>
+      <div class="word">massage → massag<span class="hy">ing</span></div>
+      <div class="example">"She is massaging the face."</div>
+    </div>
+    <div class="card">
+      <div class="ico">🚿</div>
+      <div class="word">rinse → rins<span class="hy">ing</span></div>
+      <div class="example">"He is rinsing the sponge."</div>
+    </div>
+    <div class="card">
+      <div class="ico">🧹</div>
+      <div class="word">clean → clean<span class="hy">ing</span></div>
+      <div class="example">"They are cleaning the cabin."</div>
+    </div>
+    <div class="card">
+      <div class="ico">🧤</div>
+      <div class="word">put → put<span class="hy">ting</span></div>
+      <div class="example">"She is putting on gloves."</div>
+    </div>
+    <div class="card">
+      <div class="ico">⚗️</div>
+      <div class="word">mix → mix<span class="hy">ing</span></div>
+      <div class="example">"He is mixing the mask."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 21 — PRESENT CONTINUOUS VS SIMPLE ═══════════════════════════════ -->
+<div class="slide" id="s21">
+  <span class="slide-tag blue">Stance 3 · Slide 3 of 4</span>
+  <h2>Present Simple <em>vs</em> Present Continuous</h2>
+  <p class="lead">Understanding the difference is key! Compare these pairs.</p>
+
+  <table style="margin-top:14px;">
+    <tr><th>Present Simple (habit/routine)</th><th>Present Continuous (right now)</th></tr>
+    <tr><td>She <span class="hy">applies</span> cream every day. ✅</td><td>She <span class="hb">is applying</span> cream right now. 🔄</td></tr>
+    <tr><td>He <span class="hy">washes</span> the tools after work. ✅</td><td>He <span class="hb">is washing</span> the tools now. 🔄</td></tr>
+    <tr><td>The client <span class="hy">relaxes</span> during facials. ✅</td><td>The client <span class="hb">is relaxing</span> on the bed. 🔄</td></tr>
+    <tr><td>She <span class="hy">cleans</span> the mirror in the morning. ✅</td><td>She <span class="hb">is cleaning</span> the mirror. 🔄</td></tr>
+    <tr><td>He <span class="hy">teaches</span> on Tuesdays. ✅</td><td>He <span class="hb">is teaching</span> right now. 🔄</td></tr>
+  </table>
+
+  <div class="two-col" style="margin-top:18px;">
+    <div class="fbox">
+      <div class="flabel">⏰ Time clues — Present Simple</div>
+      <div class="ftext" style="font-size:.95rem;">every day · always · usually · often · never · on Mondays · in the morning</div>
+    </div>
+    <div class="fbox">
+      <div class="flabel">⚡ Time clues — Present Continuous</div>
+      <div class="ftext" style="font-size:.95rem;">right now · at this moment · look! · listen! · currently · today · at the moment</div>
+    </div>
+  </div>
+
+  <div class="word-bank" style="margin-top:14px;">
+    <div class="wb-label">🔤 Word Bank — Actions in the cabin (–ing)</div>
+    <div class="wb-words">
+      <span class="wb-word">applying</span><span class="wb-word">cleaning</span><span class="wb-word">massaging</span>
+      <span class="wb-word">mixing</span><span class="wb-word">rinsing</span><span class="wb-word">preparing</span>
+      <span class="wb-word">putting on</span><span class="wb-word">checking</span><span class="wb-word">using</span>
+      <span class="wb-word">washing</span><span class="wb-word">sitting</span><span class="wb-word">teaching</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 22 — SCENE: INTEGRATED ═══════════════════════════════ -->
+<div class="slide" id="s22">
+  <span class="slide-tag blue">Stance 3 · Slide 4 of 4</span>
+  <h2>Full Scene: <em>Everything Together</em></h2>
+  <p class="lead">Look at this scene. It uses present continuous + prepositions + demonstratives all together.</p>
+
+  <div class="scene-box">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+      <rect width="700" height="280" fill="#0A1628"/>
+      <rect x="0" y="0" width="700" height="230" fill="rgba(13,45,94,0.55)"/>
+      <rect x="0" y="230" width="700" height="50" fill="rgba(10,40,80,0.8)"/>
+
+      <!-- Shelf -->
+      <rect x="20" y="25" width="110" height="10" rx="3" fill="rgba(93,173,226,.4)" stroke="#5DADE2" stroke-width="1.5"/>
+      <rect x="28" y="12" width="13" height="16" rx="2" fill="rgba(244,208,63,.5)"/>
+      <rect x="46" y="14" width="13" height="13" rx="2" fill="rgba(93,173,226,.5)"/>
+      <rect x="65" y="12" width="14" height="15" rx="2" fill="rgba(90,187,170,.5)"/>
+      <text x="75" y="52" text-anchor="middle" font-size="8" fill="rgba(244,208,63,.7)" font-family="Nunito">THOSE products are on the shelf</text>
+
+      <!-- Facial Bed -->
+      <rect x="165" y="155" width="190" height="52" rx="9" fill="rgba(46,134,193,.3)" stroke="rgba(93,173,226,.4)" stroke-width="1.5"/>
+
+      <!-- Client on bed -->
+      <ellipse cx="205" cy="148" rx="19" ry="15" fill="#5DADE2" opacity=".85"/>
+      <rect x="196" y="161" width="115" height="40" rx="6" fill="#1A5276" opacity=".75"/>
+      <text x="250" y="222" text-anchor="middle" font-size="8" fill="rgba(93,173,226,.7)" font-family="Nunito">The client is lying on the bed</text>
+
+      <!-- Esthetician applying -->
+      <circle cx="400" cy="125" r="17" fill="#F4D03F" opacity=".9"/>
+      <path d="M380 147 Q400 138 420 147 L422 215 L378 215Z" fill="#2E86C1" opacity=".85"/>
+      <line x1="378" y1="162" x2="340" y2="155" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="336" cy="154" r="6" fill="rgba(244,208,63,.6)"/>
+      <text x="400" y="113" text-anchor="middle" font-size="8" fill="rgba(244,208,63,.9)" font-family="Nunito">She is applying cream</text>
+      <text x="400" y="236" text-anchor="middle" font-size="8" fill="rgba(244,208,63,.6)" font-family="Nunito">in front of the client</text>
+
+      <!-- Tray next to bed -->
+      <rect x="362" y="180" width="48" height="8" rx="3" fill="rgba(93,173,226,.3)" stroke="rgba(93,173,226,.5)" stroke-width="1.2"/>
+      <circle cx="375" cy="175" r="5" fill="rgba(93,173,226,.5)"/>
+      <circle cx="390" cy="174" r="5" fill="rgba(244,208,63,.5)"/>
+      <line x1="362" y1="188" x2="362" y2="215" stroke="rgba(93,173,226,.2)" stroke-width="1.2"/>
+      <line x1="410" y1="188" x2="410" y2="215" stroke="rgba(93,173,226,.2)" stroke-width="1.2"/>
+      <text x="386" y="236" text-anchor="middle" font-size="8" fill="rgba(93,173,226,.6)" font-family="Nunito">This tray is next to the bed</text>
+
+      <!-- Student (far) reading -->
+      <circle cx="600" cy="135" r="14" fill="#8CC49A" opacity=".9"/>
+      <path d="M584 155 Q600 147 616 155 L618 215 L582 215Z" fill="#1A5276" opacity=".7"/>
+      <rect x="615" y="162" width="20" height="15" rx="2" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+      <text x="600" y="125" text-anchor="middle" font-size="8" fill="rgba(140,196,154,.9)" font-family="Nunito">That student is</text>
+      <text x="600" y="236" text-anchor="middle" font-size="8" fill="rgba(140,196,154,.6)" font-family="Nunito">reading over there</text>
+
+      <!-- Mirror -->
+      <rect x="530" y="30" width="60" height="88" rx="7" fill="rgba(93,173,226,.1)" stroke="#5DADE2" stroke-width="1.5"/>
+      <text x="560" y="135" text-anchor="middle" font-size="8" fill="rgba(174,214,241,.6)" font-family="Nunito">mirror</text>
+
+      <!-- Bottom legend -->
+      <rect x="5" y="242" width="690" height="32" fill="rgba(0,0,0,.4)" rx="5"/>
+      <text x="15" y="261" font-size="8.5" fill="rgba(244,208,63,.9)" font-family="Nunito">🟡 Esthetician: is applying cream (near)</text>
+      <text x="220" y="261" font-size="8.5" fill="rgba(93,173,226,.9)" font-family="Nunito">🔵 Client: is lying on the bed</text>
+      <text x="400" y="261" font-size="8.5" fill="rgba(140,196,154,.9)" font-family="Nunito">🟢 Student: is reading (far)</text>
+      <text x="570" y="261" font-size="8.5" fill="rgba(174,214,241,.8)" font-family="Nunito">📦 Tray: next to the bed</text>
+    </svg>
+  </div>
+
+  <div class="card-grid g3" style="margin-top:14px;">
+    <div class="card"><div class="lbl">Present Continuous</div><div class="example">"She <span class="hb">is applying</span> cream."</div></div>
+    <div class="card"><div class="lbl">+ Preposition</div><div class="example">"She is applying cream <span class="hy">on</span> the client's face."</div></div>
+    <div class="card"><div class="lbl">+ Demonstrative</div><div class="example">"<span class="ha">This</span> esthetician is applying <span class="hb">that</span> cream."</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 23 — EXERCISE: PC WRITE ═══════════════════════════════ -->
+<div class="slide" id="s23">
+  <span class="slide-tag blue">Stance 3 · Exercise A</span>
+  <h2>Write: <em>What are they doing?</em></h2>
+  <p class="lead">Look at each emoji scene and write a complete sentence using the present continuous.</p>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">is applying</span><span class="wb-word">is cleaning</span><span class="wb-word">is massaging</span>
+      <span class="wb-word">is mixing</span><span class="wb-word">is rinsing</span><span class="wb-word">is putting on</span>
+      <span class="wb-word">are preparing</span><span class="wb-word">is reading</span><span class="wb-word">is teaching</span>
+      <span class="wb-word">on the face</span><span class="wb-word">the cabin</span><span class="wb-word">the mask</span>
+      <span class="wb-word">the tools</span><span class="wb-word">gloves</span><span class="wb-word">here</span><span class="wb-word">there</span>
+    </div>
+  </div>
+
+  <div id="scene-s23"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 24 — EXERCISE: PC + ALL INTEGRATION ═══════════════════════════════ -->
+<div class="slide" id="s24">
+  <span class="slide-tag blue">Stance 3 · Exercise B</span>
+  <h2>Complete the <em>Description</em></h2>
+  <p class="lead">Fill in the blank with the correct word. Use present continuous, prepositions, or demonstratives.</p>
+
+  <div class="word-bank">
+    <div class="wb-label">📚 Full Word Bank</div>
+    <div class="wb-words">
+      <span class="wb-word">is applying</span><span class="wb-word">are cleaning</span><span class="wb-word">is mixing</span>
+      <span class="wb-word">this</span><span class="wb-word">that</span><span class="wb-word">these</span><span class="wb-word">those</span>
+      <span class="wb-word">on</span><span class="wb-word">next to</span><span class="wb-word">behind</span><span class="wb-word">in front of</span>
+      <span class="wb-word">here</span><span class="wb-word">there</span><span class="wb-word">is</span><span class="wb-word">are</span>
+    </div>
+  </div>
+
+  <div id="fill-s24"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 25 — EXERCISE: MC PRESENT CONT ═══════════════════════════════ -->
+<div class="slide" id="s25">
+  <span class="slide-tag blue">Stance 3 · Exercise C</span>
+  <h2>Choose the <em>Correct Form</em></h2>
+
+  <div id="mc-s25"></div>
+</div>
+
+<!-- ═══════════════════════════════ SLIDE 26 — FINAL GAME ═══════════════════════════════ -->
+<div class="slide" id="s26">
+  <span class="slide-tag blue">Stance 3 · Final Activity</span>
+  <h2>🎮 Final <em>Game</em> — Teacher's Activity</h2>
+
+  <div class="fbox" style="margin-top:8px;">
+    <div class="flabel">📋 Activity Instructions (Teacher explains the dynamic)</div>
+    <div class="ftext" style="font-size:1rem;">The instructor will explain the rules of our closing game.</div>
+    <div class="fsub">This slide is your canvas — use the review cards below as reference during the activity!</div>
+  </div>
+
+  <div class="card-grid g2" style="margin-top:18px;">
+    <div class="card" style="border-color:rgba(244,208,63,.3);">
+      <h3>🔵 Stance 1 Recap</h3>
+      <p style="font-size:.9rem;color:var(--pale-blue);">She <span class="hy">applies</span> · He <span class="hy">cleans</span> · It <span class="hy">smells</span><br>
+      She <span class="hy">doesn't</span> use · <span class="hb">Does</span> she apply?</p>
+    </div>
+    <div class="card" style="border-color:rgba(250,215,160,.3);">
+      <h3>🟡 Stance 2 Recap</h3>
+      <p style="font-size:.9rem;color:var(--pale-blue);"><span class="hy">This/These</span> = near · <span class="hb">That/Those</span> = far<br>
+      in · on · under · behind · next to · between<br>
+      <span class="hy">here</span> (near) · <span class="hb">there</span> (far)</p>
+    </div>
+    <div class="card" style="border-color:rgba(93,173,226,.3);">
+      <h3>🌊 Stance 3 Recap</h3>
+      <p style="font-size:.9rem;color:var(--pale-blue);">She <span class="hb">is applying</span> · He <span class="hb">is cleaning</span><br>
+      <span class="hy">Is</span> she mixing? — Yes, she <span class="hy">is</span>.<br>
+      She <span class="hy">isn't</span> applying the mask.</p>
+    </div>
+    <div class="card" style="border-color:rgba(90,187,170,.3);">
+      <h3>🏆 Full Sentence</h3>
+      <p style="font-size:.9rem;color:var(--pale-blue);"><span class="hy">"This</span> esthetician <span class="hb">is applying</span> <span class="hg">that</span> cream <span class="ha">on</span> the client's face <span class="hy">here</span>."</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;">
+    <p style="font-size:1.2rem;color:var(--horizon);font-weight:700;">⭐ Total Score Collected</p>
+    <p style="font-size:3rem;font-weight:800;color:var(--white);" id="final-score">0</p>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:8px;">Great work today! The facial cabin is your best classroom. 💆‍♀️</p>
+  </div>
+</div>
+
+</div><!-- #slides -->
+<div id="score-badge">⭐ <span id="score-num">0</span> pts</div>
+
+
+<script>
+// ========================= FULLSCREEN =========================
+function toggleFS(){
+  const btn = document.getElementById('fs-btn');
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+    btn.textContent = '✕ Exit Fullscreen';
+  } else {
+    document.exitFullscreen();
+    btn.textContent = '⛶ Fullscreen';
+  }
+}
+document.addEventListener('fullscreenchange',()=>{
+  const btn = document.getElementById('fs-btn');
+  if(!document.fullscreenElement) btn.textContent = '⛶ Fullscreen';
+});
+
+// ========================= NAVIGATION =========================
+const TOTAL = 27;
+let cur = 0;
+let score = 0;
+
+const stanceLabels = {
+  0:'Intro', 1:'Stance 1',2:'Stance 1',3:'Stance 1',4:'Stance 1',5:'Stance 1',
+  6:'Stance 1 · Ex',7:'Stance 1 · Ex',8:'Stance 1 · Ex',9:'Stance 1 · Ex',
+  10:'Stance 2',11:'Stance 2',12:'Stance 2',13:'Stance 2',14:'Stance 2',
+  15:'Stance 2 · Ex',16:'Stance 2 · Ex',17:'Stance 2 · Ex',
+  18:'Stance 3',19:'Stance 3',20:'Stance 3',21:'Stance 3',22:'Stance 3',
+  23:'Stance 3 · Ex',24:'Stance 3 · Ex',25:'Stance 3 · Ex',26:'🎮 Game'
+};
+
+function go(dir){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur = Math.max(0, Math.min(TOTAL-1, cur+dir));
+  document.getElementById('s'+cur).classList.add('active');
+  document.getElementById('slide-counter').textContent = `${cur+1} / ${TOTAL}`;
+  document.getElementById('stance-label').textContent = stanceLabels[cur]||'';
+  document.getElementById('progress-bar').style.width = `${((cur+1)/TOTAL)*100}%`;
+  document.getElementById('final-score').textContent = score;
+  if(score>0) document.getElementById('score-badge').style.display='block';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+});
+function pts(n){score+=n;document.getElementById('score-num').textContent=score;document.getElementById('score-badge').style.display='block';document.getElementById('final-score').textContent=score;}
+
+// ========================= EXERCISE BUILDER HELPERS =========================
+function makeBtns(wrap, checkFn, hint_es, answer_text){
+  const row = document.createElement('div'); row.className='btn-row';
+  const bCheck = document.createElement('button'); bCheck.className='btn btn-check'; bCheck.textContent='✓ Check Answer';
+  const bHint = document.createElement('button'); bHint.className='btn btn-hint'; bHint.textContent='💡 Hint (ES)';
+  const bAns = document.createElement('button'); bAns.className='btn btn-ans'; bAns.textContent='👁 See Answer';
+  const fb = document.createElement('div'); fb.className='feedback';
+  const hintFb = document.createElement('div'); hintFb.className='feedback';
+  const ansFb = document.createElement('div'); ansFb.className='feedback';
+  let ansVisible=false;
+  bCheck.onclick = ()=>{checkFn(fb, bCheck); fb.classList.add('show');};
+  bHint.onclick = ()=>{hintFb.className='feedback hint show'; hintFb.textContent='💡 '+hint_es; hintFb.classList.add('show');};
+  bAns.onclick = ()=>{
+    ansVisible=!ansVisible;
+    if(ansVisible){ansFb.className='feedback ans show';ansFb.textContent='📖 Answer: '+answer_text;bAns.textContent='🙈 Hide Answer';}
+    else{ansFb.classList.remove('show');bAns.textContent='👁 See Answer';}
+  };
+  row.appendChild(bCheck); row.appendChild(bHint); row.appendChild(bAns);
+  wrap.appendChild(row); wrap.appendChild(fb); wrap.appendChild(hintFb); wrap.appendChild(ansFb);
+}
+
+function makeMCQuestion(container, qText, opts, correct, hint_es){
+  const wrap = document.createElement('div'); wrap.className='ex-wrap';
+  const p = document.createElement('p'); p.className='ex-q'; p.innerHTML=qText;
+  const optDiv = document.createElement('div'); optDiv.className='mc-opts';
+  let done=false;
+  opts.forEach(o=>{
+    const btn=document.createElement('button');btn.className='mc-opt';btn.textContent=o;
+    btn.onclick=()=>{
+      if(done)return;
+      optDiv.querySelectorAll('.mc-opt').forEach(b=>b.classList.remove('correct','wrong'));
+      if(o===correct){btn.classList.add('correct');pts(1);done=true;}
+      else btn.classList.add('wrong');
+    };
+    optDiv.appendChild(btn);
+  });
+  const hintFb=document.createElement('div');hintFb.className='feedback';
+  const ansFb=document.createElement('div');ansFb.className='feedback';
+  let av=false;
+  const row=document.createElement('div');row.className='btn-row';
+  const bh=document.createElement('button');bh.className='btn btn-hint';bh.textContent='💡 Hint (ES)';
+  bh.onclick=()=>{hintFb.className='feedback hint show';hintFb.textContent='💡 '+hint_es;};
+  const ba=document.createElement('button');ba.className='btn btn-ans';ba.textContent='👁 See Answer';
+  ba.onclick=()=>{av=!av;if(av){ansFb.className='feedback ans show';ansFb.textContent='📖 Answer: '+correct;ba.textContent='🙈 Hide';}else{ansFb.classList.remove('show');ba.textContent='👁 See Answer';}};
+  row.appendChild(bh);row.appendChild(ba);
+  wrap.appendChild(p); wrap.appendChild(optDiv); wrap.appendChild(row); wrap.appendChild(hintFb); wrap.appendChild(ansFb);
+  container.appendChild(wrap);
+}
+
+function makeWriteQuestion(container, qText, accepted, hint_es, answer_text){
+  const wrap=document.createElement('div');wrap.className='ex-wrap';
+  const p=document.createElement('p');p.className='ex-q';p.innerHTML=qText;
+  const input=document.createElement('textarea');input.className='w-input';input.rows=2;input.placeholder='Write your answer here...';
+  wrap.appendChild(p);wrap.appendChild(input);
+  const fb=document.createElement('div');fb.className='feedback';
+  makeBtns(wrap,
+    (fb)=>{
+      const val=input.value.toLowerCase().trim();
+      const hit = accepted.some(a=>val.includes(a.toLowerCase()));
+      if(hit){input.classList.add('ok');fb.className='feedback ok show';fb.textContent='✓ Excellent!';pts(2);}
+      else{input.classList.add('err');fb.className='feedback err show';fb.textContent='✗ Not quite. Check the word bank!';}
+    },
+    hint_es, answer_text
+  );
+  container.appendChild(wrap);
+}
+
+// ========================= SLIDE 6: MC HE/SHE/IT =========================
+function buildS6(){
+  const el=document.getElementById('mc-s6');
+  const qs=[
+    {q:'1. The esthetician ___ the serum on the client\'s face.',opts:['apply','applies','applying','is apply'],c:'applies',h:'She es 3ª persona → verbo+s'},
+    {q:'2. He ___ the tools every day after work.',opts:['wash','washes','washing','is washing'],c:'washes',h:'wash termina en -sh → agrega -es'},
+    {q:'3. The product ___ like lavender. It\'s beautiful!',opts:['smell','smells','smelling','is smell'],c:'smells',h:'It = 3ª persona singular → +s'},
+    {q:'4. She ___ the cabin before each client arrives.',opts:['prepare','prepares','preparing','is prepares'],c:'prepares',h:'Rutina → Present Simple, she → +s'},
+    {q:'5. He ___ natural products with his clients.',opts:['recommend','recommends','recommending','does recommend'],c:'recommends',h:'He → verbo+s siempre en present simple'},
+  ];
+  qs.forEach(q=>makeMCQuestion(el,q.q,q.opts,q.c,q.h));
+}
+
+// ========================= SLIDE 7: WRITE PRESENT SIMPLE =========================
+function buildS7(){
+  const el=document.getElementById('fill-s7');
+  const qs=[
+    {q:'1. <em>(she / apply / the mask)</em> Write the full sentence:',acc:['she applies the mask','applies the mask'],h:'She + apply → applies (consonant+y → ies)',a:'She applies the mask.'},
+    {q:'2. <em>(he / clean / the facial bed)</em> Write the full sentence:',acc:['he cleans the facial bed','cleans the facial bed'],h:'He + clean → cleans (+s)',a:'He cleans the facial bed.'},
+    {q:'3. <em>(it / smell / good)</em> Write the full sentence:',acc:['it smells good','smells good'],h:'It + smell → smells (+s)',a:'It smells good.'},
+    {q:'4. Make it NEGATIVE: "She applies cream." → ',acc:["she doesn't apply","doesn't apply"],h:'She → doesn\'t + base verb (NOT applies)',a:"She doesn't apply cream."},
+    {q:'5. Make it a QUESTION: "He prepares the cabin." → ',acc:['does he prepare','does he'],h:'Does + he + base verb (NOT prepares)',a:'Does he prepare the cabin?'},
+  ];
+  qs.forEach(q=>makeWriteQuestion(el,q.q,q.acc,q.h,q.a));
+}
+
+// ========================= SLIDE 8: SCENE QUESTIONS =========================
+function buildS8(){
+  const el=document.getElementById('scene-s8');
+  const qs=[
+    {q:'1. What does the esthetician do every day? (use: apply / serum)',acc:['applies','she applies'],h:'Rutina/hábito → Present Simple. She/he → verbo+s',a:'She applies serum on the client\'s face every day.'},
+    {q:'2. Where does the esthetician stand? (use: in front of / next to)',acc:['in front of','next to','beside'],h:'¿Dónde está parada? Mira la imagen.',a:'She stands in front of the client / next to the facial bed.'},
+    {q:'3. Does the student have a notebook? Write yes/no + short answer:',acc:['yes','yes she does','she does'],h:'Mira al estudiante de la derecha.',a:'Yes, she does.'},
+    {q:'4. What does the lamp do? (use: it / illuminate / light up)',acc:['it illuminates','it lights','it gives light'],h:'IT = la lámpara. ¿Qué hace? Una sola oración.',a:'It illuminates the facial bed / It gives light.'},
+  ];
+  qs.forEach(q=>makeWriteQuestion(el,q.q,q.acc,q.h,q.a));
+}
+
+// ========================= SLIDE 9: NEGATIVES & QUESTIONS =========================
+function buildS9(){
+  const el=document.getElementById('neg-s9');
+  const qs=[
+    {q:'1. Make NEGATIVE → "She cleans the mirror."',acc:["doesn't clean","does not clean"],h:'She → doesn\'t + verbo base (sin s)',a:"She doesn't clean the mirror."},
+    {q:'2. Make QUESTION → "He recommends the serum."',acc:['does he recommend','does he'],h:'Does + he + verbo base (sin s)',a:'Does he recommend the serum?'},
+    {q:'3. Answer NO → "Does she use gloves?" → ',acc:["no she doesn't","no, she doesn't"],h:'No + she + doesn\'t',a:"No, she doesn't."},
+    {q:'4. Make NEGATIVE → "It smells good."',acc:["doesn't smell","does not smell"],h:'It → doesn\'t + smell (verbo base)',a:"It doesn't smell good."},
+    {q:'5. Make QUESTION → "She prepares the cabin." → ',acc:['does she prepare'],h:'Does + she + prepare (no -s)',a:'Does she prepare the cabin?'},
+  ];
+  qs.forEach(q=>makeWriteQuestion(el,q.q,q.acc,q.h,q.a));
+}
+
+// ========================= SLIDE 15: MC PREPOSITIONS =========================
+function buildS15(){
+  const el=document.getElementById('mc-s15');
+  const qs=[
+    {q:'1. The cream is ___ the jar.',opts:['on','in','under','between'],c:'in',h:'Dentro de un recipiente cerrado → in'},
+    {q:'2. The towel is ___ the facial bed.',opts:['in','under','on','behind'],c:'on',h:'Encima de una superficie → on'},
+    {q:'3. The bag is ___ the chair.',opts:['on','in','under','next to'],c:'under',h:'Abajo de algo → under'},
+    {q:'4. She is standing ___ the mirror.',opts:['behind','between','in front of','under'],c:'in front of',h:'Enfrente de, cara a cara con → in front of'},
+    {q:'5. The tray is ___ the bed and the cabinet.',opts:['in front of','next to','between','behind'],c:'between',h:'En medio de dos objetos → between'},
+    {q:'6. The lamp is ___ the mirror.',opts:['in','behind','at','above'],c:'behind',h:'Detrás, no visible al frente → behind'},
+  ];
+  qs.forEach(q=>makeMCQuestion(el,q.q,q.opts,q.c,q.h));
+}
+
+// ========================= SLIDE 16: MATCH DEMONSTRATIVES =========================
+function buildS16(){
+  const pairs=[
+    {l:'I am holding THIS brush right now.',r:'Near · Singular'},
+    {l:'THOSE products are on the far shelf.',r:'Far · Plural'},
+    {l:'THESE gloves are in my hands.',r:'Near · Plural'},
+    {l:'THAT client is waiting over there.',r:'Far · Singular'},
+    {l:'Come HERE, please.',r:'Near location'},
+    {l:'The serum is THERE, on the back shelf.',r:'Far location'},
+  ];
+  const el=document.getElementById('match-s16');
+  const grid=document.createElement('div');grid.className='match-grid';
+  const lc=document.createElement('div');lc.className='match-col';
+  const rc=document.createElement('div');rc.className='match-col';
+  let sel=null;
+  const shuffled=[...pairs.map(p=>p.r)].sort(()=>Math.random()-.5);
+  pairs.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=p.l;d.dataset.id=i;d.dataset.type='left';lc.appendChild(d);
+  });
+  shuffled.forEach(r=>{
+    const d=document.createElement('div');d.className='match-item';d.textContent=r;d.dataset.val=r;d.dataset.type='right';rc.appendChild(d);
+  });
+  grid.appendChild(lc);grid.appendChild(rc);el.appendChild(grid);
+  el.querySelectorAll('.match-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      if(item.classList.contains('matched-ok')||item.classList.contains('matched-err'))return;
+      if(!sel){sel=item;item.classList.add('selected');return;}
+      if(sel.dataset.type===item.dataset.type){sel.classList.remove('selected');sel=item;item.classList.add('selected');return;}
+      const li=sel.dataset.type==='left'?sel:item;
+      const ri=sel.dataset.type==='right'?sel:item;
+      if(ri.dataset.val===pairs[parseInt(li.dataset.id)].r){
+        li.classList.replace('selected','matched-ok');ri.classList.replace('selected','matched-ok');pts(2);
+      }else{
+        li.classList.add('matched-err');ri.classList.add('matched-err');
+        setTimeout(()=>{li.classList.remove('matched-err','selected');ri.classList.remove('matched-err','selected');},800);
+      }
+      sel=null;
+    });
+  });
+}
+
+// ========================= SLIDE 17: WRITE LOCATIONS =========================
+function buildS17(){
+  const el=document.getElementById('write-s17');
+  const qs=[
+    {q:'1. 🧴 One cream bottle — close to you. "_____ cream is _____ the shelf." ',acc:['this cream is on'],h:'Cerca+singular → THIS. Encima de → ON',a:'This cream is on the shelf.'},
+    {q:'2. 🧤🧤🧤 Three pairs of gloves — far from you. "_____ gloves are _____ the tray."',acc:['those gloves are next to','those gloves are on'],h:'Lejos+plural → THOSE. Al lado → next to',a:'Those gloves are next to the tray.'},
+    {q:'3. 🪞 One mirror — far away. "_____ mirror is _____ the door."',acc:['that mirror is behind'],h:'Lejos+singular → THAT. Detrás de → behind',a:'That mirror is behind the door.'},
+    {q:'4. 🧽🧽 Two sponges — right next to you. "_____ sponges are _____ here."',acc:['these sponges are right here','these sponges are here'],h:'Cerca+plural → THESE. Aquí cerca → here',a:'These sponges are right here.'},
+  ];
+  qs.forEach(q=>makeWriteQuestion(el,q.q,q.acc,q.h,q.a));
+}
+
+// ========================= SLIDE 23: SCENE PC =========================
+function buildS23(){
+  const el=document.getElementById('scene-s23');
+  const scenes=[
+    {e:'👩‍⚕️🧴😌',q:'The esthetician is with a client. She has cream in her hand.',acc:['is applying','applying cream'],h:'Verbo apply → drop e → applying. She + is + applying',a:'She is applying cream on the client\'s face.'},
+    {e:'🧹🗑️✨',q:'The student is tidying up the cabin right now.',acc:['is cleaning','cleaning the cabin'],h:'clean → cleaning (+ing). Ahora mismo → continuous',a:'She is cleaning the cabin.'},
+    {e:'🧤⚗️🤲',q:'He is putting on gloves before mixing the mask.',acc:['is putting on','putting on gloves','is mixing'],h:'put → putting (doble consonante). mix → mixing',a:'He is putting on gloves and mixing the mask.'},
+    {e:'👩‍🏫📋👥',q:'The instructor is at the front, explaining something.',acc:['is teaching','teaching','is explaining'],h:'teach → teaching. Está pasando ahora → continuous',a:'The instructor is teaching the class right now.'},
+  ];
+  scenes.forEach(s=>{
+    const wrap=document.createElement('div');wrap.className='ex-wrap';
+    wrap.innerHTML=`<p style="font-size:2.2rem;margin-bottom:6px;">${s.e}</p><p class="ex-q">${s.q}</p>`;
+    const input=document.createElement('textarea');input.className='w-input';input.rows=2;input.placeholder='Write a present continuous sentence...';
+    wrap.appendChild(input);
+    const fb=document.createElement('div');fb.className='feedback';
+    makeBtns(wrap,
+      ()=>{const val=input.value.toLowerCase();const hit=s.acc.some(a=>val.includes(a));
+        if(hit){input.classList.add('ok');fb.className='feedback ok show';fb.textContent='✓ Great!';pts(2);}
+        else{input.classList.add('err');fb.className='feedback err show';fb.textContent='Check your verb-ing form!';} 
+        wrap.querySelector('.feedback').className= hit?'feedback ok show':'feedback err show';
+      },s.h,s.a);
+    el.appendChild(wrap);
+  });
+}
+
+// ========================= SLIDE 24: FILL PC + ALL =========================
+function buildS24(){
+  const el=document.getElementById('fill-s24');
+  const qs=[
+    {q:'1. She _____ the serum on the client\'s face right now.',acc:['is applying'],h:'Ahora mismo → present continuous: is + applying',a:'is applying'},
+    {q:'2. _____ cream is on the tray, right here next to me.',acc:['this'],h:'Cerca + singular → THIS',a:'This'},
+    {q:'3. They _____ the cabin after the last client.',acc:['are cleaning'],h:'They + are + cleaning (present continuous)',a:'are cleaning'},
+    {q:'4. The towel is _____ the facial bed.',acc:['on'],h:'Encima de una superficie → on',a:'on'},
+    {q:'5. _____ products over there are very expensive.',acc:['those'],h:'Lejos + plural → THOSE',a:'Those'},
+    {q:'6. Is she applying the mask? — Yes, she _____.',acc:['is'],h:'Respuesta corta: Yes, she + is',a:'is'},
+  ];
+  qs.forEach(q=>makeWriteQuestion(el,q.q,q.acc,q.h,q.a));
+}
+
+// ========================= SLIDE 25: MC PC =========================
+function buildS25(){
+  const el=document.getElementById('mc-s25');
+  const qs=[
+    {q:'1. Look! She ___ the toner right now.',opts:['apply','applies','is applying','applying'],c:'is applying',h:'¡Ahora mismo! → present continuous: is + verb-ing'},
+    {q:'2. They ___ the cabin at this moment.',opts:['clean','are clean','are cleaning','is cleaning'],c:'are cleaning',h:'They → are + verb-ing para present continuous'},
+    {q:'3. ___ he mixing the mask?',opts:['Does','Is','Are','Do'],c:'Is',h:'Pregunta en present continuous: Is/Are + sujeto + verb-ing'},
+    {q:'4. She is not applying the serum. (Correct negative?)',opts:["She don't applying","She isn't applying","She not is applying","She doesn't applying"],c:"She isn't applying",h:'Negativo: She + is not (isn\'t) + verb-ing',},
+    {q:'5. What is the esthetician ___?',opts:['do','does','doing','did'],c:'doing',h:'What is she DOING? → present continuous question',},
+  ];
+  qs.forEach(q=>makeMCQuestion(el,q.q,q.opts,q.c,q.h));
+}
+
+// ========================= INIT =========================
+window.addEventListener('load',()=>{
+  buildS6(); buildS7(); buildS8(); buildS9();
+  buildS15(); buildS16(); buildS17();
+  buildS23(); buildS24(); buildS25();
+  document.getElementById('progress-bar').style.width=`${(1/TOTAL)*100}%`;
+});
+</script>
+</body>
+</html>
