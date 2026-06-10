@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>English for Facialists — The Complete Protocol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080f09;
+  --g1:rgba(20,52,32,.58);
+  --g2:rgba(90,18,30,.38);
+  --g3:rgba(55,32,10,.45);
+  --bo:rgba(201,169,110,.32);
+  --bw:rgba(255,255,255,.1);
+  --cream:#f0e6d3;
+  --gold:#c9a96e;
+  --goldb:#e8c98a;
+  --green:#3d7a52;
+  --greenl:#5aad78;
+  --burg:#8b1a2a;
+  --burgl:#c0394a;
+  --txt:#e4d8c8;
+  --muted:#9a8878;
+  --ok:#4a9e60;
+  --bad:#c03a3c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);overflow:hidden;height:100vh;width:100vw}
+
+/* ORBS */
+.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;animation:ofloat linear infinite}
+.o1{width:520px;height:520px;background:#1e4a2a;top:-120px;left:-80px;animation-duration:28s}
+.o2{width:420px;height:420px;background:#6b1a2a;top:35%;right:-100px;animation-duration:34s;animation-delay:-12s}
+.o3{width:380px;height:380px;background:#4a2c0a;bottom:-80px;left:32%;animation-duration:22s;animation-delay:-6s}
+.o4{width:280px;height:280px;background:#143a22;bottom:18%;right:18%;animation-duration:40s;animation-delay:-18s}
+@keyframes ofloat{
+  0%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(28px,18px) scale(1.04)}
+  50%{transform:translate(12px,38px) scale(.97)}
+  75%{transform:translate(-22px,14px) scale(1.03)}
+  100%{transform:translate(0,0) scale(1)}
+}
+
+/* PROGRESS */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--green),var(--gold));z-index:200;transition:width .4s ease}
+
+/* SLIDES */
+#pres{position:relative;width:100vw;height:100vh;z-index:1}
+.slide{position:absolute;inset:0;display:none;align-items:flex-start;justify-content:center;padding:46px 24px 86px;overflow-y:auto;animation:sfade .45s ease forwards;scrollbar-width:thin;scrollbar-color:var(--bo) transparent}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:var(--bo);border-radius:2px}
+.slide.active{display:flex;flex-direction:column}
+@keyframes sfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.gc{background:var(--g1);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--bo);border-radius:20px;padding:36px 40px;width:100%;max-width:940px;box-shadow:0 8px 48px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);margin:auto}
+.gc-sm{background:rgba(255,255,255,.04);backdrop-filter:blur(12px);border:1px solid var(--bw);border-radius:14px;padding:18px}
+
+/* TYPOGRAPHY */
+h1.t1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:var(--goldb);letter-spacing:.03em;line-height:1.1;text-shadow:0 2px 24px rgba(201,169,110,.28)}
+h2.t2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:600;color:var(--gold);margin-bottom:6px}
+h3.t3{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:400;color:var(--txt);margin-bottom:14px}
+p,li{font-size:clamp(.87rem,1.5vw,1rem);line-height:1.72;color:var(--txt)}
+ul{list-style:none}
+ul li::before{content:'◆';color:var(--gold);font-size:.55em;margin-right:9px;vertical-align:middle}
+
+/* BADGES */
+.badge-s{display:inline-block;background:rgba(139,26,42,.35);border:1px solid var(--burgl);color:var(--burgl);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+.badge-f{display:inline-block;background:rgba(61,122,82,.3);border:1px solid var(--green);color:var(--greenl);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+.badge-e{display:inline-block;background:rgba(201,169,110,.18);border:1px solid var(--gold);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+
+/* LAYOUT */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.col3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+/* VOCAB TABLE */
+.vt{width:100%;border-collapse:collapse;margin-top:10px}
+.vt th{background:rgba(201,169,110,.12);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;padding:9px 13px;text-align:left;border-bottom:1px solid var(--bo)}
+.vt td{padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;vertical-align:top}
+.vt tr:hover td{background:rgba(255,255,255,.03)}
+.trm{color:var(--goldb);font-weight:700}
+.ex{color:var(--muted);font-style:italic;font-size:.82rem}
+
+/* PHRASE BOX */
+.pb{background:rgba(255,255,255,.04);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:10px 15px;margin:7px 0}
+.pb .ph{color:var(--goldb);font-weight:700;font-size:.95rem}
+.pb .mn{color:var(--muted);font-size:.82rem;margin-top:2px}
+
+/* STEP CARD */
+.sc{display:flex;gap:13px;align-items:flex-start;background:rgba(255,255,255,.04);border-radius:12px;padding:13px;border:1px solid rgba(255,255,255,.06);margin:7px 0}
+.sn{width:34px;height:34px;min-width:34px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--gold)}
+.sc h4{color:var(--gold);font-size:.92rem;font-weight:700;margin-bottom:3px}
+.sc p{font-size:.84rem;color:var(--muted)}
+.sp{color:var(--cream);font-style:italic;font-size:.85rem;border-left:2px solid var(--gold);padding-left:8px;margin-top:5px}
+
+/* FUNCTION CARD */
+.fc{background:rgba(255,255,255,.04);border-radius:12px;padding:15px;border-top:3px solid var(--gold);margin-bottom:10px}
+.fc h4{color:var(--gold);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px}
+.fc .fe{font-size:.86rem;padding:5px 9px;background:rgba(255,255,255,.04);border-radius:6px;margin:4px 0;color:var(--cream)}
+.fc .fs{font-size:.76rem;color:var(--muted);margin-top:5px}
+
+/* TENSE BOX */
+.tb{background:rgba(255,255,255,.04);border-radius:10px;padding:13px 17px;border-left:4px solid var(--green);margin-bottom:12px}
+.tb h4{color:var(--greenl);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.tb .fml{font-size:.79rem;color:var(--gold);background:rgba(201,169,110,.1);padding:3px 9px;border-radius:4px;display:inline-block;margin-bottom:7px}
+.tb .eg{font-size:.88rem;color:var(--cream);margin:3px 0}
+.tb .eg span{color:var(--goldb);font-weight:700}
+
+/* FICHA TABLE */
+.ft{width:100%;border-collapse:collapse;font-size:.8rem}
+.ft th{background:rgba(107,26,42,.38);color:var(--cream);padding:7px 11px;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;text-align:left;border:1px solid rgba(201,169,110,.18)}
+.ft td{padding:7px 11px;border:1px solid rgba(255,255,255,.07);vertical-align:top}
+.ft tr:nth-child(even) td{background:rgba(255,255,255,.025)}
+.ft .stpn{color:var(--gold);font-weight:700}
+
+/* TAG CLOUD */
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--txt);padding:4px 13px;border-radius:20px;font-size:.82rem;transition:all .2s;cursor:default}
+.tag:hover{border-color:var(--gold);color:var(--gold)}
+
+/* NAV */
+#nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(8,15,9,.75);backdrop-filter:blur(14px);border:1px solid var(--bo);border-radius:50px;padding:7px 18px}
+.nb{background:rgba(201,169,110,.13);border:1px solid var(--bo);color:var(--gold);cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s}
+.nb:hover{background:rgba(201,169,110,.28);transform:scale(1.1)}
+.nb:disabled{opacity:.28;cursor:default;transform:none}
+#ctr{color:var(--muted);font-size:.83rem;min-width:56px;text-align:center}
+#fsb{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:4px;transition:color .2s}
+#fsb:hover{color:var(--gold)}
+
+/* EXERCISE BUTTONS */
+.eb{background:rgba(201,169,110,.13);border:1px solid var(--gold);color:var(--gold);padding:7px 18px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;transition:all .2s;margin:4px}
+.eb:hover{background:rgba(201,169,110,.28);transform:translateY(-1px)}
+.ebr{border-color:var(--muted);color:var(--muted)}
+.ebr:hover{background:rgba(255,255,255,.07)}
+
+/* MATCHING */
+.mc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.mi{background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 15px;cursor:pointer;font-size:.88rem;transition:all .2s;user-select:none;line-height:1.4}
+.mi:hover{border-color:var(--gold);background:rgba(201,169,110,.1)}
+.mi.sel{border-color:var(--gold);background:rgba(201,169,110,.18);box-shadow:0 0 14px rgba(201,169,110,.28)}
+.mi.ok{border-color:var(--ok);background:rgba(74,158,96,.18);pointer-events:none;color:var(--greenl)}
+.mi.ng{border-color:var(--bad);background:rgba(192,58,60,.15);animation:shk .32s}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* QUIZ */
+.qq{margin-bottom:18px}
+.qq p{margin-bottom:9px;font-weight:700;color:var(--cream);font-size:.93rem}
+.qo{display:flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid rgba(255,255,255,.09);border-radius:8px;margin:5px 0;cursor:pointer;transition:all .2s;font-size:.88rem}
+.qo:hover{background:rgba(255,255,255,.05);border-color:var(--gold)}
+.qo input{accent-color:var(--gold)}
+.qo.qa{border-color:var(--ok);background:rgba(74,158,96,.14)}
+.qo.qw{border-color:var(--bad);background:rgba(192,58,60,.12)}
+
+/* CROSSWORD */
+.cg{display:inline-grid;gap:2px;background:rgba(255,255,255,.04);padding:4px;border-radius:8px}
+.cc{width:42px;height:42px;position:relative}
+.cc.blk{background:rgba(0,0,0,.65);border-radius:4px}
+.cc.wht{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:4px}
+.cc.cok{background:rgba(74,158,96,.28);border-color:var(--ok)}
+.cc.cng{background:rgba(192,58,60,.18);border-color:var(--bad)}
+.ccn{position:absolute;top:2px;left:3px;font-size:.52rem;color:var(--gold);font-weight:700;line-height:1;pointer-events:none}
+.cc input{width:100%;height:100%;background:transparent;border:none;outline:none;text-align:center;font-size:1rem;font-weight:700;color:var(--cream);text-transform:uppercase;padding-top:7px;cursor:pointer}
+
+/* WORD SEARCH */
+.wg{display:inline-grid;gap:1px;padding:5px;border-radius:8px;background:rgba(255,255,255,.03)}
+.wc{width:33px;height:33px;display:flex;align-items:center;justify-content:center;font-size:.87rem;font-weight:700;cursor:pointer;border-radius:4px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.04);color:var(--txt);user-select:none;transition:all .15s}
+.wc:hover{background:rgba(201,169,110,.14)}
+.wc.wsel{background:rgba(201,169,110,.3);color:var(--gold);border-color:var(--gold)}
+.wc.wfound{background:rgba(74,158,96,.24);color:var(--greenl);border-color:var(--ok)}
+.wl{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.ww{padding:4px 11px;border:1px solid rgba(255,255,255,.14);border-radius:20px;font-size:.79rem;font-weight:700;color:var(--muted);letter-spacing:.05em}
+.ww.wdone{border-color:var(--ok);color:var(--ok);text-decoration:line-through}
+
+/* FEEDBACK */
+.fb{text-align:center;padding:10px;border-radius:8px;margin-top:12px;font-weight:700;font-size:.92rem;display:none}
+.fb.on{display:block}
+.fb.yes{background:rgba(74,158,96,.18);color:#72d488;border:1px solid var(--ok)}
+.fb.no{background:rgba(192,58,60,.14);color:#e07070;border:1px solid var(--bad)}
+
+/* TITLE SLIDE */
+.tdiv{width:110px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto}
+.lvl{background:rgba(107,26,42,.35);border:1px solid var(--burgl);color:var(--cream);padding:5px 20px;border-radius:30px;font-size:.83rem;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div id="progress" style="width:4%"></div>
+<div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div></div>
+<div id="pres">
+
+<!-- ══════════════════ SLIDE 1 — TITLE ══════════════════ -->
+<div class="slide active" id="s1">
+<div class="gc" style="text-align:center;max-width:860px;margin:auto;padding:52px 40px">
+  <div class="lvl" style="margin-bottom:20px">B1 — B2 · English for Cosmetology</div>
+  <h1 class="t1" style="margin-bottom:8px">English for Facialists</h1>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,3.5vw,2.5rem);font-weight:300;color:var(--cream);margin-bottom:22px">The Complete Facial Protocol</h2>
+  <div class="tdiv" style="margin-bottom:22px"></div>
+  <p style="color:var(--muted);font-style:italic;margin-bottom:26px;font-size:clamp(.95rem,1.8vw,1.15rem)">From Client Arrival to Departure — Phrases, Vocabulary & Language Functions</p>
+  <div class="tags" style="justify-content:center">
+    <span class="tag">📋 Clinical Forms</span>
+    <span class="tag">💬 Phrasal Verbs</span>
+    <span class="tag">🌿 Technical Vocabulary</span>
+    <span class="tag">🗣️ Language Functions</span>
+    <span class="tag">⏱️ Tenses in Context</span>
+    <span class="tag">🧖 Full Protocol A → H</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 2 — ROADMAP ══════════════════ -->
+<div class="slide" id="s2">
+<div class="gc" style="max-width:1000px">
+  <h2 class="t2">Course Roadmap</h2>
+  <p style="color:var(--muted);margin-bottom:18px">Five language focus areas run through the complete facial service cycle:</p>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--goldb);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">🎯 Language Focus Areas</h3>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.88rem">1</div>
+        <div><strong style="color:var(--goldb);font-size:.92rem">Phrasal Verbs</strong><p style="font-size:.81rem;color:var(--muted)">check in, fill out, rinse off, wipe away, leave on, break out…</p></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.88rem">2</div>
+        <div><strong style="color:var(--goldb);font-size:.92rem">Present Tenses</strong><p style="font-size:.81rem;color:var(--muted)">Simple, continuous & perfect for instructions and narration</p></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.88rem">3</div>
+        <div><strong style="color:var(--goldb);font-size:.92rem">Language Functions</strong><p style="font-size:.81rem;color:var(--muted)">Polite requests, suggestions, comfort checks, reassurance, explaining</p></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.88rem">4</div>
+        <div><strong style="color:var(--goldb);font-size:.92rem">Technical Vocabulary</strong><p style="font-size:.81rem;color:var(--muted)">Skin types, products, ingredients, equipment, procedures</p></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;display:flex;gap:12px;align-items:flex-start">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(201,169,110,.14);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:.88rem">5</div>
+        <div><strong style="color:var(--goldb);font-size:.92rem">Past & Future Tenses</strong><p style="font-size:.81rem;color:var(--muted)">Describing completed steps and upcoming actions in protocol</p></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--goldb);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">🌿 Protocol Stages</h3>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">A</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Reception &amp; Welcome</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">B</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Clinical Record / Intake Form</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">C</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Room Preparation &amp; Positioning</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">D</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Skin Analysis</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">E</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">The 10-Step Facial Protocol</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">F</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Client Communication During Treatment</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;margin-bottom:8px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">G</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">End of Service &amp; Aftercare</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid var(--bw);border-radius:10px;padding:11px;display:flex;gap:12px;align-items:center">
+        <div style="width:30px;height:30px;min-width:30px;border-radius:50%;background:rgba(107,26,42,.3);border:1px solid var(--burgl);display:flex;align-items:center;justify-content:center;color:var(--burgl);font-weight:700;font-size:.85rem">H</div>
+        <div><strong style="color:var(--cream);font-size:.9rem">Client Departure &amp; Rebooking</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 3 — STAGE A RECEPTION ══════════════════ -->
+<div class="slide" id="s3">
+<div class="gc">
+  <div class="badge-s">Stage A — Reception &amp; Welcome</div>
+  <h2 class="t2">Greeting the Client</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Key Phrases at Reception</h3>
+      <div class="pb"><div class="ph">"Good morning! Welcome to [Spa Name]."</div><div class="mn">Warm, professional greeting on arrival</div></div>
+      <div class="pb"><div class="ph">"Do you have an appointment today?"</div><div class="mn">Checking bookings — present simple</div></div>
+      <div class="pb"><div class="ph">"May I ask for your name, please?"</div><div class="mn">Polite request — modal verb may</div></div>
+      <div class="pb"><div class="ph">"Please have a seat. I'll be right with you."</div><div class="mn">Inviting to wait — future with will</div></div>
+      <div class="pb"><div class="ph">"Can I offer you some water or herbal tea?"</div><div class="mn">Hospitality offer — can + infinitive</div></div>
+      <div class="pb"><div class="ph">"I'll show you to the treatment room."</div><div class="mn">Directing the client — future will</div></div>
+      <div class="pb"><div class="ph">"Please follow me — right this way."</div><div class="mn">Warm guiding phrase</div></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Reception Vocabulary</h3>
+      <table class="vt">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td class="trm">appointment</td><td>a scheduled time for a service</td></tr>
+        <tr><td class="trm">booking</td><td>reservation made in advance</td></tr>
+        <tr><td class="trm">consultation</td><td>professional discussion before treatment</td></tr>
+        <tr><td class="trm">client / guest</td><td>person receiving the service</td></tr>
+        <tr><td class="trm">intake form</td><td>document with client's personal data</td></tr>
+        <tr><td class="trm">consent / waiver</td><td>signed permission for treatment</td></tr>
+        <tr><td class="trm">waiting area</td><td>space where clients sit before treatment</td></tr>
+        <tr><td class="trm">robe / gown</td><td>garment worn during the session</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 4 — FOCUS 1 PHRASAL VERBS ══════════════════ -->
+<div class="slide" id="s4">
+<div class="gc">
+  <div class="badge-f">Language Focus 1 — Phrasal Verbs</div>
+  <h2 class="t2">Phrasal Verbs in the Spa</h2>
+  <p style="margin-bottom:14px;color:var(--muted)">Phrasal verbs are two-word verbs that are essential in professional spa communication. Study them in context!</p>
+  <table class="vt">
+    <tr><th>Phrasal Verb</th><th>Meaning</th><th>Example in Context</th></tr>
+    <tr><td class="trm">check in</td><td>to register on arrival</td><td class="ex">"Please check in at the front desk when you arrive."</td></tr>
+    <tr><td class="trm">fill out / fill in</td><td>to complete a form</td><td class="ex">"Could you fill out this health form, please?"</td></tr>
+    <tr><td class="trm">put on</td><td>to apply to the skin</td><td class="ex">"I'm going to put on a hydrating mask now."</td></tr>
+    <tr><td class="trm">rinse off</td><td>to wash away with water</td><td class="ex">"We'll rinse off the cleanser in a moment."</td></tr>
+    <tr><td class="trm">wipe away / wipe off</td><td>to remove with cloth or cotton</td><td class="ex">"I'll wipe away the exfoliant with a warm cloth."</td></tr>
+    <tr><td class="trm">pat dry</td><td>to dry gently by patting</td><td class="ex">"Please pat dry your face — never rub."</td></tr>
+    <tr><td class="trm">lie down / lie back</td><td>to recline on the treatment table</td><td class="ex">"Go ahead and lie back comfortably on the table."</td></tr>
+    <tr><td class="trm">leave on</td><td>to keep product on the skin</td><td class="ex">"We'll leave the mask on for 15 minutes."</td></tr>
+    <tr><td class="trm">take off</td><td>to remove product or covering</td><td class="ex">"I'm going to take off the mask now."</td></tr>
+    <tr><td class="trm">follow up (with)</td><td>to continue care after treatment</td><td class="ex">"I recommend you follow up with SPF every morning."</td></tr>
+    <tr><td class="trm">break out</td><td>to develop acne or pimples</td><td class="ex">"Do you break out often in the T-zone?"</td></tr>
+    <tr><td class="trm">build up</td><td>to accumulate on the skin</td><td class="ex">"Dead skin cells build up and must be exfoliated."</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 5 — EXERCISE 1: PHRASAL VERB MATCHING ══════════════════ -->
+<div class="slide" id="s5">
+<div class="gc">
+  <div class="badge-e">Exercise 1 — Matching</div>
+  <h2 class="t2">Match the Phrasal Verb</h2>
+  <p style="margin-bottom:14px">Click a <span style="color:var(--gold)">phrasal verb</span> on the left, then click the correct <span style="color:var(--greenl)">definition</span> on the right.</p>
+  <div class="mc" id="mc-e1"></div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center">
+    <button class="eb" onclick="chkMatch('e1')">✓ Check Answers</button>
+    <button class="eb ebr" onclick="rstMatch('e1')">↺ Reset</button>
+    <span id="sc-e1" style="color:var(--muted);font-size:.88rem;margin-left:8px"></span>
+  </div>
+  <div class="fb" id="fb-e1"></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 6 — STAGE B CLINICAL RECORD ══════════════════ -->
+<div class="slide" id="s6">
+<div class="gc">
+  <div class="badge-s">Stage B — Clinical Record</div>
+  <h2 class="t2">The Client Intake Form</h2>
+  <div class="col2">
+    <div>
+      <div class="gc-sm" style="margin-bottom:13px">
+        <h4 style="color:var(--gold);margin-bottom:10px;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase">Client Intake Form — Facial</h4>
+        <table style="width:100%;font-size:.82rem;border-collapse:collapse">
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0;width:46%">Full Name:</td><td style="color:var(--cream)">___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Date of Birth:</td><td>___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Contact / Email:</td><td>___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Skin Type:</td><td>☐ Dry ☐ Oily ☐ Combo ☐ Sensitive</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Main Concern:</td><td>___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Known Allergies:</td><td>☐ None ☐ Yes (specify)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Current Medications:</td><td>___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Recent Treatments:</td><td>___________________</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.07)"><td style="color:var(--muted);padding:5px 0">Pregnant / Breastfeeding?</td><td>☐ No ☐ Yes</td></tr>
+          <tr><td style="color:var(--muted);padding:5px 0">Client Signature:</td><td>___________________</td></tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Questions to Ask the Client</h3>
+      <div class="pb"><div class="ph">"Have you had a facial treatment before?"</div><div class="mn">Present perfect — experience question</div></div>
+      <div class="pb"><div class="ph">"Do you have any known allergies?"</div><div class="mn">Present simple — safety check</div></div>
+      <div class="pb"><div class="ph">"Are you currently using any prescription creams?"</div><div class="mn">Present continuous — current routine</div></div>
+      <div class="pb"><div class="ph">"What is your main skin concern today?"</div><div class="mn">Open question — personalisation</div></div>
+      <div class="pb"><div class="ph">"Have you had any recent cosmetic procedures?"</div><div class="mn">Present perfect — recent past</div></div>
+      <div class="pb"><div class="ph">"Are you pregnant or breastfeeding?"</div><div class="mn">Contraindication safety check</div></div>
+      <div class="pb"><div class="ph">"Is your skin feeling particularly sensitive today?"</div><div class="mn">Present continuous — current state</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 7 — FOCUS 2 PRESENT TENSES ══════════════════ -->
+<div class="slide" id="s7">
+<div class="gc">
+  <div class="badge-f">Language Focus 2 — Present Tenses</div>
+  <h2 class="t2">Present Tenses for Instructions &amp; Questions</h2>
+  <div class="col3" style="margin-top:14px">
+    <div class="tb" style="border-left-color:var(--green)">
+      <h4 style="color:var(--greenl)">Present Simple</h4>
+      <div class="fml">Subject + base verb</div>
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">Routines, habits, facts, instructions</p>
+      <div class="eg">✦ "I <span>cleanse</span> the face first."</div>
+      <div class="eg">✦ "Toner <span>balances</span> skin pH."</div>
+      <div class="eg">✦ "Do you <span>use</span> SPF daily?"</div>
+      <div class="eg">✦ "We always <span>patch test</span> first."</div>
+    </div>
+    <div class="tb" style="border-left-color:var(--burgl)">
+      <h4 style="color:var(--burgl)">Present Continuous</h4>
+      <div class="fml" style="color:var(--burgl);background:rgba(139,26,42,.15)">am/is/are + verb-ing</div>
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">Ongoing actions happening RIGHT NOW</p>
+      <div class="eg">✦ "I <span>am applying</span> serum now."</div>
+      <div class="eg">✦ "It <span>is working</span> into pores."</div>
+      <div class="eg">✦ "Are you <span>feeling</span> okay?"</div>
+      <div class="eg">✦ "I <span>am using</span> a glycolic toner."</div>
+    </div>
+    <div class="tb" style="border-left-color:var(--gold)">
+      <h4 style="color:var(--gold)">Present Perfect</h4>
+      <div class="fml">have/has + past participle</div>
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">Recent actions, experience questions</p>
+      <div class="eg">✦ "I <span>have cleansed</span> your skin."</div>
+      <div class="eg">✦ "<span>Have you ever had</span> a peel?"</div>
+      <div class="eg">✦ "I <span>have applied</span> the serum."</div>
+      <div class="eg">✦ "We <span>have completed</span> extraction."</div>
+    </div>
+  </div>
+  <div class="gc-sm" style="margin-top:16px;border-left:3px solid var(--greenl)">
+    <p style="font-size:.9rem"><span style="color:var(--greenl);font-weight:700">Pro Tip:</span> During a facial, facialists constantly switch between tenses — present simple to <em>explain steps</em>, present continuous to <em>narrate ongoing actions</em>, and present perfect to <em>summarise what's been done</em>.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 8 — EXERCISE 2: QUIZ ══════════════════ -->
+<div class="slide" id="s8">
+<div class="gc">
+  <div class="badge-e">Exercise 2 — Multiple Choice Quiz</div>
+  <h2 class="t2">Clinical Record Vocabulary</h2>
+  <div id="qz-e2">
+    <div class="qq">
+      <p>1. The document a new client fills in before their first treatment is called a(n):</p>
+      <label class="qo"><input type="radio" name="q21" value="a"> Patch test form</label>
+      <label class="qo"><input type="radio" name="q21" value="b"> Intake form / clinical record</label>
+      <label class="qo"><input type="radio" name="q21" value="c"> Treatment receipt</label>
+      <label class="qo"><input type="radio" name="q21" value="d"> Product brochure</label>
+    </div>
+    <div class="qq">
+      <p>2. "Are you currently using any prescription creams?" uses which tense?</p>
+      <label class="qo"><input type="radio" name="q22" value="a"> Present simple</label>
+      <label class="qo"><input type="radio" name="q22" value="b"> Present continuous</label>
+      <label class="qo"><input type="radio" name="q22" value="c"> Past simple</label>
+      <label class="qo"><input type="radio" name="q22" value="d"> Future simple</label>
+    </div>
+    <div class="qq">
+      <p>3. A <strong>contraindication</strong> is:</p>
+      <label class="qo"><input type="radio" name="q23" value="a"> A product recommendation</label>
+      <label class="qo"><input type="radio" name="q23" value="b"> A condition that prevents safe treatment</label>
+      <label class="qo"><input type="radio" name="q23" value="c"> A type of skin toner</label>
+      <label class="qo"><input type="radio" name="q23" value="d"> A follow-up appointment</label>
+    </div>
+    <div class="qq">
+      <p>4. Which question correctly asks about past experience?</p>
+      <label class="qo"><input type="radio" name="q24" value="a"> "Did you ever had a facial?"</label>
+      <label class="qo"><input type="radio" name="q24" value="b"> "Are you having a facial before?"</label>
+      <label class="qo"><input type="radio" name="q24" value="c"> "Have you ever had a facial?"</label>
+      <label class="qo"><input type="radio" name="q24" value="d"> "Do you had a facial before?"</label>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="eb" onclick="chkQuiz('e2',['b','b','b','c'])">✓ Check Answers</button>
+    <button class="eb ebr" onclick="rstQuiz('e2')">↺ Reset</button>
+  </div>
+  <div class="fb" id="fb-e2"></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 9 — FOCUS 3 LANGUAGE FUNCTIONS ══════════════════ -->
+<div class="slide" id="s9">
+<div class="gc">
+  <div class="badge-f">Language Focus 3 — Language Functions</div>
+  <h2 class="t2">Functions of Language in the Spa</h2>
+  <p style="margin-bottom:16px;color:var(--muted)">A language function is the <em>communicative purpose</em> behind what we say. The same grammar can serve many different functions.</p>
+  <div class="col2">
+    <div>
+      <div class="fc"><h4>Making Polite Requests</h4>
+        <div class="fe">"Could you please lie back for me?"</div>
+        <div class="fe">"Would you mind removing your glasses?"</div>
+        <div class="fe">"May I start with the cleansing step?"</div>
+        <div class="fs">Structure: Could / Would you mind / May I + verb</div>
+      </div>
+      <div class="fc" style="border-top-color:var(--greenl)"><h4 style="color:var(--greenl)">Giving Warm Instructions</h4>
+        <div class="fe">"Please keep your eyes closed during this step."</div>
+        <div class="fe">"Try to breathe deeply and relax."</div>
+        <div class="fe">"Let me know if you feel any discomfort."</div>
+        <div class="fs">Please + imperative / Try to / Let me know if…</div>
+      </div>
+      <div class="fc" style="border-top-color:var(--burgl)"><h4 style="color:var(--burgl)">Making Suggestions</h4>
+        <div class="fe">"I'd recommend trying our hydrating mask."</div>
+        <div class="fe">"You might want to avoid exfoliating at home."</div>
+        <div class="fe">"How about booking a follow-up in 4 weeks?"</div>
+        <div class="fs">I'd recommend / You might want to / How about + -ing</div>
+      </div>
+    </div>
+    <div>
+      <div class="fc"><h4>Checking Comfort</h4>
+        <div class="fe">"Are you comfortable with the pressure?"</div>
+        <div class="fe">"Is the steam temperature okay for you?"</div>
+        <div class="fe">"How does that feel?"</div>
+        <div class="fs">Are you / Is it + adjective + for you?</div>
+      </div>
+      <div class="fc" style="border-top-color:var(--greenl)"><h4 style="color:var(--greenl)">Explaining &amp; Informing</h4>
+        <div class="fe">"This serum contains hyaluronic acid, which draws moisture to the skin."</div>
+        <div class="fe">"We use steam to open the pores before extraction."</div>
+        <div class="fs">This [product] contains / We use [tool] to + infinitive</div>
+      </div>
+      <div class="fc" style="border-top-color:var(--gold)"><h4>Reassuring the Client</h4>
+        <div class="fe">"That's completely normal — your skin may feel a little warm."</div>
+        <div class="fe">"Don't worry, the tingling means it's working."</div>
+        <div class="fe">"You're doing great — just a few more minutes."</div>
+        <div class="fs">That's normal / Don't worry + explanation</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 10 — STAGE C ROOM & POSITIONING ══════════════════ -->
+<div class="slide" id="s10">
+<div class="gc">
+  <div class="badge-s">Stage C — Room Preparation &amp; Positioning</div>
+  <h2 class="t2">Preparing the Room &amp; the Client</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Room Preparation Steps</h3>
+      <div class="sc"><div class="sn">1</div><div><h4>Set up the treatment table</h4><p>Cover with a clean sheet, arrange tools in order of use.</p><div class="sp">"The treatment table is all set up for you."</div></div></div>
+      <div class="sc"><div class="sn">2</div><div><h4>Sanitise your hands</h4><p>Sanitise before and after every client contact.</p><div class="sp">"I'm just sanitising my hands before we begin."</div></div></div>
+      <div class="sc"><div class="sn">3</div><div><h4>Lay out products in order</h4><p>Arrange products on the trolley in protocol sequence.</p><div class="sp">"I've already prepared all the products we'll be using."</div></div></div>
+      <div class="sc"><div class="sn">4</div><div><h4>Adjust lighting &amp; temperature</h4><p>Create a calm, comfortable environment.</p><div class="sp">"I'll dim the lights a little to help you relax."</div></div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:14px;margin-bottom:8px">Equipment Vocabulary</h3>
+      <div class="tags">
+        <span class="tag">treatment table</span><span class="tag">headband</span><span class="tag">drape / sheet</span>
+        <span class="tag">trolley / cart</span><span class="tag">magnifying lamp</span><span class="tag">steamer</span>
+        <span class="tag">gauze</span><span class="tag">spatula</span><span class="tag">cotton pads</span><span class="tag">spray bottle</span>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Positioning the Client</h3>
+      <div class="pb"><div class="ph">"Go ahead and change into the robe — I'll step outside."</div><div class="mn">Giving privacy before the session</div></div>
+      <div class="pb"><div class="ph">"When you're ready, please lie back on the table, face up."</div><div class="mn">Positioning instruction — imperative + adverb</div></div>
+      <div class="pb"><div class="ph">"I'm going to place this headband to keep your hair back."</div><div class="mn">Narrating an upcoming action — going to</div></div>
+      <div class="pb"><div class="ph">"Is the pillow comfortable? Would you like another one?"</div><div class="mn">Comfort check + offer</div></div>
+      <div class="pb"><div class="ph">"Let me tuck this drape around your shoulders — it'll keep you warm."</div><div class="mn">Caring instruction + reassurance</div></div>
+      <div class="pb"><div class="ph">"Please let me know if you need to move at any point."</div><div class="mn">Permission + ongoing comfort check</div></div>
+      <div class="pb"><div class="ph">"Feel free to close your eyes and just relax."</div><div class="mn">Warm invitation — feel free to…</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 11 — EXERCISE 3: CROSSWORD ══════════════════ -->
+<div class="slide" id="s11">
+<div class="gc" style="max-width:900px;padding:28px 36px">
+  <div class="badge-e">Exercise 3 — Crossword</div>
+  <h2 class="t2" style="margin-bottom:14px">Skincare Terms Crossword</h2>
+  <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+    <div>
+      <div class="cg" id="cwgrid" style="grid-template-columns:repeat(7,42px);grid-template-rows:repeat(7,42px)"></div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="eb" onclick="chkCW()">✓ Check</button>
+        <button class="eb ebr" onclick="rstCW()">↺ Reset</button>
+      </div>
+      <div class="fb" id="fb-cw"></div>
+    </div>
+    <div style="flex:1;min-width:220px">
+      <div class="gc-sm" style="margin-bottom:12px">
+        <h4 style="color:var(--gold);font-size:.83rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px">→ Across</h4>
+        <p style="font-size:.84rem;margin-bottom:6px"><span style="color:var(--gold)">1.</span> Concentrated active-ingredient product applied after toning (5)</p>
+        <p style="font-size:.84rem;margin-bottom:6px"><span style="color:var(--gold)">4.</span> To ___ the skin: apply liquid to balance pH after cleansing (4)</p>
+        <p style="font-size:.84rem;margin-bottom:6px"><span style="color:var(--gold)">5.</span> Hot vapour used to open pores before extractions (5)</p>
+        <p style="font-size:.84rem"><span style="color:var(--gold)">6.</span> Tiny opening in the skin's surface that can become clogged (4)</p>
+      </div>
+      <div class="gc-sm">
+        <h4 style="color:var(--greenl);font-size:.83rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px">↓ Down</h4>
+        <p style="font-size:.84rem;margin-bottom:6px"><span style="color:var(--greenl)">2.</span> To wash off a product with water (5)</p>
+        <p style="font-size:.84rem"><span style="color:var(--greenl)">3.</span> Treatment spread over the face and left for 10–20 minutes (4)</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 12 — STAGE D SKIN ANALYSIS ══════════════════ -->
+<div class="slide" id="s12">
+<div class="gc">
+  <div class="badge-s">Stage D — Skin Analysis</div>
+  <h2 class="t2">Skin Analysis &amp; Assessment</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Skin Types in English</h3>
+      <table class="vt">
+        <tr><th>Skin Type</th><th>Description</th></tr>
+        <tr><td class="trm">Normal</td><td>balanced, small pores, not oily or dry</td></tr>
+        <tr><td class="trm">Dry</td><td>lacks oil, feels tight, may flake or peel</td></tr>
+        <tr><td class="trm">Oily</td><td>excess sebum, enlarged pores, shiny</td></tr>
+        <tr><td class="trm">Combination</td><td>oily T-zone, normal or dry on cheeks</td></tr>
+        <tr><td class="trm">Sensitive</td><td>easily irritated, prone to redness</td></tr>
+        <tr><td class="trm">Dehydrated</td><td>lacks water (any skin type can be dehydrated)</td></tr>
+        <tr><td class="trm">Mature / ageing</td><td>fine lines, loss of elasticity, dullness</td></tr>
+        <tr><td class="trm">Acne-prone</td><td>frequent breakouts, inflammation, comedones</td></tr>
+      </table>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:13px;margin-bottom:8px">Skin Conditions Vocabulary</h3>
+      <div class="tags">
+        <span class="tag">blackheads</span><span class="tag">whiteheads</span><span class="tag">comedones</span>
+        <span class="tag">hyperpigmentation</span><span class="tag">rosacea</span><span class="tag">dehydration lines</span>
+        <span class="tag">enlarged pores</span><span class="tag">fine lines</span><span class="tag">uneven skin tone</span>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Analysis Phrases</h3>
+      <div class="pb"><div class="ph">"I'm going to analyse your skin under the magnifying lamp."</div><div class="mn">Explaining the step — going to</div></div>
+      <div class="pb"><div class="ph">"Your skin appears to be combination — oily in the T-zone."</div><div class="mn">Describing skin type — present simple</div></div>
+      <div class="pb"><div class="ph">"I can see some blocked pores around the nose area."</div><div class="mn">Observation — modal can</div></div>
+      <div class="pb"><div class="ph">"There's a little redness on the cheeks — are you prone to sensitivity?"</div><div class="mn">Observation + follow-up question</div></div>
+      <div class="pb"><div class="ph">"Your skin is looking slightly dehydrated today."</div><div class="mn">Current state — present continuous</div></div>
+      <div class="pb"><div class="ph">"Based on the analysis, I'd recommend a hydrating protocol."</div><div class="mn">Recommendation after assessment</div></div>
+      <div class="pb"><div class="ph">"I'm going to skip the extraction step — your skin is too reactive today."</div><div class="mn">Adapting the protocol safely</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 13 — FOCUS 4 TECHNICAL VOCABULARY ══════════════════ -->
+<div class="slide" id="s13">
+<div class="gc">
+  <div class="badge-f">Language Focus 4 — Technical Vocabulary</div>
+  <h2 class="t2">Essential Cosmetology Vocabulary</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--goldb);margin-bottom:9px">Products &amp; Ingredients</h3>
+      <table class="vt">
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td class="trm">cleanser</td><td>removes makeup, oil and impurities</td></tr>
+        <tr><td class="trm">toner</td><td>balances skin's pH after cleansing</td></tr>
+        <tr><td class="trm">exfoliant</td><td>removes dead skin cells from the surface</td></tr>
+        <tr><td class="trm">serum</td><td>concentrated active-ingredient treatment</td></tr>
+        <tr><td class="trm">moisturiser</td><td>hydrates and seals moisture into the skin</td></tr>
+        <tr><td class="trm">SPF / sunscreen</td><td>protects against UV radiation</td></tr>
+        <tr><td class="trm">hyaluronic acid</td><td>humectant that draws water to the skin</td></tr>
+        <tr><td class="trm">retinol</td><td>vitamin A — stimulates cell turnover</td></tr>
+        <tr><td class="trm">AHA / BHA</td><td>chemical exfoliating acids</td></tr>
+        <tr><td class="trm">collagen</td><td>structural protein giving skin firmness</td></tr>
+        <tr><td class="trm">niacinamide</td><td>vitamin B3 — brightens and minimises pores</td></tr>
+        <tr><td class="trm">antioxidant</td><td>protects skin from environmental damage</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--goldb);margin-bottom:9px">Procedures &amp; Techniques</h3>
+      <table class="vt">
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td class="trm">double cleansing</td><td>cleansing twice — oil-based then water-based</td></tr>
+        <tr><td class="trm">extraction</td><td>manual removal of comedones from pores</td></tr>
+        <tr><td class="trm">steaming</td><td>applying hot vapour to open pores</td></tr>
+        <tr><td class="trm">effleurage</td><td>gentle gliding massage strokes</td></tr>
+        <tr><td class="trm">petrissage</td><td>kneading massage technique</td></tr>
+        <tr><td class="trm">lymphatic drainage</td><td>stimulating lymph flow to reduce puffiness</td></tr>
+        <tr><td class="trm">patch test</td><td>sensitivity test done 24h before treatment</td></tr>
+        <tr><td class="trm">desincrustation</td><td>softening hardened sebum in pores</td></tr>
+        <tr><td class="trm">galvanic current</td><td>electrical current used for ionisation</td></tr>
+        <tr><td class="trm">high frequency</td><td>electrical treatment for acne and antisepsis</td></tr>
+        <tr><td class="trm">microcurrent</td><td>low-level current that tones facial muscles</td></tr>
+        <tr><td class="trm">décolletage</td><td>the neck and upper chest area</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 14 — EXERCISE 4: WORD SEARCH ══════════════════ -->
+<div class="slide" id="s14">
+<div class="gc" style="max-width:980px;padding:26px 32px">
+  <div class="badge-e">Exercise 4 — Word Search</div>
+  <h2 class="t2" style="margin-bottom:8px">Find the Technical Terms</h2>
+  <p style="font-size:.86rem;margin-bottom:13px;color:var(--muted)">Click the <strong style="color:var(--gold)">first</strong> letter of a word, then click the <strong style="color:var(--gold)">last</strong> letter. Words go horizontally →, vertically ↓, or diagonally ↘.</p>
+  <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+    <div>
+      <div class="wg" id="wsgrid" style="grid-template-columns:repeat(12,33px);grid-template-rows:repeat(10,33px)"></div>
+      <div style="margin-top:9px"><button class="eb ebr" onclick="rstWS()">↺ Reset</button></div>
+    </div>
+    <div style="flex:1;min-width:160px">
+      <p style="font-size:.79rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px">Find these words:</p>
+      <div class="wl" id="wslist"></div>
+      <div style="margin-top:12px;padding:10px;background:rgba(255,255,255,.04);border-radius:8px">
+        <p style="font-size:.82rem;color:var(--muted)" id="wsstat">Found: <span style="color:var(--gold)">0</span> / 10</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 15 — STAGE E PROTOCOL 1-5 ══════════════════ -->
+<div class="slide" id="s15">
+<div class="gc">
+  <div class="badge-s">Stage E — The 10-Step Facial Protocol (Part 1)</div>
+  <h2 class="t2">Steps 1–5: Cleanse to Extract</h2>
+  <div class="sc"><div class="sn">1</div><div><h4>DOUBLE CLEANSE — Remove makeup &amp; impurities</h4><p>First with oil-based cleanser, then with a foaming water-based one.</p><div class="sp">"I'm going to start by removing your makeup with a micellar water first."</div><div class="sp">"Now I'm applying a foaming cleanser to deep-clean the pores."</div></div></div>
+  <div class="sc"><div class="sn">2</div><div><h4>TONE — Balance the skin's pH</h4><p>Apply toner to restore the acid mantle after cleansing.</p><div class="sp">"I'm toning your skin now to rebalance its pH. You might feel a slight cooling sensation."</div></div></div>
+  <div class="sc"><div class="sn">3</div><div><h4>EXFOLIATE — Remove dead skin cells</h4><p>Chemical or physical exfoliant to brighten and refine texture.</p><div class="sp">"I'm applying a mild AHA exfoliant. It may tingle slightly — that's completely normal."</div><div class="sp">"I'll leave it on for two minutes, then rinse it off."</div></div></div>
+  <div class="sc"><div class="sn">4</div><div><h4>STEAM — Open pores with vapour</h4><p>Steamer positioned 30–40 cm from the face for 5–10 minutes.</p><div class="sp">"I'm bringing in the steamer now. It will help open your pores for the extraction step."</div><div class="sp">"Is the steam comfortable? Let me know if it's too warm."</div></div></div>
+  <div class="sc"><div class="sn">5</div><div><h4>EXTRACT — Remove comedones</h4><p>Carefully extract blackheads and whiteheads when indicated.</p><div class="sp">"I'm doing a few gentle extractions around the nose. There may be slight pressure — breathe through it."</div><div class="sp">"I've finished the extractions. Your pores are looking much clearer now."</div></div></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 16 — STAGE E PROTOCOL 6-10 ══════════════════ -->
+<div class="slide" id="s16">
+<div class="gc">
+  <div class="badge-s">Stage E — The 10-Step Facial Protocol (Part 2)</div>
+  <h2 class="t2">Steps 6–10: Mask to Protect</h2>
+  <div class="sc"><div class="sn">6</div><div><h4>MASK — Targeted skin treatment</h4><p>Apply a mask suited to the client's skin type for 10–20 minutes.</p><div class="sp">"I've chosen a hydrating mask for your skin today. I'll leave it on for 15 minutes — just relax."</div></div></div>
+  <div class="sc"><div class="sn">7</div><div><h4>SERUM — Active ingredient delivery</h4><p>Apply targeted serum after removing the mask. Press gently to absorb.</p><div class="sp">"I've removed the mask and I'm now applying a vitamin C serum to brighten your complexion."</div><div class="sp">"I'm pressing it gently so it absorbs deeply into the skin."</div></div></div>
+  <div class="sc"><div class="sn">8</div><div><h4>FACIAL MASSAGE — Stimulate &amp; relax</h4><p>Effleurage, petrissage and lymphatic drainage for 10–15 minutes.</p><div class="sp">"I'm moving on to the facial massage now. Let me know if the pressure is too much or too little."</div><div class="sp">"I'm using effleurage strokes to stimulate circulation and promote lymphatic drainage."</div></div></div>
+  <div class="sc"><div class="sn">9</div><div><h4>MOISTURISE — Seal in hydration</h4><p>Apply moisturiser suited to the skin type to lock in all previous layers.</p><div class="sp">"I'm applying a rich moisturiser to seal in all the nutrients we've introduced to your skin today."</div></div></div>
+  <div class="sc"><div class="sn">10</div><div><h4>SPF — Daily sun protection</h4><p>Always finish a daytime facial with SPF 30 or higher.</p><div class="sp">"I'm finishing with SPF 30 to protect everything we've worked on. Your skin has been exfoliated — it's extra sensitive to UV right now."</div></div></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 17 — FOCUS 5 PAST & FUTURE TENSES ══════════════════ -->
+<div class="slide" id="s17">
+<div class="gc">
+  <div class="badge-f">Language Focus 5 — Past &amp; Future Tenses</div>
+  <h2 class="t2">Describing the Protocol: Then &amp; Next</h2>
+  <p style="margin-bottom:14px;color:var(--muted)">Facialists use past tenses to describe what has just been done, and future tenses to explain what comes next.</p>
+  <div class="col2">
+    <div>
+      <div class="tb" style="margin-bottom:12px">
+        <h4>Past Simple — Completed Steps</h4>
+        <div class="fml">Subject + past verb</div>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:7px">Clearly finished actions during the session</p>
+        <div class="eg">✦ "I <span>applied</span> the toner a moment ago."</div>
+        <div class="eg">✦ "We <span>completed</span> the extraction step."</div>
+        <div class="eg">✦ "I <span>used</span> a glycolic acid exfoliant."</div>
+      </div>
+      <div class="tb" style="border-left-color:var(--gold)">
+        <h4 style="color:var(--gold)">Present Perfect — Just Finished</h4>
+        <div class="fml" style="color:var(--gold);background:rgba(201,169,110,.12)">have/has + past participle</div>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:7px">Recent action, result still relevant NOW</p>
+        <div class="eg">✦ "I <span>have just removed</span> the mask."</div>
+        <div class="eg">✦ "<span>I've applied</span> the serum."</div>
+        <div class="eg">✦ "We <span>have finished</span> the massage."</div>
+      </div>
+    </div>
+    <div>
+      <div class="tb" style="margin-bottom:12px;border-left-color:var(--burgl)">
+        <h4 style="color:var(--burgl)">Going to — Planned Next Steps</h4>
+        <div class="fml" style="color:var(--burgl);background:rgba(139,26,42,.15)">am/is/are going to + infinitive</div>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:7px">Announcing the next step (planned)</p>
+        <div class="eg">✦ "I'm <span>going to apply</span> the serum now."</div>
+        <div class="eg">✦ "We're <span>going to move on</span> to massage."</div>
+        <div class="eg">✦ "I'm <span>going to rinse off</span> the exfoliant."</div>
+      </div>
+      <div class="tb" style="border-left-color:var(--greenl)">
+        <h4 style="color:var(--greenl)">Will — Spontaneous / Reassurance</h4>
+        <div class="fml" style="color:var(--greenl);background:rgba(58,122,82,.15)">will + base verb</div>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:7px">Promises, predictions, reassurance</p>
+        <div class="eg">✦ "I <span>will be</span> right back."</div>
+        <div class="eg">✦ "This <span>will feel</span> a little cool."</div>
+        <div class="eg">✦ "That <span>will fade</span> within an hour."</div>
+      </div>
+    </div>
+  </div>
+  <div class="gc-sm" style="margin-top:14px;text-align:center;border:1px solid var(--gold)">
+    <p style="font-size:.88rem"><strong style="color:var(--gold)">🕐 Protocol Timeline:</strong> <em style="color:var(--burgl)">going to</em> → <em style="color:var(--muted)">present continuous</em> → <em style="color:var(--gold)">present perfect (just)</em> → <em style="color:var(--greenl)">past simple</em></p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 18 — STAGE F CLIENT COMMUNICATION ══════════════════ -->
+<div class="slide" id="s18">
+<div class="gc">
+  <div class="badge-s">Stage F — During the Treatment</div>
+  <h2 class="t2">Communication During the Facial</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Narrating Your Actions</h3>
+      <div class="pb"><div class="ph">"I'm now moving on to the massage step."</div><div class="mn">Present continuous — narrating the action</div></div>
+      <div class="pb"><div class="ph">"I've just finished applying the serum."</div><div class="mn">Present perfect — just completed</div></div>
+      <div class="pb"><div class="ph">"I'm going to use a little more pressure here — is that alright?"</div><div class="mn">Future intention + asking for consent</div></div>
+      <div class="pb"><div class="ph">"I used a hyaluronic acid mask because your skin looked dehydrated."</div><div class="mn">Past simple + professional explanation</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-top:13px;margin-bottom:10px">Comfort Checks</h3>
+      <div class="pb"><div class="ph">"How are you feeling so far?"</div></div>
+      <div class="pb"><div class="ph">"Is the massage pressure comfortable for you?"</div></div>
+      <div class="pb"><div class="ph">"Do you feel any stinging or burning sensation?"</div></div>
+      <div class="pb"><div class="ph">"Let me know if you'd like me to adjust anything."</div></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Reassurance Phrases</h3>
+      <div class="pb"><div class="ph">"The tingling is totally normal — it means the AHA is working."</div></div>
+      <div class="pb"><div class="ph">"A little redness after extractions is expected. It'll calm down within the hour."</div></div>
+      <div class="pb"><div class="ph">"Don't worry — that means your circulation is improving beautifully."</div></div>
+      <div class="pb"><div class="ph">"You're doing brilliantly — we're almost done with this step."</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-top:13px;margin-bottom:10px">Explaining Products</h3>
+      <div class="pb"><div class="ph">"This serum contains vitamin C, which helps brighten dark spots."</div></div>
+      <div class="pb"><div class="ph">"I'm using an enzyme mask — it dissolves dead skin cells very gently."</div></div>
+      <div class="pb"><div class="ph">"This oil is lightweight, so it won't clog your pores."</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 19 — EXERCISE 5: PRODUCT MATCHING ══════════════════ -->
+<div class="slide" id="s19">
+<div class="gc">
+  <div class="badge-e">Exercise 5 — Column Matching</div>
+  <h2 class="t2">Match Product to Purpose</h2>
+  <p style="margin-bottom:14px;color:var(--muted)">Click a product on the left, then click its correct function on the right.</p>
+  <div class="mc" id="mc-e5"></div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center">
+    <button class="eb" onclick="chkMatch('e5')">✓ Check Answers</button>
+    <button class="eb ebr" onclick="rstMatch('e5')">↺ Reset</button>
+    <span id="sc-e5" style="color:var(--muted);font-size:.88rem;margin-left:8px"></span>
+  </div>
+  <div class="fb" id="fb-e5"></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 20 — WARM INSTRUCTIONS DEEP DIVE ══════════════════ -->
+<div class="slide" id="s20">
+<div class="gc">
+  <div class="badge-f">Language Focus — Deep Dive</div>
+  <h2 class="t2">Giving Instructions with Warmth</h2>
+  <p style="margin-bottom:16px;color:var(--muted)">In a spa, instructions must feel caring — not commanding. Compare these examples:</p>
+  <div class="col2" style="margin-bottom:18px">
+    <div class="gc-sm" style="border-top:3px solid var(--bad)">
+      <h4 style="color:#e07070;font-size:.83rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">❌ Too Direct / Commanding</h4>
+      <p style="font-size:.89rem;margin:7px 0;color:var(--muted)">"Lie down."</p>
+      <p style="font-size:.89rem;margin:7px 0;color:var(--muted)">"Don't move your head."</p>
+      <p style="font-size:.89rem;margin:7px 0;color:var(--muted)">"Close your eyes."</p>
+      <p style="font-size:.89rem;margin:7px 0;color:var(--muted)">"Stop talking."</p>
+      <p style="font-size:.89rem;margin:7px 0;color:var(--muted)">"Take off your jewellery."</p>
+    </div>
+    <div class="gc-sm" style="border-top:3px solid var(--ok)">
+      <h4 style="color:#72d488;font-size:.83rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">✓ Warm &amp; Professional</h4>
+      <p style="font-size:.89rem;margin:7px 0">"Go ahead and lie back comfortably."</p>
+      <p style="font-size:.89rem;margin:7px 0">"Please try to keep your head still — just like that."</p>
+      <p style="font-size:.89rem;margin:7px 0">"Feel free to close your eyes and relax."</p>
+      <p style="font-size:.89rem;margin:7px 0">"I'll be working quietly for the next few minutes."</p>
+      <p style="font-size:.89rem;margin:7px 0">"Would you mind removing your earrings?"</p>
+    </div>
+  </div>
+  <h3 style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:12px">Softening Strategies</h3>
+  <div class="col3">
+    <div class="fc"><h4>Add "please" + reason</h4>
+      <div class="fe">"Please keep your eyes closed — I'm about to apply steam."</div>
+      <div class="fs">Command + reason = considerate</div>
+    </div>
+    <div class="fc" style="border-top-color:var(--greenl)"><h4 style="color:var(--greenl)">Use "go ahead and"</h4>
+      <div class="fe">"Go ahead and remove your glasses."</div>
+      <div class="fe">"Go ahead and lie back."</div>
+      <div class="fs">Invites action without commanding</div>
+    </div>
+    <div class="fc" style="border-top-color:var(--burgl)"><h4 style="color:var(--burgl)">Use "feel free to"</h4>
+      <div class="fe">"Feel free to let me know if you need a break."</div>
+      <div class="fe">"Feel free to ask questions anytime."</div>
+      <div class="fs">Gives agency to the client</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 21 — EXERCISE 6: FUNCTIONS QUIZ ══════════════════ -->
+<div class="slide" id="s21">
+<div class="gc">
+  <div class="badge-e">Exercise 6 — Identify the Function</div>
+  <h2 class="t2">What is the Language Function?</h2>
+  <div id="qz-e6">
+    <div class="qq">
+      <p>1. "I would recommend using SPF every morning after this treatment." → This is:</p>
+      <label class="qo"><input type="radio" name="q61" value="a"> A polite request</label>
+      <label class="qo"><input type="radio" name="q61" value="b"> Making a suggestion / recommendation</label>
+      <label class="qo"><input type="radio" name="q61" value="c"> A comfort check</label>
+      <label class="qo"><input type="radio" name="q61" value="d"> Explaining a procedure</label>
+    </div>
+    <div class="qq">
+      <p>2. "Is the pressure comfortable for you?" → This is:</p>
+      <label class="qo"><input type="radio" name="q62" value="a"> Making a suggestion</label>
+      <label class="qo"><input type="radio" name="q62" value="b"> Giving a warm instruction</label>
+      <label class="qo"><input type="radio" name="q62" value="c"> Checking comfort</label>
+      <label class="qo"><input type="radio" name="q62" value="d"> Reassuring the client</label>
+    </div>
+    <div class="qq">
+      <p>3. "Don't worry — the redness is completely normal after extractions." → This is:</p>
+      <label class="qo"><input type="radio" name="q63" value="a"> Making a polite request</label>
+      <label class="qo"><input type="radio" name="q63" value="b"> Reassuring the client</label>
+      <label class="qo"><input type="radio" name="q63" value="c"> Asking for consent</label>
+      <label class="qo"><input type="radio" name="q63" value="d"> Making a suggestion</label>
+    </div>
+    <div class="qq">
+      <p>4. "Could you please remove your glasses before we begin?" → This is:</p>
+      <label class="qo"><input type="radio" name="q64" value="a"> A polite request</label>
+      <label class="qo"><input type="radio" name="q64" value="b"> A comfort check</label>
+      <label class="qo"><input type="radio" name="q64" value="c"> Explaining a product</label>
+      <label class="qo"><input type="radio" name="q64" value="d"> A farewell phrase</label>
+    </div>
+    <div class="qq">
+      <p>5. "This serum contains hyaluronic acid, which draws moisture into the skin's deeper layers." → This is:</p>
+      <label class="qo"><input type="radio" name="q65" value="a"> Reassuring</label>
+      <label class="qo"><input type="radio" name="q65" value="b"> Checking comfort</label>
+      <label class="qo"><input type="radio" name="q65" value="c"> Explaining &amp; informing</label>
+      <label class="qo"><input type="radio" name="q65" value="d"> Making a polite request</label>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="eb" onclick="chkQuiz('e6',['b','c','b','a','c'])">✓ Check Answers</button>
+    <button class="eb ebr" onclick="rstQuiz('e6')">↺ Reset</button>
+  </div>
+  <div class="fb" id="fb-e6"></div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 22 — STAGE G END OF SERVICE ══════════════════ -->
+<div class="slide" id="s22">
+<div class="gc">
+  <div class="badge-s">Stage G — End of Service &amp; Aftercare</div>
+  <h2 class="t2">Finishing the Facial &amp; Aftercare Advice</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Closing the Treatment</h3>
+      <div class="pb"><div class="ph">"We've finished the facial — take your time sitting up."</div><div class="mn">Allowing recovery time — present perfect</div></div>
+      <div class="pb"><div class="ph">"Your skin looks absolutely radiant — the hydration really worked beautifully."</div><div class="mn">Positive closing comment — observation</div></div>
+      <div class="pb"><div class="ph">"I'll give you a moment to get dressed and meet you at the front desk."</div><div class="mn">Next steps — future will</div></div>
+      <div class="pb"><div class="ph">"How are you feeling after the treatment?"</div><div class="mn">Follow-up comfort check</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:14px;margin-bottom:9px">Aftercare Instructions</h3>
+      <div class="pb"><div class="ph">"Please avoid wearing heavy makeup for the next 24 hours."</div></div>
+      <div class="pb"><div class="ph">"Don't exfoliate at home for the next 5 days — we've already treated your skin."</div></div>
+      <div class="pb"><div class="ph">"I strongly recommend applying SPF every morning, even on cloudy days."</div></div>
+      <div class="pb"><div class="ph">"Stay out of direct sunlight for 48 hours — we used acids today."</div></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Product Recommendations</h3>
+      <div class="pb"><div class="ph">"I'd suggest taking home our hydrating serum — it would complement what we did today."</div><div class="mn">Soft recommendation — I'd suggest + -ing</div></div>
+      <div class="pb"><div class="ph">"Based on what I observed, your skin would respond well to a niacinamide toner at home."</div></div>
+      <div class="pb"><div class="ph">"The cleanser we used today is available at reception if you'd like to take it home."</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:14px;margin-bottom:9px">Specialist's Notes (for the ficha)</h3>
+      <div class="gc-sm">
+        <p style="font-size:.81rem;margin-bottom:6px;color:var(--muted)">Written in past tense — record what was done:</p>
+        <p style="font-size:.83rem;color:var(--cream);line-height:1.65">"Double cleansed with micellar water + foaming gel. Applied 10% glycolic acid for 2 min. Steamed 7 min. Light extractions (nose area). Hydrating mask × 15 min. Effleurage + lymphatic drainage massage. Finished with HA serum + vitamin C + SPF 30."</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 23 — STAGE H DEPARTURE & REBOOKING ══════════════════ -->
+<div class="slide" id="s23">
+<div class="gc">
+  <div class="badge-s">Stage H — Client Departure &amp; Rebooking</div>
+  <h2 class="t2">Saying Goodbye &amp; Booking the Next Visit</h2>
+  <div class="col2">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Farewell Phrases</h3>
+      <div class="pb"><div class="ph">"It was an absolute pleasure taking care of your skin today."</div></div>
+      <div class="pb"><div class="ph">"Thank you so much for coming in — I hope you enjoyed the treatment."</div></div>
+      <div class="pb"><div class="ph">"Please don't hesitate to call if you have any concerns after today."</div></div>
+      <div class="pb"><div class="ph">"I hope you enjoy the rest of your day — you deserve it!"</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:14px;margin-bottom:9px">Follow-up Questions</h3>
+      <div class="pb"><div class="ph">"How did your skin feel the day after the treatment?"</div><div class="mn">At next appointment or follow-up call</div></div>
+      <div class="pb"><div class="ph">"Did you experience any reaction or sensitivity after your visit?"</div></div>
+      <div class="pb"><div class="ph">"Were you able to follow the aftercare advice we discussed?"</div></div>
+      <div class="pb"><div class="ph">"Have you noticed any improvement in your skin since the last session?"</div></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:10px">Rebooking Language</h3>
+      <div class="pb"><div class="ph">"I'd recommend coming back in about 4 weeks for the best results."</div><div class="mn">Suggesting frequency — I'd recommend + -ing</div></div>
+      <div class="pb"><div class="ph">"Shall I book you in for the same time next month?"</div><div class="mn">Offering to rebook — shall I…?</div></div>
+      <div class="pb"><div class="ph">"Would you like to pre-book your next appointment before you leave?"</div></div>
+      <div class="pb"><div class="ph">"We have availability on Tuesdays and Thursdays — which works best for you?"</div></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);margin-top:14px;margin-bottom:8px">Rebooking Vocabulary</h3>
+      <div class="tags">
+        <span class="tag">rebook / reschedule</span><span class="tag">availability</span><span class="tag">time slot</span>
+        <span class="tag">maintenance facial</span><span class="tag">treatment plan</span><span class="tag">course / series</span>
+        <span class="tag">loyalty programme</span><span class="tag">waiting list</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 24 — THE COMPLETE PROTOCOL CARD ══════════════════ -->
+<div class="slide" id="s24">
+<div class="gc" style="max-width:1020px;padding:26px 32px">
+  <div class="badge-s">Complete Reference</div>
+  <h2 class="t2">The Complete Facial Protocol Card</h2>
+  <p style="margin-bottom:13px;font-size:.84rem;color:var(--muted)">Your professional reference for the full service cycle — from reception to rebooking, in English.</p>
+  <table class="ft">
+    <tr><th colspan="4" style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:.98rem;letter-spacing:.1em">FACIAL TREATMENT PROTOCOL — COMPLETE CLIENT RECORD</th></tr>
+    <tr><th style="width:5%">#</th><th style="width:20%">Stage</th><th style="width:40%">Key Phrases (English)</th><th style="width:35%">Language Focus</th></tr>
+    <tr><td class="stpn">A</td><td><strong>Reception &amp; Welcome</strong></td><td>"Welcome! Do you have an appointment? May I take your name, please?"</td><td>Polite requests · Greetings · Present simple</td></tr>
+    <tr><td class="stpn">B</td><td><strong>Clinical Record</strong></td><td>"Could you fill out this form? Have you had a facial before? Do you have any allergies?"</td><td>Present perfect · Intake vocabulary · Yes/No questions</td></tr>
+    <tr><td class="stpn">C</td><td><strong>Room &amp; Positioning</strong></td><td>"Please lie back comfortably. I'll tuck this drape around you. Is the pillow okay?"</td><td>Warm instructions · Comfort checks · Going to</td></tr>
+    <tr><td class="stpn">D</td><td><strong>Skin Analysis</strong></td><td>"I'm going to analyse your skin now. It appears combination. I can see some blocked pores."</td><td>Technical vocab · Skin types · Observations</td></tr>
+    <tr><td class="stpn">1</td><td><strong>Double Cleanse</strong></td><td>"I'm starting with micellar water to remove makeup, then a foaming cleanser."</td><td>Present continuous · Phrasal verbs: wipe off, rinse off</td></tr>
+    <tr><td class="stpn">2</td><td><strong>Tone</strong></td><td>"I'm applying toner to rebalance your skin's pH. You might feel a slight chill."</td><td>Present continuous · Comfort prep · Will for prediction</td></tr>
+    <tr><td class="stpn">3</td><td><strong>Exfoliate</strong></td><td>"This AHA may tingle — that's completely normal. I'll leave it on for 2 minutes."</td><td>Reassurance · Going to &amp; will · Leave on (phrasal)</td></tr>
+    <tr><td class="stpn">4</td><td><strong>Steam</strong></td><td>"The steamer will open your pores beautifully. Is the temperature comfortable?"</td><td>Will · Comfort check · Technical vocabulary</td></tr>
+    <tr><td class="stpn">5</td><td><strong>Extract</strong></td><td>"I'm doing gentle extractions now. There may be slight pressure — breathe through it."</td><td>Present continuous · Warn + reassure · Body language</td></tr>
+    <tr><td class="stpn">6</td><td><strong>Mask</strong></td><td>"I've applied a hydrating mask — we'll leave it on for 15 minutes. Just relax."</td><td>Present perfect · Leave on (phrasal) · Suggestions</td></tr>
+    <tr><td class="stpn">7</td><td><strong>Serum</strong></td><td>"I've removed the mask and I'm now pressing in a vitamin C serum."</td><td>Present perfect + continuous · Ingredient vocabulary</td></tr>
+    <tr><td class="stpn">8</td><td><strong>Massage</strong></td><td>"I'm using effleurage strokes. Let me know if the pressure needs adjusting."</td><td>Present continuous · Technique vocab · Comfort check</td></tr>
+    <tr><td class="stpn">9</td><td><strong>Moisturise</strong></td><td>"I'm sealing everything in with a moisturiser tailored to your skin type."</td><td>Present continuous · Product explanation · Phrasal verbs</td></tr>
+    <tr><td class="stpn">10</td><td><strong>SPF</strong></td><td>"I'm finishing with SPF 30 — essential after exfoliation."</td><td>Present continuous · Justification · Aftercare vocabulary</td></tr>
+    <tr><td class="stpn">G</td><td><strong>End of Service</strong></td><td>"Your skin looks radiant. Avoid heavy makeup for 24 hours. I strongly recommend SPF daily."</td><td>Aftercare language · Suggestions · Past tense for notes</td></tr>
+    <tr><td class="stpn">H</td><td><strong>Departure &amp; Rebook</strong></td><td>"It was a pleasure! Shall I book you in for next month? We recommend every 4 weeks."</td><td>Farewell · Rebooking vocabulary · Future + modals</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ══════════════════ SLIDE 25 — EXERCISE 7: FINAL REVIEW QUIZ ══════════════════ -->
+<div class="slide" id="s25">
+<div class="gc">
+  <div class="badge-e">Exercise 7 — Final Review Quiz</div>
+  <h2 class="t2">Mixed Review: All 5 Focus Areas</h2>
+  <div id="qz-e7">
+    <div class="qq">
+      <p>1. "I'm going to __________ the cleanser now." Which phrasal verb fits best?</p>
+      <label class="qo"><input type="radio" name="q71" value="a"> break out</label>
+      <label class="qo"><input type="radio" name="q71" value="b"> rinse off</label>
+      <label class="qo"><input type="radio" name="q71" value="c"> build up</label>
+      <label class="qo"><input type="radio" name="q71" value="d"> check in</label>
+    </div>
+    <div class="qq">
+      <p>2. "I __________ the mask five minutes ago." (past simple) → correct form?</p>
+      <label class="qo"><input type="radio" name="q72" value="a"> have applied</label>
+      <label class="qo"><input type="radio" name="q72" value="b"> applied</label>
+      <label class="qo"><input type="radio" name="q72" value="c"> am applying</label>
+      <label class="qo"><input type="radio" name="q72" value="d"> will apply</label>
+    </div>
+    <div class="qq">
+      <p>3. Which product removes dead skin cells from the surface?</p>
+      <label class="qo"><input type="radio" name="q73" value="a"> Serum</label>
+      <label class="qo"><input type="radio" name="q73" value="b"> Moisturiser</label>
+      <label class="qo"><input type="radio" name="q73" value="c"> Exfoliant</label>
+      <label class="qo"><input type="radio" name="q73" value="d"> Toner</label>
+    </div>
+    <div class="qq">
+      <p>4. "The tingling is completely normal." → What language function is this?</p>
+      <label class="qo"><input type="radio" name="q74" value="a"> Polite request</label>
+      <label class="qo"><input type="radio" name="q74" value="b"> Reassuring the client</label>
+      <label class="qo"><input type="radio" name="q74" value="c"> Checking comfort</label>
+      <label class="qo"><input type="radio" name="q74" value="d"> Giving aftercare advice</label>
+    </div>
+    <div class="qq">
+      <p>5. To announce the next planned step in the protocol, you use:</p>
+      <label class="qo"><input type="radio" name="q75" value="a"> Past simple</label>
+      <label class="qo"><input type="radio" name="q75" value="b"> Present perfect</label>
+      <label class="qo"><input type="radio" name="q75" value="c"> Going to + infinitive</label>
+      <label class="qo"><input type="radio" name="q75" value="d"> Present simple</label>
+    </div>
+    <div class="qq">
+      <p>6. Which sentence correctly uses the present perfect to describe a just-completed action?</p>
+      <label class="qo"><input type="radio" name="q76" value="a"> "I apply the serum."</label>
+      <label class="qo"><input type="radio" name="q76" value="b"> "I have just applied the serum."</label>
+      <label class="qo"><input type="radio" name="q76" value="c"> "I was applied the serum."</label>
+      <label class="qo"><input type="radio" name="q76" value="d"> "I applying the serum."</label>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="eb" onclick="chkQuiz('e7',['b','b','c','b','c','b'])">✓ Check Answers</button>
+    <button class="eb ebr" onclick="rstQuiz('e7')">↺ Reset</button>
+  </div>
+  <div class="fb" id="fb-e7"></div>
+</div>
+</div>
+
+</div><!-- end #pres -->
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nb" id="pb" onclick="go(-1)" disabled>◀</button>
+  <span id="ctr">1 / 25</span>
+  <button class="nb" id="nb" onclick="go(1)">▶</button>
+  <button id="fsb" onclick="fs()" title="Fullscreen">⛶</button>
+</div>
+
+<script>
+// ─── NAVIGATION ───
+let cur=1,total=25;
+function go(d){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur=Math.max(1,Math.min(total,cur+d));
+  const sl=document.getElementById('s'+cur);
+  sl.classList.add('active');
+  sl.scrollTop=0;
+  document.getElementById('ctr').textContent=cur+' / '+total;
+  document.getElementById('pb').disabled=cur===1;
+  document.getElementById('nb').disabled=cur===total;
+  document.getElementById('progress').style.width=((cur/total)*100)+'%';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+function fs(){!document.fullscreenElement?document.documentElement.requestFullscreen():document.exitFullscreen()}
+
+// ─── MATCHING ───
+const mdata={
+  e1:{pairs:[
+    {t:'fill out / fill in',d:'to complete a written form',id:1},
+    {t:'rinse off',d:'to wash away a product with water',id:2},
+    {t:'put on',d:'to apply a product to the skin',id:3},
+    {t:'wipe away',d:'to remove with cloth or cotton pad',id:4},
+    {t:'leave on',d:'to keep a product on the skin',id:5},
+    {t:'break out',d:'to develop acne or pimples',id:6},
+  ]},
+  e5:{pairs:[
+    {t:'Cleanser',d:'Removes makeup, oil and impurities',id:1},
+    {t:'Toner',d:'Restores the skin\'s pH after cleansing',id:2},
+    {t:'Serum',d:'Delivers concentrated active ingredients',id:3},
+    {t:'Moisturiser',d:'Hydrates and seals moisture into skin',id:4},
+    {t:'SPF / Sunscreen',d:'Protects skin from UV radiation',id:5},
+    {t:'Exfoliant',d:'Removes dead skin cells from the surface',id:6},
+  ]}
+};
+const mstate={};
+
+function initMatch(id){
+  const d=mdata[id];
+  const c=document.getElementById('mc-'+id);
+  c.innerHTML='';
+  mstate[id]={sel:null,matched:0,total:d.pairs.length};
+  const L=document.createElement('div'),R=document.createElement('div');
+  const shuffled=[...d.pairs].sort(()=>Math.random()-.5);
+  d.pairs.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='mi';el.textContent=p.t;
+    el.dataset.id=p.id;el.dataset.type='t';
+    el.onclick=()=>mclick(el,id);
+    L.appendChild(el);
+  });
+  shuffled.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='mi';el.textContent=p.d;
+    el.dataset.id=p.id;el.dataset.type='d';
+    el.onclick=()=>mclick(el,id);
+    R.appendChild(el);
+  });
+  c.appendChild(L);c.appendChild(R);
+}
+
+function mclick(el,id){
+  if(el.classList.contains('ok'))return;
+  const st=mstate[id];
+  if(!st.sel){el.classList.add('sel');st.sel=el;}
+  else{
+    const prev=st.sel;
+    if(prev===el){el.classList.remove('sel');st.sel=null;return;}
+    const sameId=prev.dataset.id===el.dataset.id;
+    const diffType=prev.dataset.type!==el.dataset.type;
+    prev.classList.remove('sel');
+    if(sameId&&diffType){
+      prev.classList.add('ok');el.classList.add('ok');
+      st.matched++;
+      if(st.matched===st.total){showFb('fb-'+id,'🌿 Excellent! All pairs matched correctly!',true);}
+    }else{
+      prev.classList.add('ng');el.classList.add('ng');
+      setTimeout(()=>{prev.classList.remove('ng');el.classList.remove('ng');},450);
+    }
+    st.sel=null;
+  }
+}
+
+function chkMatch(id){
+  const st=mstate[id];
+  const sc=document.getElementById('sc-'+id);
+  sc.textContent=st.matched+'/'+st.total+' matched';
+  showFb('fb-'+id,`Score: ${st.matched} / ${st.total} pairs matched.`,st.matched===st.total);
+}
+function rstMatch(id){
+  document.getElementById('fb-'+id).className='fb';
+  document.getElementById('sc-'+id).textContent='';
+  initMatch(id);
+}
+
+// ─── QUIZ ───
+function chkQuiz(id,ans){
+  const c=document.getElementById('qz-'+id);
+  let ok=0;
+  ans.forEach((a,i)=>{
+    const n='q'+(id==='e2'?'2':id==='e6'?'6':'7')+(i+1);
+    c.querySelectorAll('[name="'+n+'"]').forEach(opt=>{
+      const lb=opt.closest('.qo');
+      lb.classList.remove('qa','qw');
+      if(opt.value===a)lb.classList.add('qa');
+      if(opt.checked&&opt.value!==a)lb.classList.add('qw');
+      if(opt.checked&&opt.value===a)ok++;
+    });
+  });
+  const pct=Math.round(ok/ans.length*100);
+  const msg=ok===ans.length?`🎉 Perfect! ${ok}/${ans.length} — Outstanding!`
+    :pct>=60?`✓ Good effort! ${ok}/${ans.length} correct. Review highlighted answers.`
+    :`${ok}/${ans.length} correct. Review the language focus slides and try again!`;
+  showFb('fb-'+id,msg,ok===ans.length||pct>=60);
+}
+function rstQuiz(id){
+  const c=document.getElementById('qz-'+id);
+  c.querySelectorAll('.qo').forEach(o=>{o.classList.remove('qa','qw');const i=o.querySelector('input');if(i)i.checked=false;});
+  document.getElementById('fb-'+id).className='fb';
+}
+
+// ─── CROSSWORD ───
+// Grid 7×7 (rows 0-6, cols 0-6)
+// SERUM: across r0,c2-6 | RINSE: down c4,r0-4 | MASK: down c6,r0-3
+// TONE: across r2,c2-5  | STEAM: across r4,c2-6 | PORE: across r6,c2-5
+const cw=[
+  [0,0,{l:'S',n:1},{l:'E'},{l:'R',n:2},{l:'U'},{l:'M',n:3}],
+  [0,0,0,0,{l:'I'},0,{l:'A'}],
+  [0,0,{l:'T',n:4},{l:'O'},{l:'N'},{l:'E'},{l:'S'}],
+  [0,0,0,0,{l:'S'},0,{l:'K'}],
+  [0,0,{l:'S',n:5},{l:'T'},{l:'E'},{l:'A'},{l:'M'}],
+  [0,0,0,0,0,0,0],
+  [0,0,{l:'P',n:6},{l:'O'},{l:'R'},{l:'E'},0],
+];
+
+function buildCW(){
+  const g=document.getElementById('cwgrid');
+  g.innerHTML='';
+  cw.forEach((row,r)=>row.forEach((cell,c)=>{
+    const d=document.createElement('div');
+    d.className='cc '+(cell?'wht':'blk');
+    d.id='cw-'+r+'-'+c;
+    if(cell){
+      if(cell.n){const sp=document.createElement('span');sp.className='ccn';sp.textContent=cell.n;d.appendChild(sp);}
+      const inp=document.createElement('input');
+      inp.maxLength=1;inp.dataset.ans=cell.l;
+      inp.addEventListener('input',e=>{e.target.value=e.target.value.toUpperCase().slice(-1);d.classList.remove('cok','cng');});
+      d.appendChild(inp);
+    }
+    g.appendChild(d);
+  }));
+}
+
+function chkCW(){
+  let ok=0,tot=0;
+  cw.forEach((row,r)=>row.forEach((cell,c)=>{
+    if(!cell)return;
+    tot++;
+    const d=document.getElementById('cw-'+r+'-'+c);
+    const i=d.querySelector('input');
+    d.classList.remove('cok','cng');
+    if(i.value===cell.l){ok++;d.classList.add('cok');}
+    else d.classList.add('cng');
+  }));
+  showFb('fb-cw',ok===tot?'🌿 Perfect! All letters correct!':ok+' / '+tot+' letters correct. Keep going!',ok===tot);
+}
+function rstCW(){
+  document.querySelectorAll('#cwgrid input').forEach(i=>i.value='');
+  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('cok','cng'));
+  document.getElementById('fb-cw').className='fb';
+}
+
+// ─── WORD SEARCH ───
+const wsWords=['SERUM','TONER','MASK','STEAM','PORE','COLLAGEN','CLEANSER','HYDRATE','RETINOL','EXFOLIATE'];
+const ROWS=10,COLS=12;
+let wsGrid=[],wsPlacements=[],wsFound=new Set(),wsStart=null;
+
+function buildWS(){
+  wsGrid=Array(ROWS).fill(null).map(()=>Array(COLS).fill(''));
+  wsPlacements=[];wsFound=new Set();wsStart=null;
+  const dirs=[[0,1],[1,0],[1,1]];
+  for(const w of wsWords){
+    let placed=false,tries=0;
+    while(!placed&&tries<300){
+      const dir=dirs[Math.floor(Math.random()*dirs.length)];
+      const mr=ROWS-(dir[0]?w.length:1),mc=COLS-(dir[1]?w.length:1);
+      const r=Math.floor(Math.random()*(mr+1)),c=Math.floor(Math.random()*(mc+1));
+      let ok=true;
+      for(let i=0;i<w.length;i++){
+        const nr=r+dir[0]*i,nc=c+dir[1]*i;
+        if(wsGrid[nr][nc]&&wsGrid[nr][nc]!==w[i]){ok=false;break;}
+      }
+      if(ok){
+        const cells=[];
+        for(let i=0;i<w.length;i++){const nr=r+dir[0]*i,nc=c+dir[1]*i;wsGrid[nr][nc]=w[i];cells.push([nr,nc]);}
+        wsPlacements.push({w,r,c,dir,cells});placed=true;
+      }
+      tries++;
+    }
+  }
+  const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)if(!wsGrid[r][c])wsGrid[r][c]=alpha[Math.floor(Math.random()*26)];
+  renderWS();renderWSList();
+}
+
+function renderWS(){
+  const g=document.getElementById('wsgrid');
+  g.innerHTML='';
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    const d=document.createElement('div');
+    d.className='wc';d.textContent=wsGrid[r][c];
+    d.dataset.r=r;d.dataset.c=c;
+    d.addEventListener('click',wsClick);
+    g.appendChild(d);
+  }
+}
+
+function renderWSList(){
+  const l=document.getElementById('wslist');l.innerHTML='';
+  wsWords.forEach(w=>{
+    const sp=document.createElement('span');sp.className='ww';sp.id='wsw-'+w;sp.textContent=w;l.appendChild(sp);
+  });
+  updWSstat();
+}
+
+function wsClick(e){
+  const el=e.currentTarget;
+  const r=+el.dataset.r,c=+el.dataset.c;
+  if(!wsStart){
+    wsStart={r,c,el};el.classList.add('wsel');
+  }else{
+    const sr=wsStart.r,sc=wsStart.c;
+    wsStart.el.classList.remove('wsel');wsStart=null;
+    wsCheck(sr,sc,r,c);
+  }
+}
+
+function wsCheck(r1,c1,r2,c2){
+  const dr=Math.sign(r2-r1),dc=Math.sign(c2-c1);
+  const cells=[];let r=r1,c=c1;
+  while(true){
+    cells.push([r,c]);
+    if(r===r2&&c===c2)break;
+    r+=dr;c+=dc;
+    if(cells.length>15)break;
+  }
+  const sel=cells.map(([r,c])=>wsGrid[r][c]).join('');
+  for(const pl of wsPlacements){
+    if(wsFound.has(pl.w))continue;
+    const fwd=pl.cells.map(([r,c])=>wsGrid[r][c]).join('');
+    const bwd=fwd.split('').reverse().join('');
+    if(sel===fwd||sel===bwd){
+      const pc=pl.cells,cc=cells;
+      const fwdMatch=(pc[0][0]===cc[0][0]&&pc[0][1]===cc[0][1]);
+      const bwdMatch=(pc[0][0]===cc[cc.length-1][0]&&pc[0][1]===cc[cc.length-1][1]);
+      if(fwdMatch||bwdMatch){
+        wsFound.add(pl.w);
+        pl.cells.forEach(([r,c])=>{
+          const el=document.querySelector('#wsgrid .wc[data-r="'+r+'"][data-c="'+c+'"]');
+          if(el)el.classList.add('wfound');
+        });
+        const sp=document.getElementById('wsw-'+pl.w);
+        if(sp)sp.classList.add('wdone');
+        updWSstat();return;
+      }
+    }
+  }
+  cells.forEach(([r,c])=>{
+    const el=document.querySelector('#wsgrid .wc[data-r="'+r+'"][data-c="'+c+'"]');
+    if(el){el.style.color='var(--bad)';setTimeout(()=>el.style.color='',400);}
+  });
+}
+
+function updWSstat(){
+  document.getElementById('wsstat').innerHTML='Found: <span style="color:var(--gold)">'+wsFound.size+'</span> / '+wsWords.length;
+}
+function rstWS(){wsFound=new Set();wsStart=null;buildWS();}
+
+// ─── FEEDBACK HELPER ───
+function showFb(id,msg,good){
+  const el=document.getElementById(id);
+  el.textContent=msg;
+  el.className='fb on '+(good?'yes':'no');
+}
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded',()=>{
+  initMatch('e1');initMatch('e5');
+  buildCW();buildWS();
+});
+</script>
+</body>
+</html>
